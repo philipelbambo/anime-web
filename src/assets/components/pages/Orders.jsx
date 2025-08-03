@@ -3,7 +3,7 @@ import SideMenu from './Sidemenu';
 import Header from './header';
 import BreadcrumbSearch from './BreadcrumbSearch';
 
-// Sample orders data
+// Sample orders data with more customers
 const orders = [
   {
     id: 1,
@@ -41,6 +41,78 @@ const orders = [
     total: '₱520.00',
     date: '2025-08-01',
   },
+  {
+    id: 5,
+    customer: 'Sofia Mendoza',
+    orderNumber: '#ORD-2024-005',
+    status: 'Delivered',
+    items: 'Lechon Kawali x1, Steamed Rice x2',
+    total: '₱720.00',
+    date: '2025-08-02',
+  },
+  {
+    id: 6,
+    customer: 'Miguel Torres',
+    orderNumber: '#ORD-2024-006',
+    status: 'Preparing',
+    items: 'Adobo Chicken x1, Pancit x1, Lumpia x5',
+    total: '₱580.00',
+    date: '2025-08-03',
+  },
+  {
+    id: 7,
+    customer: 'Carmen Lopez',
+    orderNumber: '#ORD-2024-007',
+    status: 'Pending',
+    items: 'Sinigang na Baboy x1, Rice x3',
+    total: '₱450.00',
+    date: '2025-08-03',
+  },
+  {
+    id: 8,
+    customer: 'Luis Fernandez',
+    orderNumber: '#ORD-2024-008',
+    status: 'Delivered',
+    items: 'Grilled Bangus x1, Garlic Rice x2',
+    total: '₱390.00',
+    date: '2025-08-02',
+  },
+  {
+    id: 9,
+    customer: 'Isabella Cruz',
+    orderNumber: '#ORD-2024-009',
+    status: 'Preparing',
+    items: 'Bicol Express x1, Rice x2, Halo-halo x1',
+    total: '₱520.00',
+    date: '2025-08-03',
+  },
+  {
+    id: 10,
+    customer: 'Carlos Villanueva',
+    orderNumber: '#ORD-2024-010',
+    status: 'Cancelled',
+    items: 'Kare-kare x1, Bagoong x1, Rice x2',
+    total: '₱680.00',
+    date: '2025-08-01',
+  },
+  {
+    id: 11,
+    customer: 'Rosario Bautista',
+    orderNumber: '#ORD-2024-011',
+    status: 'Delivered',
+    items: 'Crispy Pata x1, Rice x3, San Miguel x2',
+    total: '₱890.00',
+    date: '2025-08-02',
+  },
+  {
+    id: 12,
+    customer: 'Eduardo Ramos',
+    orderNumber: '#ORD-2024-012',
+    status: 'Pending',
+    items: 'Sisig x1, Rice x1, Red Horse x1',
+    total: '₱320.00',
+    date: '2025-08-03',
+  },
 ];
 
 const getStatusColor = (status) => {
@@ -77,7 +149,7 @@ const Orders = () => (
           >
             <h2 
               className="text-2xl font-bold mb-6 text-gray-800 p-4 rounded-lg"
-              style={neumorphismStyle}
+              style={{ ...neumorphismStyle, color: '#000000' }}
             >
               Orders
             </h2>
@@ -93,37 +165,37 @@ const Orders = () => (
                   >
                     <th 
                       className="py-3 px-4 rounded-tl-lg font-semibold text-gray-700"
-                      style={neumorphismStyle}
+                      style={{ ...neumorphismStyle, color: '#000000' }}
                     >
                       Order #
                     </th>
                     <th 
                       className="py-3 px-4 font-semibold text-gray-700"
-                      style={neumorphismStyle}
+                      style={{ ...neumorphismStyle, color: '#000000' }}
                     >
                       Customer
                     </th>
                     <th 
                       className="py-3 px-4 font-semibold text-gray-700"
-                      style={neumorphismStyle}
+                      style={{ ...neumorphismStyle, color: '#000000' }}
                     >
                       Items
                     </th>
                     <th 
                       className="py-3 px-4 font-semibold text-gray-700"
-                      style={neumorphismStyle}
+                      style={{ ...neumorphismStyle, color: '#000000' }}
                     >
                       Total
                     </th>
                     <th 
                       className="py-3 px-4 font-semibold text-gray-700"
-                      style={neumorphismStyle}
+                      style={{ ...neumorphismStyle, color: '#000000' }}
                     >
                       Date
                     </th>
                     <th 
                       className="py-3 px-4 rounded-tr-lg font-semibold text-gray-700"
-                      style={neumorphismStyle}
+                      style={{ ...neumorphismStyle, color: '#000000' }}
                     >
                       Status
                     </th>
@@ -135,34 +207,19 @@ const Orders = () => (
                       key={order.id} 
                       className={`${index < orders.length - 1 ? 'border-b border-gray-300' : ''}`}
                     >
-                      <td 
-                        className="py-3 px-4 font-semibold text-blue-700 rounded-lg m-1"
-                        style={neumorphismStyle}
-                      >
+                      <td className="py-3 px-4 font-semibold" style={{ color: '#000000' }}>
                         {order.orderNumber}
                       </td>
-                      <td 
-                        className="py-3 px-4 rounded-lg m-1"
-                        style={neumorphismStyle}
-                      >
+                      <td className="py-3 px-4" style={{ color: '#000000' }}>
                         {order.customer}
                       </td>
-                      <td 
-                        className="py-3 px-4 text-sm text-gray-600 rounded-lg m-1"
-                        style={neumorphismStyle}
-                      >
+                      <td className="py-3 px-4 text-sm" style={{ color: '#000000' }}>
                         {order.items}
                       </td>
-                      <td 
-                        className="py-3 px-4 font-bold text-green-600 rounded-lg m-1"
-                        style={neumorphismStyle}
-                      >
+                      <td className="py-3 px-4 font-bold" style={{ color: '#000000' }}>
                         {order.total}
                       </td>
-                      <td 
-                        className="py-3 px-4 text-xs text-gray-500 rounded-lg m-1"
-                        style={neumorphismStyle}
-                      >
+                      <td className="py-3 px-4 text-xs" style={{ color: '#000000' }}>
                         {order.date}
                       </td>
                       <td className="py-3 px-4">
@@ -173,7 +230,8 @@ const Orders = () => (
                             background: order.status === 'Pending' ? '#fbbf24' :
                                        order.status === 'Preparing' ? '#3b82f6' :
                                        order.status === 'Delivered' ? '#10b981' :
-                                       order.status === 'Cancelled' ? '#ef4444' : '#6b7280'
+                                       order.status === 'Cancelled' ? '#ef4444' : '#6b7280',
+                            color: '#000000'
                           }}
                         >
                           {order.status}

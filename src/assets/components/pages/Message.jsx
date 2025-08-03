@@ -37,7 +37,7 @@ const initialClients = [
     orderStatus: 'pending',
     orderItems: 'Pizza Margherita x2, Coke x1',
     totalAmount: '₱650.00',
-    recipient: 'admin', // who should receive the messages
+    recipient: 'admin',
     lastMessage: 'Hi! When will my order be ready?',
     timestamp: '2 minutes ago',
     unreadCount: 1,
@@ -69,7 +69,7 @@ const initialClients = [
     orderStatus: 'preparing',
     orderItems: 'Burger Combo x1, Fries x2',
     totalAmount: '₱450.00',
-    recipient: 'rider', // this should go to rider
+    recipient: 'rider',
     lastMessage: 'Where are you now? I\'m waiting at the gate.',
     timestamp: '5 minutes ago',
     unreadCount: 2,
@@ -187,7 +187,6 @@ const Message = () => {
   const [showEmojis, setShowEmojis] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRecipient, setFilterRecipient] = useState('all'); // all, admin, rider
-
   const activeClient = clients.find(client => client.id === activeClientId);
   const activeMessages = activeClient ? activeClient.messages : [];
 
@@ -200,14 +199,12 @@ const Message = () => {
 
   const handleSend = () => {
     if (input.trim() === '' || !activeClient) return;
-    
     const newMessage = {
       id: activeMessages.length + 1,
       sender: 'Admin',
       message: input,
       timestamp: new Date().toLocaleString(),
     };
-
     setClients(clients.map(client => 
       client.id === activeClientId 
         ? { 
@@ -224,7 +221,6 @@ const Message = () => {
 
   const handleClientSelect = (clientId) => {
     setActiveClientId(clientId);
-    // Mark messages as read
     setClients(clients.map(client => 
       client.id === clientId 
         ? { ...client, unreadCount: 0 }
@@ -276,7 +272,6 @@ const Message = () => {
                 boxShadow: '8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff'
               }}
             >
-              
               {/* Client List Sidebar */}
               <div 
                 className="w-200 border-r border-gray-200 flex flex-col"
@@ -288,7 +283,9 @@ const Message = () => {
                 {/* Header */}
                 <div className="p-4 border-b border-gray-200">
                   <div className="flex items-center justify-between mb-3">
-                    <h2 className="text-xl font-bold text-gray-800">Order Messages</h2>
+                    <h2 className="text-xl font-bold text-gray-800" style={{ color: '#000000' }}>
+                      Order Messages
+                    </h2>
                     <div className="flex gap-2">
                       <select 
                         className="text-sm border rounded px-2 py-1"
@@ -296,7 +293,8 @@ const Message = () => {
                         onChange={(e) => setFilterRecipient(e.target.value)}
                         style={{ 
                           background: '#e0e0e0',
-                          boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                          boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff',
+                          color: '#000000'
                         }}
                       >
                         <option value="all">All Messages</option>
@@ -315,7 +313,8 @@ const Message = () => {
                       onChange={(e) => setSearchTerm(e.target.value)}
                       style={{ 
                         background: '#e0e0e0',
-                        boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff'
+                        boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff',
+                        color: '#000000'
                       }}
                     />
                     <svg className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -323,7 +322,6 @@ const Message = () => {
                     </svg>
                   </div>
                 </div>
-
                 {/* Client List */}
                 <div className="flex-1 overflow-y-auto">
                   {filteredClients.map((client) => (
@@ -354,26 +352,32 @@ const Message = () => {
                           </div>
                           <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${getStatusColor(client.orderStatus)}`}></div>
                         </div>
-                        
                         {/* Client Info */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
-                            <h3 className="font-semibold text-gray-900 text-sm">{client.name}</h3>
-                            <span className="text-xs text-gray-500">{client.timestamp}</span>
+                            <h3 className="font-semibold text-gray-900 text-sm" style={{ color: '#000000' }}>
+                              {client.name}
+                            </h3>
+                            <span className="text-xs text-gray-500" style={{ color: '#000000' }}>
+                              {client.timestamp}
+                            </span>
                           </div>
-                          
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs font-medium text-gray-700">{client.orderNumber}</span>
+                            <span className="text-xs font-medium text-gray-700" style={{ color: '#000000' }}>
+                              {client.orderNumber}
+                            </span>
                             <span className={`text-xs px-2 py-0.5 rounded-full text-white ${getStatusColor(client.orderStatus)}`}>
                               {getStatusText(client.orderStatus)}
                             </span>
                           </div>
-                          
-                          <p className="text-xs text-gray-600 mt-1 truncate">{client.orderItems}</p>
-                          <p className="text-xs font-semibold text-green-600 mt-1">{client.totalAmount}</p>
-                          
+                          <p className="text-xs text-gray-600 mt-1 truncate" style={{ color: '#000000' }}>
+                            {client.orderItems}
+                          </p>
+                          <p className="text-xs font-semibold text-green-600 mt-1" style={{ color: '#000000' }}>
+                            {client.totalAmount}
+                          </p>
                           <div className="flex items-center justify-between mt-2">
-                            <span className={`text-xs font-medium ${getRecipientColor(client.recipient)}`}>
+                            <span className={`text-xs font-medium ${getRecipientColor(client.recipient)}`} style={{ color: '#000000' }}>
                               → {client.recipient === 'admin' ? 'Admin' : 'Rider'}
                             </span>
                             {client.unreadCount > 0 && (
@@ -388,15 +392,15 @@ const Message = () => {
                               </div>
                             )}
                           </div>
-                          
-                          <p className="text-sm text-gray-600 truncate mt-1 italic">"{client.lastMessage}"</p>
+                          <p className="text-sm text-gray-600 truncate mt-1 italic" style={{ color: '#000000' }}>
+                            "{client.lastMessage}"
+                          </p>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-
               {/* Chat Area */}
               <div 
                 className="flex-1 flex flex-col"
@@ -424,25 +428,29 @@ const Message = () => {
                             <div className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(activeClient.orderStatus)}`}></div>
                           </div>
                           <div>
-                            <h3 className="font-semibold text-gray-900">{activeClient.name}</h3>
+                            <h3 className="font-semibold text-gray-900" style={{ color: '#000000' }}>
+                              {activeClient.name}
+                            </h3>
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">{activeClient.orderNumber}</span>
+                              <span className="text-sm text-gray-600" style={{ color: '#000000' }}>
+                                {activeClient.orderNumber}
+                              </span>
                               <span className={`text-xs px-2 py-0.5 rounded-full text-white ${getStatusColor(activeClient.orderStatus)}`}>
                                 {getStatusText(activeClient.orderStatus)}
                               </span>
                             </div>
                           </div>
                         </div>
-                        
                         {/* Order Summary */}
                         <div className="text-right">
-                          <p className="text-sm font-semibold text-green-600">{activeClient.totalAmount}</p>
-                          <p className={`text-xs ${getRecipientColor(activeClient.recipient)}`}>
+                          <p className="text-sm font-semibold text-green-600" style={{ color: '#000000' }}>
+                            {activeClient.totalAmount}
+                          </p>
+                          <p className={`text-xs ${getRecipientColor(activeClient.recipient)}`} style={{ color: '#000000' }}>
                             Messages to: {activeClient.recipient === 'admin' ? 'Admin' : 'Rider'}
                           </p>
                         </div>
                       </div>
-                      
                       {/* Order Details */}
                       <div 
                         className="mt-3 p-3 rounded-lg"
@@ -451,12 +459,11 @@ const Message = () => {
                           boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff'
                         }}
                       >
-                        <p className="text-sm text-gray-700">
+                        <p className="text-sm text-gray-700" style={{ color: '#000000' }}>
                           <span className="font-medium">Order Items:</span> {activeClient.orderItems}
                         </p>
                       </div>
                     </div>
-
                     {/* Messages */}
                     <div 
                       className="flex-1 overflow-y-auto p-4"
@@ -486,23 +493,29 @@ const Message = () => {
                                 className="mb-2 p-2 rounded text-blue-800 text-xs"
                                 style={{ 
                                   background: '#dbeafe',
-                                  boxShadow: 'inset 2px 2px 4px #a3b1c6, inset -2px -2px 4px #ffffff'
+                                  boxShadow: 'inset 2px 2px 4px #a3b1c6, inset -2px -2px 4px #ffffff',
+                                  color: '#000000'
                                 }}
                               >
-                                <div className="font-semibold">{msg.orderInfo.orderNumber}</div>
-                                <div>{msg.orderInfo.items}</div>
-                                <div className="font-semibold">{msg.orderInfo.total}</div>
+                                <div className="font-semibold" style={{ color: '#000000' }}>
+                                  {msg.orderInfo.orderNumber}
+                                </div>
+                                <div style={{ color: '#000000' }}>{msg.orderInfo.items}</div>
+                                <div className="font-semibold" style={{ color: '#000000' }}>
+                                  {msg.orderInfo.total}
+                                </div>
                               </div>
                             )}
-                            <div className="text-sm">{msg.message}</div>
-                            <div className={`text-xs mt-1 ${msg.sender === 'Admin' ? 'text-blue-100' : 'text-gray-500'}`}>
+                            <div className="text-sm" style={{ color: '#000000' }}>
+                              {msg.message}
+                            </div>
+                            <div className={`text-xs mt-1 ${msg.sender === 'Admin' ? 'text-blue-100' : 'text-gray-500'}`} style={{ color: '#000000' }}>
                               {msg.timestamp}
                             </div>
                           </div>
                         </div>
                       ))}
                     </div>
-
                     {/* Message Input */}
                     <div 
                       className="p-4 border-t border-gray-200"
@@ -510,10 +523,12 @@ const Message = () => {
                         background: '#e0e0e0'
                       }}
                     >
-                      <div className="mb-2 text-xs text-gray-600">
-                        Responding as: <span className="font-semibold">Admin</span> 
+                      <div className="mb-2 text-xs text-gray-600" style={{ color: '#000000' }}>
+                        Responding as: <span className="font-semibold" style={{ color: '#000000' }}>Admin</span> 
                         {activeClient.recipient === 'rider' && (
-                          <span className="ml-2 text-orange-600">(This message is intended for Rider)</span>
+                          <span className="ml-2 text-orange-600" style={{ color: '#000000' }}>
+                            (This message is intended for Rider)
+                          </span>
                         )}
                       </div>
                       <div className="flex items-center gap-2 relative">
@@ -537,7 +552,8 @@ const Message = () => {
                           onKeyDown={e => { if (e.key === 'Enter') handleSend(); }}
                           style={{ 
                             background: '#e0e0e0',
-                            boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff'
+                            boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff',
+                            color: '#000000'
                           }}
                         />
                         <button
@@ -605,7 +621,9 @@ const Message = () => {
                       <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
-                      <p className="text-lg">Select an order to view messages</p>
+                      <p className="text-lg" style={{ color: '#000000' }}>
+                        Select an order to view messages
+                      </p>
                     </div>
                   </div>
                 )}

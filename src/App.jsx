@@ -10,7 +10,8 @@ import ManageProduct from './assets/components/pages/ManageProduct';
 import Homepage from './assets/components/pages/Homepage';
 import Message from './assets/components/pages/Message';
 import Orders from './assets/components/pages/Orders';
-
+import Customers from './assets/components/pages/Customers';
+import Reports from './assets/components/pages/Reports';
 function App() {
   return (
     <div className="App">
@@ -26,6 +27,8 @@ function App() {
         <Route path="/manageproduct" element={<ManageProduct />} />
         <Route path="/message" element={<Message />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/customers" element={<Customers />} />
+        <Route path="/reports" element={<Reports />} />
         {/* Add more routes as needed */}
       </Routes>
       </BrowserRouter>
