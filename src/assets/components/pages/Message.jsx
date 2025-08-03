@@ -269,10 +269,22 @@ const Message = () => {
         <div className="flex-1 flex flex-col justify-start items-start p-11">
           <div className="w-full py-6">
             <BreadcrumbSearch />
-            <div className="w-full bg-white rounded-lg shadow-md flex h-[650px]">
+            <div 
+              className="w-full rounded-lg flex h-[650px]" 
+              style={{ 
+                background: '#e0e0e0',
+                boxShadow: '8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff'
+              }}
+            >
               
               {/* Client List Sidebar */}
-              <div className="w-200 border-r border-gray-200 flex flex-col">
+              <div 
+                className="w-200 border-r border-gray-200 flex flex-col"
+                style={{ 
+                  background: '#e0e0e0',
+                  boxShadow: 'inset 8px 8px 15px #a3b1c6, inset -8px -8px 15px #ffffff'
+                }}
+              >
                 {/* Header */}
                 <div className="p-4 border-b border-gray-200">
                   <div className="flex items-center justify-between mb-3">
@@ -282,6 +294,10 @@ const Message = () => {
                         className="text-sm border rounded px-2 py-1"
                         value={filterRecipient}
                         onChange={(e) => setFilterRecipient(e.target.value)}
+                        style={{ 
+                          background: '#e0e0e0',
+                          boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                        }}
                       >
                         <option value="all">All Messages</option>
                         <option value="admin">To Admin</option>
@@ -294,9 +310,13 @@ const Message = () => {
                     <input
                       type="text"
                       placeholder="Search orders or customers..."
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="w-full pl-10 pr-4 py-2 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
+                      style={{ 
+                        background: '#e0e0e0',
+                        boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff'
+                      }}
                     />
                     <svg className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -311,15 +331,25 @@ const Message = () => {
                       key={client.id}
                       className={`p-4 cursor-pointer transition-colors border-b border-gray-100 ${
                         activeClientId === client.id 
-                          ? 'bg-blue-50 border-r-2 border-blue-500' 
+                          ? 'border-r-2 border-blue-500' 
                           : 'hover:bg-gray-50'
                       }`}
                       onClick={() => handleClientSelect(client.id)}
+                      style={activeClientId === client.id ? {
+                        background: '#e0e0e0',
+                        boxShadow: 'inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff'
+                      } : {}}
                     >
                       <div className="flex items-start gap-3">
                         {/* Avatar */}
                         <div className="relative">
-                          <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                          <div 
+                            className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-sm"
+                            style={{ 
+                              background: '#4f46e5',
+                              boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                            }}
+                          >
                             {client.avatar}
                           </div>
                           <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${getStatusColor(client.orderStatus)}`}></div>
@@ -347,7 +377,13 @@ const Message = () => {
                               → {client.recipient === 'admin' ? 'Admin' : 'Rider'}
                             </span>
                             {client.unreadCount > 0 && (
-                              <div className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                              <div 
+                                className="text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                                style={{ 
+                                  background: '#ef4444',
+                                  boxShadow: '2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff'
+                                }}
+                              >
                                 {client.unreadCount}
                               </div>
                             )}
@@ -362,7 +398,13 @@ const Message = () => {
               </div>
 
               {/* Chat Area */}
-              <div className="flex-1 flex flex-col">
+              <div 
+                className="flex-1 flex flex-col"
+                style={{ 
+                  background: '#e0e0e0',
+                  boxShadow: 'inset 8px 8px 15px #a3b1c6, inset -8px -8px 15px #ffffff'
+                }}
+              >
                 {activeClient ? (
                   <>
                     {/* Chat Header */}
@@ -370,7 +412,13 @@ const Message = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <div className="relative">
-                            <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                            <div 
+                              className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold"
+                              style={{ 
+                                background: '#4f46e5',
+                                boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                              }}
+                            >
                               {activeClient.avatar}
                             </div>
                             <div className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(activeClient.orderStatus)}`}></div>
@@ -396,7 +444,13 @@ const Message = () => {
                       </div>
                       
                       {/* Order Details */}
-                      <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                      <div 
+                        className="mt-3 p-3 rounded-lg"
+                        style={{ 
+                          background: '#e0e0e0',
+                          boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff'
+                        }}
+                      >
                         <p className="text-sm text-gray-700">
                           <span className="font-medium">Order Items:</span> {activeClient.orderItems}
                         </p>
@@ -404,16 +458,37 @@ const Message = () => {
                     </div>
 
                     {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
+                    <div 
+                      className="flex-1 overflow-y-auto p-4"
+                      style={{ 
+                        background: '#e0e0e0',
+                        boxShadow: 'inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff'
+                      }}
+                    >
                       {activeMessages.map((msg) => (
                         <div key={msg.id} className={`mb-4 flex ${msg.sender === 'Admin' ? 'justify-end' : 'justify-start'}`}>
-                          <div className={`max-w-md px-4 py-2 rounded-2xl shadow ${
-                            msg.sender === 'Admin' 
-                              ? 'bg-blue-500 text-white' 
-                              : 'bg-white text-gray-900 border border-gray-200'
-                          }`} style={{ wordBreak: 'break-word' }}>
+                          <div 
+                            className={`max-w-md px-4 py-2 rounded-2xl text-white ${
+                              msg.sender === 'Admin' 
+                                ? 'text-white' 
+                                : 'text-gray-900 border border-gray-200'
+                            }`} 
+                            style={{ 
+                              wordBreak: 'break-word',
+                              background: msg.sender === 'Admin' ? '#4f46e5' : '#e0e0e0',
+                              boxShadow: msg.sender === 'Admin' 
+                                ? '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                                : '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                            }}
+                          >
                             {msg.orderInfo && (
-                              <div className="mb-2 p-2 bg-blue-100 rounded text-blue-800 text-xs">
+                              <div 
+                                className="mb-2 p-2 rounded text-blue-800 text-xs"
+                                style={{ 
+                                  background: '#dbeafe',
+                                  boxShadow: 'inset 2px 2px 4px #a3b1c6, inset -2px -2px 4px #ffffff'
+                                }}
+                              >
                                 <div className="font-semibold">{msg.orderInfo.orderNumber}</div>
                                 <div>{msg.orderInfo.items}</div>
                                 <div className="font-semibold">{msg.orderInfo.total}</div>
@@ -429,7 +504,12 @@ const Message = () => {
                     </div>
 
                     {/* Message Input */}
-                    <div className="p-4 border-t border-gray-200 bg-white">
+                    <div 
+                      className="p-4 border-t border-gray-200"
+                      style={{ 
+                        background: '#e0e0e0'
+                      }}
+                    >
                       <div className="mb-2 text-xs text-gray-600">
                         Responding as: <span className="font-semibold">Admin</span> 
                         {activeClient.recipient === 'rider' && (
@@ -437,39 +517,63 @@ const Message = () => {
                         )}
                       </div>
                       <div className="flex items-center gap-2 relative">
-                        <button className="p-2 hover:bg-gray-100 rounded-full">
+                        <button 
+                          className="p-2 rounded-full"
+                          style={{ 
+                            background: '#e0e0e0',
+                            boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                          }}
+                        >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                           </svg>
                         </button>
                         <input
                           type="text"
-                          className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                          className="flex-1 border-0 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                           placeholder={`Reply to ${activeClient.name}...`}
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           onKeyDown={e => { if (e.key === 'Enter') handleSend(); }}
+                          style={{ 
+                            background: '#e0e0e0',
+                            boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff'
+                          }}
                         />
                         <button
                           type="button"
-                          className="p-2 hover:bg-gray-100 rounded-full text-xl"
+                          className="p-2 rounded-full text-xl"
                           onClick={() => setShowEmojis(!showEmojis)}
                           title="Choose emoji"
+                          style={{ 
+                            background: '#e0e0e0',
+                            boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                          }}
                         >
                           😊
                         </button>
                         {showEmojis && (
-                          <div className="absolute bottom-14 right-0 bg-white border rounded-lg shadow-lg p-1 grid grid-cols-4 gap-1 w-24 max-h-32 overflow-y-auto z-10">
+                          <div 
+                            className="absolute bottom-14 right-0 border rounded-lg p-1 grid grid-cols-4 gap-1 w-24 max-h-32 overflow-y-auto z-10"
+                            style={{ 
+                              background: '#e0e0e0',
+                              boxShadow: '8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff'
+                            }}
+                          >
                             {emojiList.map((emoji, idx) => (
                               <button
                                 key={idx}
                                 type="button"
-                                                                  className="p-0.5 hover:bg-gray-200 rounded flex items-center justify-center w-5 h-5"
+                                className="p-0.5 rounded flex items-center justify-center w-5 h-5"
                                 onClick={() => {
                                   setInput(input + emoji.char);
                                   setShowEmojis(false);
                                 }}
                                 title={emoji.char}
+                                style={{ 
+                                  background: '#e0e0e0',
+                                  boxShadow: '2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff'
+                                }}
                               >
                                 <img
                                   src={`https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/${emoji.code}.png`}
@@ -481,8 +585,12 @@ const Message = () => {
                           </div>
                         )}
                         <button
-                          className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition"
+                          className="text-white p-2 rounded-full transition"
                           onClick={handleSend}
+                          style={{ 
+                            background: '#4f46e5',
+                            boxShadow: '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff'
+                          }}
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

@@ -9,6 +9,7 @@ import CustomerOrderList from './assets/components/pages/CustomerOrderList';
 import ManageProduct from './assets/components/pages/ManageProduct';
 import Homepage from './assets/components/pages/Homepage';
 import Message from './assets/components/pages/Message';
+import Orders from './assets/components/pages/Orders';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/customer-orders" element={<CustomerOrderList />} />
         <Route path="/manageproduct" element={<ManageProduct />} />
         <Route path="/message" element={<Message />} />
+        <Route path="/orders" element={<Orders />} />
         {/* Add more routes as needed */}
       </Routes>
       </BrowserRouter>
