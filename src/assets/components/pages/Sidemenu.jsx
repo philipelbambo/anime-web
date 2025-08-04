@@ -10,14 +10,16 @@ import {
 } from 'lucide-react';
 
 const SideMenu = () => {
-  const menuItems = [
-    { icon: LayoutDashboard, text: "Dashboard", href: "/Dashboard" },
-    { icon: Database, text: "Manage Product", href: "/manageproduct" },
-    { icon: MessageSquare, text: "Message", href: "/message" },
-    { icon: ShoppingCart, text: "Orders", href: "/orders" },
-    { icon: Users, text: "Customers", href: "/customers" },
-    { icon: BarChart3, text: "Reports", href: "/reports" }
-  ];
+ const menuItems = [
+  { icon: LayoutDashboard, text: "Dashboard", href: "/Dashboard" },
+  { icon: Database, text: "Manage Product", href: "/manageproduct" },
+  { icon: MessageSquare, text: "Message", href: "/message" },
+  { icon: ShoppingCart, text: "Orders", href: "/orders" },
+  { icon: Users, text: "Customers", href: "/customers" },
+  { icon: FileText, text: "Summary", href: "/summary" }, // 👈 Added this
+  { icon: BarChart3, text: "Reports", href: "/reports" }
+];
+
 
   return (
     <div

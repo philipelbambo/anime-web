@@ -12,6 +12,7 @@ import Message from './assets/components/pages/Message';
 import Orders from './assets/components/pages/Orders';
 import Customers from './assets/components/pages/Customers';
 import Reports from './assets/components/pages/Reports';
+import Summary from './assets/components/pages/Summary';
 function App() {
   return (
     <div className="App">
@@ -29,6 +30,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/customers" element={<Customers />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/summary" element={<Summary />} />
         {/* Add more routes as needed */}
       </Routes>
       </BrowserRouter>
