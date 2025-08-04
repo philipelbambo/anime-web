@@ -15,9 +15,9 @@ const SideMenu = () => {
   { icon: Database, text: "Manage Product", href: "/user/products" },
   { icon: MessageSquare, text: "Message", href: "/user/message" },
   { icon: ShoppingCart, text: "Orders", href: "/user/orders" },
-  { icon: Users, text: "Customers", href: "/customers" },
-  { icon: FileText, text: "Summary", href: "/summary" }, // 👈 Added this
-  { icon: BarChart3, text: "Reports", href: "/reports" }
+  { icon: Users, text: "Customers", href: "/user/customers" },
+  { icon: FileText, text: "Summary", href: "/user/summary" }, // 👈 Added this
+  { icon: BarChart3, text: "Reports", href: "/user/reports" }
 ];
 
 

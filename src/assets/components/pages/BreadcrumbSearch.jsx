@@ -4,19 +4,24 @@ import { useLocation } from 'react-router-dom';
 
 export default function BreadcrumbSearch() {
   const [searchQuery, setSearchQuery] = useState('');
-  const location = useLocation();
+  const location = useLocation().pathname;
 
   function setLocation() {
-    const current = location.pathname;
 
-     if (current === '/user') {
+     if (location === '/user') {
         return "Dashboard";
-     } else if (current === '/user/products') {
+     } else if (location === '/user/products') {
         return "Products";
-     } else if (current === '/user/message') {
+     } else if (location === '/user/message') {
         return "Messages";
-     } else if (current === '/user/orders') {
+     } else if (location === '/user/orders') {
         return "Orders";
+     } else if (location === '/user/customers') {
+        return "Customers";
+     } else if (location === '/user/summary') {
+        return "Summary";
+     } else if (location === '/user/reports') {
+        return "Reports";
      }
 
     return "";
@@ -42,7 +47,7 @@ export default function BreadcrumbSearch() {
           <ol className="flex items-center space-x-2 w-1/3 min-w-[120px]">
               <li className="flex items-center gap-3">
                 <a
-                  href={setLocation()}
+                  href=""
                   className="text-gray-600 hover:text-gray-800 transition-colors duration-200 text-sm font-medium"
                 >
                   {setLocation()}

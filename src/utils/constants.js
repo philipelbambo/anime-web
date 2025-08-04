@@ -109,3 +109,191 @@ export const ordersData = [
     date: '2025-08-03',
   },
 ];
+
+
+export const customers = [
+  {
+    id: 1,
+    name: 'Maria Santos',
+    email: 'maria.santos@email.com',
+    phone: '09171234567',
+    orders: 3,
+    lastOrder: '2025-08-02',
+    totalSpent: '₱2,100.00',
+    items: 'Anime Shirt, Hoodie, Cap',
+  },
+  {
+    id: 2,
+    name: 'John Dela Cruz',
+    email: 'john.delacruz@email.com',
+    phone: '09181234567',
+    orders: 2,
+    lastOrder: '2025-08-01',
+    totalSpent: '₱1,200.00',
+    items: 'Anime Shirt, Keychain',
+  },
+  {
+    id: 3,
+    name: 'Anna Reyes',
+    email: 'anna.reyes@email.com',
+    phone: '09191234567',
+    orders: 1,
+    lastOrder: '2025-07-30',
+    totalSpent: '₱650.00',
+    items: 'Anime Hoodie',
+  },
+  {
+    id: 4,
+    name: 'Robert Garcia',
+    email: 'robert.garcia@email.com',
+    phone: '09201234567',
+    orders: 4,
+    lastOrder: '2025-08-02',
+    totalSpent: '₱2,800.00',
+    items: 'Anime Shirt, Cap, Hoodie, Socks',
+  },
+  {
+    id: 5,
+    name: 'Sarah Kim',
+    email: 'sarah.kim@email.com',
+    phone: '09211234567',
+    orders: 2,
+    lastOrder: '2025-07-31',
+    totalSpent: '₱1,450.00',
+    items: 'Anime Poster, Stickers',
+  },
+  {
+    id: 6,
+    name: 'Michael Torres',
+    email: 'michael.torres@email.com',
+    phone: '09221234567',
+    orders: 5,
+    lastOrder: '2025-08-03',
+    totalSpent: '₱3,200.00',
+    items: 'Anime Shirt, Hoodie, Cap, Poster, Keychain',
+  },
+  {
+    id: 7,
+    name: 'Jenny Lim',
+    email: 'jenny.lim@email.com',
+    phone: '09231234567',
+    orders: 1,
+    lastOrder: '2025-07-29',
+    totalSpent: '₱890.00',
+    items: 'Anime Figurine',
+  },
+  {
+    id: 8,
+    name: 'Carlos Mendoza',
+    email: 'carlos.mendoza@email.com',
+    phone: '09241234567',
+    orders: 3,
+    lastOrder: '2025-08-01',
+    totalSpent: '₱2,350.00',
+    items: 'Anime Hoodie, Poster, Bag',
+  },
+  {
+    id: 9,
+    name: 'Lisa Chan',
+    email: 'lisa.chan@email.com',
+    phone: '09251234567',
+    orders: 2,
+    lastOrder: '2025-07-28',
+    totalSpent: '₱1,100.00',
+    items: 'Anime Shirt, Socks',
+  },
+  {
+    id: 10,
+    name: 'David Rodriguez',
+    email: 'david.rodriguez@email.com',
+    phone: '09261234567',
+    orders: 4,
+    lastOrder: '2025-08-02',
+    totalSpent: '₱2,750.00',
+    items: 'Anime Hoodie, Cap, Keychain, Stickers',
+  },
+  {
+    id: 11,
+    name: 'Grace Tan',
+    email: 'grace.tan@email.com',
+    phone: '09271234567',
+    orders: 1,
+    lastOrder: '2025-07-27',
+    totalSpent: '₱520.00',
+    items: 'Anime Poster',
+  },
+  {
+    id: 12,
+    name: 'Antonio Cruz',
+    email: 'antonio.cruz@email.com',
+    phone: '09281234567',
+    orders: 6,
+    lastOrder: '2025-08-03',
+    totalSpent: '₱4,100.00',
+    items: 'Anime Shirt, Hoodie, Cap, Poster, Figurine, Bag',
+  },
+];
+
+
+export const summaryData = {
+  highlights: [
+    {
+      title: 'Anime Shirts',
+      description: 'Popular anime shirts available in various designs and sizes.',
+      count: 12,
+      unit: 'styles',
+    },
+    {
+      title: 'Hoodies',
+      description: 'Cozy anime hoodies for all seasons.',
+      count: 7,
+      unit: 'styles',
+    },
+    {
+      title: 'Caps',
+      description: 'Anime-themed caps for fans.',
+      count: 5,
+      unit: 'styles',
+    },
+    {
+      title: 'Keychains',
+      description: 'Collectible anime keychains.',
+      count: 20,
+      unit: 'designs',
+    },
+    {
+      title: 'Socks',
+      description: 'Fun anime socks for everyday wear.',
+      count: 8,
+      unit: 'styles',
+    },
+  ],
+  featured: [
+    {
+      name: 'Best Seller',
+      product: 'Naruto Anime Shirt',
+      sold: 30,
+      revenue: '₱4,500.00',
+    },
+    {
+      name: 'New Arrival',
+      product: 'Attack on Titan Hoodie',
+      sold: 10,
+      revenue: '₱2,000.00',
+    },
+  ],
+  customerFeedback: [
+    {
+      customer: 'Maria Santos',
+      feedback: 'Great quality shirts and fast delivery!'
+    },
+    {
+      customer: 'John Dela Cruz',
+      feedback: 'Love the hoodie! Will order again.'
+    },
+    {
+      customer: 'Anna Reyes',
+      feedback: 'Keychains are super cute.'
+    },
+  ],
+};
