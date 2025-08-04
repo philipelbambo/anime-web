@@ -50,11 +50,7 @@ const neumorphicStyle = {
 
 const Dashboard = () => {
   return (
-    <div className="h-screen bg-gray-200" style={{ backgroundColor: '#e0e0e0' }}>
-      <Header />
-      <div className="flex w-full">
-        <SideMenu />
-
+    <div className="h-screen bg-gray-200">
         {/* Main Content Container */}
         <div className="flex-1 flex w-full flex-col justify-start items-start">
           {/* Responsive container extending to sidemenu boundary */}
@@ -124,7 +120,7 @@ const Dashboard = () => {
 
               {/* Category Distribution */}
               <div
-                className="p-6 rounded-lg"
+                className="w-full p-6 rounded-lg"
                 style={neumorphicStyle}
               >
                 <h3 className="text-lg font-semibold text-black mb-4">Sales by Category</h3>
@@ -151,7 +147,7 @@ const Dashboard = () => {
 
             {/* Top Products */}
             <div
-              className="p-6 rounded-lg mb-8"
+              className="h-fit w-full p-6 rounded-lg mb-8"
               style={neumorphicStyle}
             >
               <h3 className="text-lg font-semibold text-black mb-4">Top Products</h3>
@@ -194,7 +190,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

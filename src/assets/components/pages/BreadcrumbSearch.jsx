@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import { Search, ChevronRight } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 export default function BreadcrumbSearch() {
   const [searchQuery, setSearchQuery] = useState('');
-  
-  const breadcrumbItems = [
-    { label: 'Home', href: '#' },
-    { label: 'Products', href: '#' },
-    { label: 'Electronics', href: '#' },
-    { label: 'Smartphones', href: '#' }
-  ];
+  const location = useLocation();
+
+  function setLocation() {
+    const current = location.pathname;
+
+     if (current === '/user') {
+        return "Dashboard";
+     } else if (current === '/user/products') {
+        return "Products";
+     } else if (current === '/user/message') {
+        return "Messages";
+     } else if (current === '/user/orders') {
+        return "Orders";
+     }
+
+    return "";
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -29,19 +40,15 @@ export default function BreadcrumbSearch() {
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center flex-1">
           <ol className="flex items-center space-x-2 w-1/3 min-w-[120px]">
-            {breadcrumbItems.map((item, index) => (
-              <li key={index} className="flex items-center">
+              <li className="flex items-center gap-3">
                 <a
-                  href={item.href}
+                  href={setLocation()}
                   className="text-gray-600 hover:text-gray-800 transition-colors duration-200 text-sm font-medium"
                 >
-                  {item.label}
+                  {setLocation()}
                 </a>
-                {index < breadcrumbItems.length - 1 && (
-                  <ChevronRight className="w-3.5 h-3.5 text-gray-400 mx-1.5" />
-                )}
+                <ChevronRight size={15} />
               </li>
-            ))}
           </ol>
         </nav>
 

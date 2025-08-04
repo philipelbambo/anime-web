@@ -257,13 +257,8 @@ const Message = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200" style={{ backgroundColor: '#e0e0e0' }}>
-      <Header />
-      <div className="flex w-full">
-        <SideMenu />
-        {/* Main Content Container */}
-        <div className="flex-1 flex flex-col justify-start items-start p-11">
-          <div className="w-full py-6">
+    <div className="h-full bg-gray-200 p-5 overflow-y-hidden">
+          <div className="h-full w-full">
             <BreadcrumbSearch />
             <div 
               className="w-full rounded-lg flex h-[650px]" 
@@ -323,7 +318,7 @@ const Message = () => {
                   </div>
                 </div>
                 {/* Client List */}
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 h-full overflow-y-auto">
                   {filteredClients.map((client) => (
                     <div
                       key={client.id}
@@ -403,7 +398,7 @@ const Message = () => {
               </div>
               {/* Chat Area */}
               <div 
-                className="flex-1 flex flex-col"
+                className="flex-1 h-full flex flex-col"
                 style={{ 
                   background: '#e0e0e0',
                   boxShadow: 'inset 8px 8px 15px #a3b1c6, inset -8px -8px 15px #ffffff'
@@ -631,8 +626,6 @@ const Message = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

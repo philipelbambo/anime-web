@@ -2,118 +2,8 @@ import React from 'react';
 import SideMenu from './Sidemenu';
 import Header from './header';
 import BreadcrumbSearch from './BreadcrumbSearch';
+import { ordersData } from '../../../utils/constants';
 
-// Sample orders data with more customers
-const orders = [
-  {
-    id: 1,
-    customer: 'Maria Santos',
-    orderNumber: '#ORD-2024-001',
-    status: 'Pending',
-    items: 'Pizza Margherita x2, Coke x1',
-    total: '₱650.00',
-    date: '2025-08-02',
-  },
-  {
-    id: 2,
-    customer: 'John Dela Cruz',
-    orderNumber: '#ORD-2024-002',
-    status: 'Preparing',
-    items: 'Burger Combo x1, Fries x2',
-    total: '₱450.00',
-    date: '2025-08-02',
-  },
-  {
-    id: 3,
-    customer: 'Anna Reyes',
-    orderNumber: '#ORD-2024-003',
-    status: 'Delivered',
-    items: 'Chicken Wings x1, Rice x2',
-    total: '₱380.00',
-    date: '2025-08-01',
-  },
-  {
-    id: 4,
-    customer: 'Robert Garcia',
-    orderNumber: '#ORD-2024-004',
-    status: 'Cancelled',
-    items: 'Pasta Carbonara x1, Garlic Bread x1',
-    total: '₱520.00',
-    date: '2025-08-01',
-  },
-  {
-    id: 5,
-    customer: 'Sofia Mendoza',
-    orderNumber: '#ORD-2024-005',
-    status: 'Delivered',
-    items: 'Lechon Kawali x1, Steamed Rice x2',
-    total: '₱720.00',
-    date: '2025-08-02',
-  },
-  {
-    id: 6,
-    customer: 'Miguel Torres',
-    orderNumber: '#ORD-2024-006',
-    status: 'Preparing',
-    items: 'Adobo Chicken x1, Pancit x1, Lumpia x5',
-    total: '₱580.00',
-    date: '2025-08-03',
-  },
-  {
-    id: 7,
-    customer: 'Carmen Lopez',
-    orderNumber: '#ORD-2024-007',
-    status: 'Pending',
-    items: 'Sinigang na Baboy x1, Rice x3',
-    total: '₱450.00',
-    date: '2025-08-03',
-  },
-  {
-    id: 8,
-    customer: 'Luis Fernandez',
-    orderNumber: '#ORD-2024-008',
-    status: 'Delivered',
-    items: 'Grilled Bangus x1, Garlic Rice x2',
-    total: '₱390.00',
-    date: '2025-08-02',
-  },
-  {
-    id: 9,
-    customer: 'Isabella Cruz',
-    orderNumber: '#ORD-2024-009',
-    status: 'Preparing',
-    items: 'Bicol Express x1, Rice x2, Halo-halo x1',
-    total: '₱520.00',
-    date: '2025-08-03',
-  },
-  {
-    id: 10,
-    customer: 'Carlos Villanueva',
-    orderNumber: '#ORD-2024-010',
-    status: 'Cancelled',
-    items: 'Kare-kare x1, Bagoong x1, Rice x2',
-    total: '₱680.00',
-    date: '2025-08-01',
-  },
-  {
-    id: 11,
-    customer: 'Rosario Bautista',
-    orderNumber: '#ORD-2024-011',
-    status: 'Delivered',
-    items: 'Crispy Pata x1, Rice x3, San Miguel x2',
-    total: '₱890.00',
-    date: '2025-08-02',
-  },
-  {
-    id: 12,
-    customer: 'Eduardo Ramos',
-    orderNumber: '#ORD-2024-012',
-    status: 'Pending',
-    items: 'Sisig x1, Rice x1, Red Horse x1',
-    total: '₱320.00',
-    date: '2025-08-03',
-  },
-];
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -137,11 +27,8 @@ const neumorphismInsetStyle = {
 
 const Orders = () => (
   <div className="min-h-screen bg-gray-200">
-    <Header />
-    <div className="flex w-full">
-      <SideMenu />
-      <div className="flex-1 flex flex-col justify-start items-start p-11">
-        <div className="w-full py-6">
+      <div className="flex-1 flex flex-col justify-start items-start p-5">
+        <div className="w-full">
           <BreadcrumbSearch />
           <div
             className="w-full rounded-lg p-6"
@@ -202,10 +89,10 @@ const Orders = () => (
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order, index) => (
+                  {ordersData.map((order, index) => (
                     <tr 
                       key={order.id} 
-                      className={`${index < orders.length - 1 ? 'border-b border-gray-300' : ''}`}
+                      className={`${index < ordersData.length - 1 ? 'border-b border-gray-300' : ''}`}
                     >
                       <td className="py-3 px-4 font-semibold" style={{ color: '#000000' }}>
                         {order.orderNumber}
@@ -246,7 +133,6 @@ const Orders = () => (
         </div>
       </div>
     </div>
-  </div>
 );
 
 export default Orders;

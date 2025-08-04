@@ -11,10 +11,10 @@ import {
 
 const SideMenu = () => {
  const menuItems = [
-  { icon: LayoutDashboard, text: "Dashboard", href: "/Dashboard" },
-  { icon: Database, text: "Manage Product", href: "/manageproduct" },
-  { icon: MessageSquare, text: "Message", href: "/message" },
-  { icon: ShoppingCart, text: "Orders", href: "/orders" },
+  { icon: LayoutDashboard, text: "Dashboard", href: "/user" },
+  { icon: Database, text: "Manage Product", href: "/user/products" },
+  { icon: MessageSquare, text: "Message", href: "/user/message" },
+  { icon: ShoppingCart, text: "Orders", href: "/user/orders" },
   { icon: Users, text: "Customers", href: "/customers" },
   { icon: FileText, text: "Summary", href: "/summary" }, // 👈 Added this
   { icon: BarChart3, text: "Reports", href: "/reports" }
@@ -31,14 +31,14 @@ const SideMenu = () => {
     >
       <div className="px-5 pb-5 mb-5">
         <div
-          className="p-4 rounded-lg flex justify-center items-center"
+          className="p-4 rounded-lg min-h-[95px] flex justify-center items-center"
           style={{
             background: '#e0e0e0',
             boxShadow: '8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff'
           }}
         >
           <img
-            src="./Gallery2/logo6.png"
+            src="/public/Gallery2/logo6.png"
             alt="Logo"
             className="max-w-full h-auto max-h-16"
           />
