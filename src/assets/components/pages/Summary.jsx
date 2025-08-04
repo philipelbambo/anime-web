@@ -1,6 +1,3 @@
-import React from 'react';
-import SideMenu from './Sidemenu';
-import Header from './header';
 import BreadcrumbSearch from './BreadcrumbSearch';
 import { summaryData } from '../../../utils/constants';
 

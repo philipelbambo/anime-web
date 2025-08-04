@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 // Import the default React-Toastify CSS directly here
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,6 +11,8 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +30,7 @@ const Login = () => {
         toast.success('Login successful! Welcome back.');
         // Redirect after a short delay to allow toast to be seen
         setTimeout(() => {
-          window.location.href = 'Dashboard'; // Demo redirect
+          navigate('/user') // Demo redirect
         }, 1000);
       } else {
         setError('Invalid credentials. Please contact administrator for access.');

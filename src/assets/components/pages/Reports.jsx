@@ -1,4 +1,3 @@
-import React from 'react';
 import SideMenu from './Sidemenu';
 import Header from './header';
 import BreadcrumbSearch from './BreadcrumbSearch';
@@ -35,11 +34,8 @@ const getStatusColor = (status) => {
 
 const Reports = () => (
   <div className="min-h-screen bg-gray-200">
-    <Header />
-    <div className="flex w-full">
-      <SideMenu />
-      <div className="flex-1 flex flex-col justify-start items-start p-11">
-        <div className="w-full py-6">
+      <div className="flex-1 flex flex-col justify-start items-start p-5">
+        <div className="w-full">
           <BreadcrumbSearch />
           <div
             className="w-full rounded-lg p-6"
@@ -105,7 +101,6 @@ const Reports = () => (
         </div>
       </div>
     </div>
-  </div>
 );
 
 export default Reports;

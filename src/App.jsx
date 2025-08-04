@@ -12,14 +12,13 @@ const MessagePage = lazy(() => import('./assets/components/pages/Message'));
 const OrdersPage = lazy(() => import('./assets/components/pages/Orders'));
 const CustomersPage = lazy(() => import('./assets/components/pages/Customers'));
 const SummaryPage = lazy(() => import('./assets/components/pages/Summary'));
+const ReportsPage = lazy(() => import('./assets/components/pages/Reports'));
 
 import "./App.css"; // Assuming you have a global CSS file
 import Login from "./assets/components/pages/login";
 import Header from "./assets/components/pages/header";
 import Breadcrumbs from "./assets/components/pages/BreadcrumbSearch"; // Importing the SideMenu component
 import Homepage from './assets/components/pages/Homepage';
-import Reports from './assets/components/pages/Reports';
-import Summary from './assets/components/pages/Summary';
 function App() {
   return (
     <div className="App">
@@ -30,7 +29,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/header" element={<Header />} />
         <Route path="/breadcrumbs" element={<Breadcrumbs />} />
-        <Route path="/reports" element={<Reports />} />
         
         <Route path='/user' element={<Suspense fallback={<LoadingPage />}><MainLayout /></Suspense>}>
           <Route index element={<Suspense fallback={<LoadingPage />}><Dashboard /></Suspense>} />
@@ -38,7 +36,8 @@ function App() {
           <Route path='message' element={<Suspense fallback={<LoadingPage />}><MessagePage /></Suspense>}/>
           <Route path='orders' element={<Suspense fallback={<LoadingPage />}><OrdersPage /></Suspense>}/>
           <Route path='customers' element={<Suspense fallback={<LoadingPage />}><CustomersPage /></Suspense>}/>
-          <Route path='summary' element={<Suspense fallback={<LoadingPage />}><Summary /></Suspense>}/>
+          <Route path='summary' element={<Suspense fallback={<LoadingPage />}><SummaryPage /></Suspense>}/>
+          <Route path='reports' element={<Suspense fallback={<LoadingPage />}><ReportsPage /></Suspense>}/>
         </Route>
 
         <Route path='*' element={<NotFoundPage />}/>
