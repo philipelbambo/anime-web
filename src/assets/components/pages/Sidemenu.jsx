@@ -23,7 +23,7 @@ const SideMenu = () => {
 
   return (
     <div
-      className="w-64 h-screen py-5 flex flex-col fixed left-0 top-0 mt-15"
+      className="w-64 h-full py-5 flex flex-col sticky top-0 left-0"
       style={{
         background: '#e0e0e0',
         boxShadow: 'none'

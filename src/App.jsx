@@ -1,6 +1,12 @@
 // App.js
 import { Routes,Route,BrowserRouter } from 'react-router-dom';
-import Dashboard from "./assets/components/pages/dashboard";
+import { lazy, Suspense } from 'react';
+
+const LoadingPage = lazy(() => import('./assets/components/pages/LoadingPage'));
+const MainLayout = lazy(() => import('./assets/components/layouts/MainLayout'));
+
+const Dashboard = lazy(() => import('./assets/components/pages/Dashboard'));
+
 import "./App.css"; // Assuming you have a global CSS file
 import Login from "./assets/components/pages/login";
 import Header from "./assets/components/pages/header";
@@ -31,7 +37,10 @@ function App() {
         <Route path="/customers" element={<Customers />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/summary" element={<Summary />} />
-        {/* Add more routes as needed */}
+        
+        <Route path='/user' element={<Suspense fallback={<LoadingPage />}><MainLayout /></Suspense>}>
+          <Route index element={<Suspense fallback={<LoadingPage />}></Suspense>} />
+        </Route>
       </Routes>
       </BrowserRouter>
     </div>

@@ -49,7 +49,7 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full fixed top-0 z-100">
+    <div className="w-full sticky top-0 z-100">
       {/* Header */}
       <header
         className="flex items-center justify-between px-6 py-2 !text-white relative z-50"

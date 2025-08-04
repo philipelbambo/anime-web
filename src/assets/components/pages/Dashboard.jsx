@@ -50,15 +50,15 @@ const neumorphicStyle = {
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-200" style={{ backgroundColor: '#e0e0e0' }}>
+    <div className="h-screen bg-gray-200" style={{ backgroundColor: '#e0e0e0' }}>
       <Header />
       <div className="flex w-full">
         <SideMenu />
 
         {/* Main Content Container */}
-        <div className="flex-1 flex flex-col justify-start items-start p-11">
+        <div className="flex-1 flex w-full flex-col justify-start items-start">
           {/* Responsive container extending to sidemenu boundary */}
-          <div className="w-full pl-0 pr-8 sm:pr-12 lg:pr-16 py-6">
+          <div className="w-full py-5 px-5">
             <BreadcrumbSearch />
 
             {/* Dashboard Header */}
