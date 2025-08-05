@@ -12,19 +12,19 @@ const Spinner = () => (
 const Header = () => {
   const [rightMenuOpen, setRightMenuOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [isLoggingOut, setIsLoggingOut] = useState(false); // State to track logout process
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
 
   const neumorphicStyle = {
-    backgroundColor: '#131419',
-    boxShadow: 'inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8)'
+    background: '#131419', // Dark base color
+    boxShadow: 'inset -2px -2px 6px rgba(255, 255, 255, 0.05), inset 2px 2px 6px rgba(0, 0, 0, 0.8)'
   };
 
   const buttonStyle = {
-    backgroundColor: '#131419',
+    background: '#131419', // Dark base color
     boxShadow: rightMenuOpen ?
-      'inset 2px 2px 6px rgba(0, 0, 0, 0.8), inset -2px -2px 6px rgba(255, 255, 255, 0.1)' :
-      'inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8)'
+      'inset 2px 2px 6px rgba(0, 0, 0, 0.8), inset -2px -2px 6px rgba(255, 255, 255, 0.05)' :
+      'inset -2px -2px 6px rgba(255, 255, 255, 0.05), inset 2px 2px 6px rgba(0, 0, 0, 0.8)'
   };
 
   const requestLogout = () => {
@@ -33,15 +33,13 @@ const Header = () => {
   };
 
   const confirmLogout = () => {
-    setIsLoggingOut(true); // Set logging out state to true
+    setIsLoggingOut(true);
     setShowLogoutModal(false);
-
-    // Simulate logout process
     setTimeout(() => {
       console.log('Logging out...');
       navigate('/login');
-      setIsLoggingOut(false); // Reset logging out state
-    }, 2000); // Simulate a delay for the logout process
+      setIsLoggingOut(false);
+    }, 2000);
   };
 
   const cancelLogout = () => {
@@ -50,20 +48,14 @@ const Header = () => {
 
   return (
     <div className="w-full sticky top-0 z-100">
-      {/* Header */}
-      <header
-        className="flex items-center justify-between px-6 py-2 !text-white relative z-50"
-        style={neumorphicStyle}
-      >
+      <header className="flex items-center justify-between px-6 py-2 text-white relative z-50" style={neumorphicStyle}>
         <div className="w-10"></div>
-        {/* Right Side - Hamburger Menu */}
         <div className="flex items-center space-x-4">
-          {/* Right Hamburger Menu */}
           <button
             onClick={() => setRightMenuOpen(!rightMenuOpen)}
             className="p-3 rounded-lg transition-all duration-200 hover:scale-105 focus:outline-none"
             style={rightMenuOpen ?
-              { ...buttonStyle, boxShadow: 'inset 2px 2px 6px rgba(0, 0, 0, 0.8), inset -2px -2px 6px rgba(255, 255, 255, 0.1)' } :
+              { ...buttonStyle, boxShadow: 'inset 2px 2px 6px rgba(0, 0, 0, 0.8), inset -2px -2px 6px rgba(255, 255, 255, 0.05)' } :
               buttonStyle
             }
           >
@@ -71,12 +63,9 @@ const Header = () => {
           </button>
         </div>
       </header>
-      {/* Right Dropdown Menu */}
+
       {rightMenuOpen && (
-        <div
-          className="absolute right-6 top-16 w-64 !text-white rounded-lg p-4 z-40 transition-all duration-300"
-          style={neumorphicStyle}
-        >
+        <div className="absolute right-6 top-16 w-64 text-white rounded-lg p-4 z-40 transition-all duration-300" style={neumorphicStyle}>
           <div className="space-y-2">
             <a href="#" className="block py-2 px-4 rounded hover:bg-white hover:bg-opacity-10 transition-colors">
               Settings
@@ -84,10 +73,9 @@ const Header = () => {
             <a href="#" className="block py-2 px-4 rounded hover:bg-white hover:bg-opacity-10 transition-colors">
               Profile
             </a>
-            {/* Logout link now red with white text */}
             <button
               onClick={requestLogout}
-              className="w-full text-left py-2 px-4 rounded !bg-red-500 text-white !hover:bg-red-600 transition-colors flex items-center space-x-2"
+              className="w-full text-left py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600 transition-colors flex items-center space-x-2"
             >
               <LogOut size={20} />
               <span>Logout</span>
@@ -95,7 +83,7 @@ const Header = () => {
           </div>
         </div>
       )}
-      {/* Overlay to close menus when clicking outside */}
+
       {rightMenuOpen && (
         <div
           className="fixed inset-0 z-30"
@@ -104,33 +92,25 @@ const Header = () => {
           }}
         />
       )}
-      {/* Logout Confirmation Modal */}
+
       {showLogoutModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-          {/* Modal Overlay */}
-          <div
-            className="fixed inset-0 !bg-black bg-opacity-50 backdrop-blur-sm"
-            onClick={cancelLogout}
-          ></div>
-          {/* Modal Content */}
-          <div
-            className="relative w-full max-w-sm rounded-lg p-6 text-white text-center"
-            style={neumorphicStyle}
-          >
+          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={cancelLogout}></div>
+          <div className="relative w-full max-w-sm rounded-lg p-6 text-white text-center" style={neumorphicStyle}>
             <div className="flex flex-col items-center justify-center space-y-4">
-              <AlertCircle size={48} className="!text-red-400" />
+              <AlertCircle size={48} className="text-red-400" />
               <h2 className="text-xl font-bold">Confirm Logout</h2>
-              <p className="!text-gray-300">Are you sure you want to log out?</p>
+              <p className="text-gray-300">Are you sure you want to log out?</p>
               <div className="flex space-x-4 w-full justify-center mt-4">
                 <button
                   onClick={confirmLogout}
-                  className="px-6 py-2 rounded-lg !bg-red-500 !text-white !hover:bg-red-600 transition-colors"
+                  className="px-6 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"
                 >
                   Logout
                 </button>
                 <button
                   onClick={cancelLogout}
-                  className="px-6 py-2 rounded-lg !bg-gray-700 !text-white !hover:bg-gray-600 transition-colors"
+                  className="px-6 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-600 transition-colors"
                 >
                   Cancel
                 </button>
@@ -139,7 +119,7 @@ const Header = () => {
           </div>
         </div>
       )}
-      {/* Spinner */}
+
       {isLoggingOut && <Spinner />}
     </div>
   );

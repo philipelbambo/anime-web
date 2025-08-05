@@ -1,195 +1,331 @@
-import React from 'react';
-import SideMenu from './Sidemenu';
-import Header from './header';
-import BreadcrumbSearch from './BreadcrumbSearch';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
-import { TrendingUp, TrendingDown, Users, ShoppingCart, DollarSign, Package } from 'lucide-react';
+import React, { useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
+import { TrendingUp, TrendingDown, Users, ShoppingCart, DollarSign, Package, AlertTriangle, Shirt, Box } from 'lucide-react';
 
-// Sample data for charts
-const salesData = [
-  { month: 'Jan', sales: 4000, orders: 240, revenue: 24000 },
-  { month: 'Feb', sales: 3000, orders: 198, revenue: 22000 },
-  { month: 'Mar', sales: 5000, orders: 300, revenue: 32000 },
-  { month: 'Apr', sales: 4500, orders: 278, revenue: 28000 },
-  { month: 'May', sales: 6000, orders: 389, revenue: 38000 },
-  { month: 'Jun', sales: 5500, orders: 349, revenue: 35000 },
+// Sample data for daily sales
+const dailySalesData = [
+  { day: 'Mon', tshirts: 45, hoodies: 23, pants: 15, total: 83 },
+  { day: 'Tue', tshirts: 52, hoodies: 31, pants: 18, total: 101 },
+  { day: 'Wed', tshirts: 38, hoodies: 19, pants: 12, total: 69 },
+  { day: 'Thu', tshirts: 67, hoodies: 41, pants: 25, total: 133 },
+  { day: 'Fri', tshirts: 89, hoodies: 56, pants: 34, total: 179 },
+  { day: 'Sat', tshirts: 124, hoodies: 78, pants: 45, total: 247 },
+  { day: 'Sun', tshirts: 98, hoodies: 62, pants: 38, total: 198 },
 ];
 
-const categoryData = [
-  { name: 'Electronics', value: 35, color: '#666' },
-  { name: 'Clothing', value: 25, color: '#888' },
-  { name: 'Books', value: 20, color: '#555' },
-  { name: 'Home & Garden', value: 15, color: '#777' },
-  { name: 'Sports', value: 5, color: '#999' },
+// Sample data for monthly sales
+const monthlySalesData = [
+  { month: 'Jan', tshirts: 1200, hoodies: 800, pants: 450, revenue: 28500 },
+  { month: 'Feb', tshirts: 1100, hoodies: 720, pants: 420, revenue: 26200 },
+  { month: 'Mar', tshirts: 1450, hoodies: 950, pants: 580, revenue: 34800 },
+  { month: 'Apr', tshirts: 1380, hoodies: 890, pants: 540, revenue: 33200 },
+  { month: 'May', tshirts: 1620, hoodies: 1100, pants: 670, revenue: 39800 },
+  { month: 'Jun', tshirts: 1550, hoodies: 1050, pants: 640, revenue: 38100 },
 ];
 
+// Anime category distribution
+const animeCategories = [
+  { name: 'Naruto', value: 22, color: '#FF6B35' },
+  { name: 'One Piece', value: 20, color: '#F7931E' },
+  { name: 'Jujutsu Kaisen', value: 18, color: '#1F4E79' },
+  { name: 'Demon Slayer', value: 16, color: '#DC143C' },
+  { name: 'Hunter x Hunter', value: 14, color: '#228B22' },
+  { name: 'Mushoku Tensei', value: 10, color: '#8A2BE2' },
+];
+
+// Stock data
+const stockData = [
+  { 
+    product: 'Naruto T-Shirts', 
+    sizes: { S: 45, M: 32, L: 28, XL: 15, XXL: 8 },
+    totalStock: 128,
+    lowStock: false,
+    reorderLevel: 50
+  },
+  { 
+    product: 'One Piece Hoodies', 
+    sizes: { S: 23, M: 18, L: 12, XL: 8, XXL: 5 },
+    totalStock: 66,
+    lowStock: false,
+    reorderLevel: 40
+  },
+  { 
+    product: 'Jujutsu Kaisen Pants', 
+    sizes: { S: 8, M: 12, L: 15, XL: 6, XXL: 4 },
+    totalStock: 45,
+    lowStock: true,
+    reorderLevel: 50
+  },
+  { 
+    product: 'Demon Slayer T-Shirts', 
+    sizes: { S: 18, M: 25, L: 22, XL: 12, XXL: 7 },
+    totalStock: 84,
+    lowStock: false,
+    reorderLevel: 50
+  },
+  { 
+    product: 'Hunter x Hunter Hoodies', 
+    sizes: { S: 15, M: 20, L: 18, XL: 10, XXL: 5 },
+    totalStock: 68,
+    lowStock: false,
+    reorderLevel: 40
+  },
+  { 
+    product: 'Mushoku Tensei T-Shirts', 
+    sizes: { S: 12, M: 16, L: 14, XL: 8, XXL: 5 },
+    totalStock: 55,
+    lowStock: false,
+    reorderLevel: 50
+  },
+];
+
+// Top selling products
 const topProducts = [
-  { name: 'iPhone 15 Pro', sales: 1200, revenue: 1200000 },
-  { name: 'MacBook Air M2', sales: 850, revenue: 850000 },
-  { name: 'Nike Air Max', sales: 650, revenue: 97500 },
-  { name: 'Samsung Galaxy S24', sales: 580, revenue: 580000 },
-  { name: 'iPad Pro', sales: 420, revenue: 420000 },
+  { name: 'Naruto Uzumaki T-Shirt', sales: 245, revenue: 6125, type: 'T-Shirt' },
+  { name: 'Luffy Straw Hat Hoodie', sales: 189, revenue: 9450, type: 'Hoodie' },
+  { name: 'Gojo Satoru T-Shirt', sales: 167, revenue: 4175, type: 'T-Shirt' },
+  { name: 'Tanjiro Kamado Hoodie', sales: 156, revenue: 7800, type: 'Hoodie' },
+  { name: 'Killua Zoldyck Pants', sales: 134, revenue: 4690, type: 'Pants' },
 ];
 
-const revenueData = [
-  { day: 'Mon', revenue: 12000 },
-  { day: 'Tue', revenue: 15000 },
-  { day: 'Wed', revenue: 8000 },
-  { day: 'Thu', revenue: 18000 },
-  { day: 'Fri', revenue: 22000 },
-  { day: 'Sat', revenue: 25000 },
-  { day: 'Sun', revenue: 19000 },
-];
-
-// Neumorphic style object
+// Neumorphic style
 const neumorphicStyle = {
   background: '#e0e0e0',
   boxShadow: '8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff',
   border: 'none',
 };
 
-const Dashboard = () => {
+const BreadcrumbSearch = () => {
   return (
-    <div className="h-screen bg-gray-200">
-        {/* Main Content Container */}
-        <div className="flex-1 flex w-full flex-col justify-start items-start">
-          {/* Responsive container extending to sidemenu boundary */}
-          <div className="w-full py-5 px-5">
-            <BreadcrumbSearch />
+    <div className="flex items-center justify-between mb-6">
+      <nav className="flex items-center space-x-2 text-sm">
+        <span className="text-gray-600">Dashboard</span>
+        <span className="text-gray-400">/</span>
+        <span className="text-gray-900 font-medium">Anime Apparel Store</span>
+      </nav>
+      <div className="flex items-center space-x-4">
+        <input
+          type="search"
+          placeholder="Search products..."
+          className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+    </div>
+  );
+};
 
-            {/* Dashboard Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-black mb-2">E-commerce Dashboard</h1>
-              <p className="text-black opacity-80">Overview of your store performance</p>
+const Dashboard = () => {
+  const [viewMode, setViewMode] = useState('daily');
+
+  const totalStock = stockData.reduce((sum, item) => sum + item.totalStock, 0);
+  const lowStockItems = stockData.filter(item => item.lowStock || item.totalStock <= item.reorderLevel).length;
+
+  return (
+    <div className="h-screen bg-gray-200 p-5">
+      <BreadcrumbSearch />
+
+      {/* Dashboard Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-black mb-2">Anime Apparel Store Dashboard</h1>
+        <p className="text-black opacity-80">Track your anime merchandise sales and inventory</p>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {[
+          { title: 'Daily Revenue', value: '$4,247', change: '+18.2%', icon: DollarSign },
+          { title: 'Items Sold Today', value: '198', change: '+12.5%', icon: Shirt },
+          { title: 'Total Stock', value: totalStock.toLocaleString(), change: '-5.2%', icon: Package },
+          { title: 'Low Stock Alerts', value: lowStockItems.toString(), change: '+2', icon: AlertTriangle },
+        ].map((card, index) => (
+          <div key={index} className="p-6 rounded-lg" style={neumorphicStyle}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-black opacity-70">{card.title}</p>
+                <p className="text-2xl font-bold text-black">{card.value}</p>
+                <div className="flex items-center mt-2">
+                  {card.change.startsWith('+') ? (
+                    <TrendingUp className="w-4 h-4 mr-1 text-green-600" />
+                  ) : (
+                    <TrendingDown className="w-4 h-4 mr-1 text-red-600" />
+                  )}
+                  <span className={`text-sm ${card.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
+                    {card.change}
+                  </span>
+                </div>
+              </div>
+              <card.icon className={`w-12 h-12 ${card.title === 'Low Stock Alerts' && lowStockItems > 0 ? 'text-red-500' : 'text-black'}`} />
             </div>
+          </div>
+        ))}
+      </div>
 
-            {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {[
-                { title: 'Total Revenue', value: '$179,000', change: '+12.5%', icon: DollarSign },
-                { title: 'Total Orders', value: '1,754', change: '+8.2%', icon: ShoppingCart },
-                { title: 'Active Customers', value: '12,847', change: '-2.1%', icon: Users },
-                { title: 'Products Sold', value: '3,642', change: '+15.3%', icon: Package },
-              ].map((card, index) => (
-                <div
-                  key={index}
-                  className="p-6 rounded-lg"
-                  style={neumorphicStyle}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-black opacity-70">{card.title}</p>
-                      <p className="text-2xl font-bold text-black">{card.value}</p>
-                      <div className="flex items-center mt-2">
-                        <TrendingUp
-                          className={`w-4 h-4 mr-1 ${card.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}
-                        />
-                        <span
-                          className={`text-sm ${card.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}
-                        >
-                          {card.change}
-                        </span>
-                      </div>
-                    </div>
-                    <card.icon className="w-12 h-12 text-black" />
+      {/* Sales Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        {/* Daily/Monthly Sales Chart */}
+        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-black">Product Sales</h3>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setViewMode('daily')}
+                className={`px-3 py-1 rounded text-sm ${viewMode === 'daily' ? 'bg-black text-white' : 'bg-gray-300 text-black'}`}
+              >
+                Daily
+              </button>
+              <button
+                onClick={() => setViewMode('monthly')}
+                className={`px-3 py-1 rounded text-sm ${viewMode === 'monthly' ? 'bg-black text-white' : 'bg-gray-300 text-black'}`}
+              >
+                Monthly
+              </button>
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            {viewMode === 'daily' ? (
+              <AreaChart data={dailySalesData}>
+                <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                <XAxis dataKey="day" stroke="#000" />
+                <YAxis stroke="#000" />
+                <Tooltip />
+                <Legend />
+                <Area type="monotone" dataKey="tshirts" stackId="1" stroke="#FF6B35" fill="#FF6B35" name="T-Shirts" />
+                <Area type="monotone" dataKey="hoodies" stackId="1" stroke="#F7931E" fill="#F7931E" name="Hoodies" />
+                <Area type="monotone" dataKey="pants" stackId="1" stroke="#1F4E79" fill="#1F4E79" name="Pants" />
+              </AreaChart>
+            ) : (
+              <BarChart data={monthlySalesData}>
+                <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+                <XAxis dataKey="month" stroke="#000" />
+                <YAxis stroke="#000" />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="tshirts" fill="#FF6B35" name="T-Shirts" />
+                <Bar dataKey="hoodies" fill="#F7931E" name="Hoodies" />
+                <Bar dataKey="pants" fill="#1F4E79" name="Pants" />
+              </BarChart>
+            )}
+          </ResponsiveContainer>
+        </div>
+
+        {/* Anime Category Distribution */}
+        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+          <h3 className="text-lg font-semibold text-black mb-4">Popular Anime Series</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={animeCategories}
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#000"
+                dataKey="value"
+                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+              >
+                {animeCategories.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Stock Management and Top Products Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        {/* Stock Management */}
+        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+          <h3 className="text-lg font-semibold text-black mb-4 flex items-center">
+            <Box className="w-5 h-5 mr-2" />
+            Inventory Status
+          </h3>
+          <div className="space-y-4 max-h-80 overflow-y-auto">
+            {stockData.map((item, index) => (
+              <div key={index} className="border-b border-gray-300 pb-3">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="font-medium text-black text-sm">{item.product}</p>
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      item.lowStock || item.totalStock <= item.reorderLevel
+                        ? 'bg-red-100 text-red-800' 
+                        : 'bg-green-100 text-green-800'
+                    }`}>
+                      {item.totalStock} units
+                    </span>
+                    {(item.lowStock || item.totalStock <= item.reorderLevel) && (
+                      <AlertTriangle className="w-4 h-4 text-red-500" />
+                    )}
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Charts Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-              {/* Sales Trend Chart */}
-              <div
-                className="p-6 rounded-lg"
-                style={neumorphicStyle}
-              >
-                <h3 className="text-lg font-semibold text-black mb-4">Sales Trend</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={salesData}>
-                    <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                    <XAxis dataKey="month" stroke="#000" />
-                    <YAxis stroke="#000" />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="sales" stroke="#000" strokeWidth={3} />
-                    <Line type="monotone" dataKey="orders" stroke="#555" strokeWidth={3} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-
-              {/* Category Distribution */}
-              <div
-                className="w-full p-6 rounded-lg"
-                style={neumorphicStyle}
-              >
-                <h3 className="text-lg font-semibold text-black mb-4">Sales by Category</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={categoryData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={100}
-                      fill="#000"
-                      dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {categoryData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Top Products */}
-            <div
-              className="h-fit w-full p-6 rounded-lg mb-8"
-              style={neumorphicStyle}
-            >
-              <h3 className="text-lg font-semibold text-black mb-4">Top Products</h3>
-              <div className="space-y-4">
-                {topProducts.map((product, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between border-b border-gray-300 pb-2"
-                  >
-                    <div>
-                      <p className="font-medium text-black text-sm">{product.name}</p>
-                      <p className="text-xs text-black opacity-70">{product.sales} units sold</p>
+                <div className="grid grid-cols-5 gap-2 text-xs">
+                  {Object.entries(item.sizes).map(([size, count]) => (
+                    <div key={size} className="text-center">
+                      <div className="text-gray-600">{size}</div>
+                      <div className="font-medium">{count}</div>
                     </div>
-                    <p className="font-semibold text-black text-sm">
-                      ${product.revenue.toLocaleString()}
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
-            {/* Monthly Performance Bar Chart */}
-            <div
-              className="p-6 rounded-lg mb-8"
-              style={neumorphicStyle}
-            >
-              <h3 className="text-lg font-semibold text-black mb-4">Monthly Performance</h3>
-              <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={salesData}>
-                  <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                  <XAxis dataKey="month" stroke="#000" />
-                  <YAxis stroke="#000" />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="revenue" fill="#666" name="Revenue ($)" />
-                  <Bar dataKey="orders" fill="#888" name="Orders" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+        {/* Top Products */}
+        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+          <h3 className="text-lg font-semibold text-black mb-4">Best Sellers</h3>
+          <div className="space-y-4">
+            {topProducts.map((product, index) => (
+              <div key={index} className="flex items-center justify-between border-b border-gray-300 pb-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-400 to-red-500 flex items-center justify-center text-white font-bold text-sm">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <p className="font-medium text-black text-sm">{product.name}</p>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-xs text-black opacity-70">{product.sales} sold</span>
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        product.type === 'T-Shirt' ? 'bg-orange-100 text-orange-800' :
+                        product.type === 'Hoodie' ? 'bg-blue-100 text-blue-800' :
+                        'bg-purple-100 text-purple-800'
+                      }`}>
+                        {product.type}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p className="font-semibold text-black text-sm">
+                  ${product.revenue.toLocaleString()}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* Revenue Trend */}
+      <div className="p-6 rounded-lg mb-8" style={neumorphicStyle}>
+        <h3 className="text-lg font-semibold text-black mb-4">Monthly Revenue Trend</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={monthlySalesData}>
+            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+            <XAxis dataKey="month" stroke="#000" />
+            <YAxis stroke="#000" />
+            <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Revenue']} />
+            <Legend />
+            <Line 
+              type="monotone" 
+              dataKey="revenue" 
+              stroke="#000" 
+              strokeWidth={3}
+              dot={{ fill: '#000', strokeWidth: 2, r: 6 }}
+              name="Monthly Revenue"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 };
 
