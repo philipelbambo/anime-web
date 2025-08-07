@@ -34,6 +34,7 @@ const Homepage = () => {
   const [newReview, setNewReview] = useState({ rating: 5, comment: '' });
   const [reviews, setReviews] = useState({});
   const [toasts, setToasts] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false); // Burger menu state
   const [checkoutForm, setCheckoutForm] = useState({
     email: '',
     firstName: '',
@@ -61,7 +62,7 @@ const Homepage = () => {
     setToasts(prev => prev.filter(toast => toast.id !== id));
   };
 
-  // Hero slider images (larger resolution: 1600x600)
+  // Hero slider images
   const heroSlides = [
     './Gallery1/background3.jpg',
     './Gallery1/background2.jpg',
@@ -104,8 +105,6 @@ const Homepage = () => {
         { id: 24, name: "Usopp's Kabuto Slingshot Replica", price: 39.99, image: 'https://images.unsplash.com/photo-1596782531398-e7c6b5b5c928?w=300&h=300&fit=crop', rating: 4.5, reviews: 190, onSale: true },
       ]
     },
-    // Other categories remain unchanged...
-    // (Keeping full categories for completeness)
     {
       name: 'Hunter x Hunter',
       products: [
@@ -395,10 +394,23 @@ const Homepage = () => {
         />
       ))}
 
-      {/* Header */}
-      <div className="bg-white shadow-sm border-white">
+      {/* Header with Burger Menu */}
+      <div className="bg-white shadow-sm borde-white border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Store</h1>
+          {/* Left: Burger Menu + Logo */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-black focus:outline-none"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <h1 className="text-2xl font-bold text-black">Store</h1>
+          </div>
+
+          {/* Right: Cart Button */}
           <button
             onClick={() => setShowCart(true)}
             className="relative bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-800"
@@ -412,7 +424,53 @@ const Homepage = () => {
             )}
           </button>
         </div>
-      </div>
+{/* Sidebar Menu (Slide-in from left) */}
+        {menuOpen && (
+          <div className="fixed inset-y-0 left-0 w-80 bg-white shadow-blur z-50 transform transition-transform duration-300 ease-in-out">
+            <div className="flex flex-col p-6 space-y-6 h-full">
+              <div className="flex justify-between items-center">
+                <img 
+                  src="./Gallery1/luffy1.png" 
+                  alt="MENU" 
+                  className="h-12 w-auto"
+                />
+                <button onClick={() => setMenuOpen(false)} className="text-black">
+                  <X size={24} />
+                </button>
+              </div>
+              <nav className="flex flex-col space-y-6 mt-4 flex-1">
+                <a
+                  href="/home"
+                  className="text-black text-xl hover:underline"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Home
+                </a>
+                <a
+                  href="/about"
+                  className="text-black text-xl hover:underline"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  About
+                </a>
+                <a
+                  href="/contact"
+                  className="text-black text-xl hover:underline"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Contact
+                </a>
+                <a
+                  href="/map"
+                  className="text-black text-xl hover:underline"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Map
+                </a>
+              </nav>
+            </div>
+          </div>
+        )}
 
       {/* Hero Slider */}
       <div className="relative w-full h-[500px] bg-white">
@@ -457,36 +515,6 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* Quote Bar */}
-      <div className="bg-white py-2 shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <p className="text-black text-xl italic">
-            "Shopping can be a delightful experience, offering a chance to explore the latest trends and find unique items."
-          </p>
-        </div>
-      </div>
-
-      {/* Sale Timer (Smaller, Left-Aligned) */}
-      <div className="bg-white py-1">
-        <div className="max-w-3xl mx-auto px-1">
-          <div className="flex items-center gap-2 text-sm text-gray-700">
-            <Clock size={16} className="text-red-600" />
-            <span className="font-medium">Sale ends in:</span>
-            <span className="flex gap-1">
-              <span className="bg-red-100 text-red-700 px-1 py-0.5 rounded text-xs font-bold">
-                {saleTimeLeft.days}d
-              </span>
-              <span className="bg-red-100 text-red-700 px-1 py-0.5 rounded text-xs font-bold">
-                {saleTimeLeft.hours}h
-              </span>
-              <span className="bg-red-100 text-red-700 px-1 py-0.5 rounded text-xs font-bold">
-                {saleTimeLeft.minutes}m
-              </span>
-            </span>
-          </div>
-        </div>
-      </div>
-
       {/* Product Categories */}
       <div className="w-full px-10 py-20">
         {categories.map((category) => (
@@ -497,10 +525,7 @@ const Homepage = () => {
         ))}
       </div>
 
-      {/* Modals and Cart/Checkout */}
-      {/* (Product Modal, Review Modal, Cart Sidebar, Checkout Modal) */}
-      {/* ... (Unchanged for brevity, included in full code) ... */}
-
+      {/* Modals: Product, Review, Cart, Checkout */}
       {selectedProduct && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -917,7 +942,8 @@ const Homepage = () => {
         }
       `}</style>
     </div>
+  </div>
   );
-};
+}
 
 export default Homepage;
