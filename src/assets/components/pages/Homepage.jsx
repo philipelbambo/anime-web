@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Search, Star, ShoppingCart, Clock, Heart, X, MessageCircle, Plus, Minus, Trash2, User, MapPin, CreditCard } from 'lucide-react';
-
+import { Home, Info, Phone, Map } from "lucide-react";
 // Toast Component
 const Toast = ({ message, type, onClose }) => {
   useEffect(() => {
@@ -26,7 +26,6 @@ const Homepage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
-  const [saleTimeLeft, setSaleTimeLeft] = useState({ days: 2, hours: 14, minutes: 32 });
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -36,20 +35,24 @@ const Homepage = () => {
   const [toasts, setToasts] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [checkoutForm, setCheckoutForm] = useState({
-    email: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: '',
-    phone: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    cardName: ''
+    email: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
+    phone: '',
+    paymentMethod: 'paypal' // Set PayPal as the default
   });
+  // Sample payment details - in a real app, these would come from a backend or environment variables
+    const gcashNumber = '0917-123-4567';
+    const paypalId = 'philipyupatelbambo@gmail.com';
+    const gcashMessage = 'Please send your payment to the following GCash number. After payment, take a screenshot and send it to our customer support for verification.';
+    const paypalMessage = 'Please send your payment to the following PayPal account. Make sure to use the "Friends and Family" option to avoid transaction fees.';
+
+// [ ... existing useState hooks and other functions ... ]
   const [subscriptionEmail, setSubscriptionEmail] = useState('');
 
   // Show toast function
@@ -259,36 +262,42 @@ const Homepage = () => {
     setNewReview({ rating: 5, comment: '' });
     showToast('Review added successfully!', 'success');
   };
+// Handle checkout
+const handleCheckout = () => {
+  const required = ['email', 'firstName', 'lastName', 'address', 'city', 'zipCode'];
+  const missing = required.filter(field => !checkoutForm[field]);
 
-  // Handle checkout
-  const handleCheckout = () => {
-    const required = ['email', 'firstName', 'lastName', 'address', 'city', 'zipCode', 'cardNumber', 'expiryDate', 'cvv'];
-    const missing = required.filter(field => !checkoutForm[field]);
-    if (missing.length > 0) {
-      showToast('Please fill in all required fields', 'error');
-      return;
-    }
-    showToast('Order placed successfully! Thank you for your purchase.', 'success');
-    setCart([]);
-    setShowCheckout(false);
-    setShowCart(false);
-    setCheckoutForm({
-      email: '',
-      firstName: '',
-      lastName: '',
-      address: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: '',
-      phone: '',
-      cardNumber: '',
-      expiryDate: '',
-      cvv: '',
-      cardName: ''
-    });
-  };
+  if (missing.length > 0) {
+    showToast('Please fill in all required fields', 'error');
+    return;
+  }
 
+  // Provide a confirmation message based on the selected payment method
+  if (checkoutForm.paymentMethod === 'cod') {
+    showToast('Order placed successfully! Please prepare the exact amount for Cash on Delivery.', 'success');
+  } else if (checkoutForm.paymentMethod === 'gcash') {
+    showToast('Order placed successfully! Please complete your GCash payment and send us a screenshot for verification.', 'success');
+  } else if (checkoutForm.paymentMethod === 'paypal') {
+    showToast('Order placed successfully! Please complete your PayPal payment and send us a screenshot of the transaction for verification.', 'success');
+  }
+
+  // Reset the cart and close the modals after a successful checkout
+  setCart([]);
+  setShowCheckout(false);
+  setShowCart(false);
+  setCheckoutForm({
+    email: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
+    phone: '',
+    paymentMethod: 'cod' // Reset to a default value
+  });
+};
   // Handle newsletter subscription
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -418,7 +427,7 @@ const Homepage = () => {
       ))}
 
       {/* Header with Burger Menu */}
-      <div className="bg-white shadow-sm border-white border-gray-200">
+      <div className="bg-white shadow-sm  border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
           {/* Left: Burger Menu + Logo */}
           <div className="flex items-center gap-4">
@@ -460,36 +469,39 @@ const Homepage = () => {
                 <button onClick={() => setMenuOpen(false)} className="text-black">
                   <X size={24} />
                 </button>
-              </div>
-              <nav className="flex flex-col space-y-6 mt-4 flex-1">
-                <a
-                  href="/home"
-                  className="text-black text-xl hover:underline"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Home
-                </a>
-                <a
-                  href="/about"
-                  className="text-black text-xl hover:underline"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  About
-                </a>
-                <a
-                  href="/contact"
-                  className="text-black text-xl hover:underline"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Contact
-                </a>
-                <a
-                  href="/map"
-                  className="text-black text-xl hover:underline"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Map
-                </a>
+                </div>
+                <nav className="flex flex-col space-y-6 mt-4 flex-1">
+                  <a
+                    href="/home"
+                    className="flex items-center gap-3 text-black text-xl hover:underline"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <Home size={20} /> Home
+                  </a>
+
+                  <a
+                    href="/about"
+                    className="flex items-center gap-3 text-black text-xl hover:underline"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <Info size={20} /> About
+                  </a>
+
+                  <a
+                    href="/contact"
+                    className="flex items-center gap-3 text-black text-xl hover:underline"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <Phone size={20} /> Contact
+                  </a>
+
+                  <a
+                    href="/Mapping"
+                    className="flex items-center gap-3 text-black text-xl hover:underline"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <Map size={20} /> Map
+                  </a>
               </nav>
             </div>
           </div>
@@ -700,7 +712,6 @@ const Homepage = () => {
           </div>
         </div>
       )}
-
       {/* Cart Sidebar */}
       {showCart && (
         <div className="fixed inset-0 bg-black/50 z-50 flex">
@@ -763,191 +774,107 @@ const Homepage = () => {
           </div>
         </div>
       )}
+{/* Checkout Modal */}
+{showCheckout && (
+  <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">Checkout</h2>
+        <button onClick={() => setShowCheckout(false)} className="text-gray-500 hover:text-gray-700">
+          <X size={24} />
+        </button>
+      </div>
+      <form onSubmit={(e) => { e.preventDefault(); handleCheckout(); }}>
+        {/* Contact Information */}
+        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><User size={20} /> Contact Information</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <input type="email" placeholder="Email" value={checkoutForm.email} onChange={(e) => setCheckoutForm({ ...checkoutForm, email: e.target.value })} className="p-3 border border-gray-300 rounded-lg" required />
+          <input type="tel" placeholder="Phone Number" value={checkoutForm.phone} onChange={(e) => setCheckoutForm({ ...checkoutForm, phone: e.target.value })} className="p-3 border border-gray-300 rounded-lg" />
+        </div>
 
-      {/* Checkout Modal */}
-      {showCheckout && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Checkout</h2>
-                <button onClick={() => setShowCheckout(false)}><X size={24} /></button>
-              </div>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
-                  <div className="space-y-3 mb-4">
-                    {cart.map((item) => (
-                      <div key={item.cartId} className="flex justify-between items-center py-2 border-b">
-                        <div>
-                          <p className="font-medium">{item.name}</p>
-                          <p className="text-sm text-gray-500">Size: {item.size} | Qty: {item.quantity}</p>
-                        </div>
-                        <span className="font-semibold">₱{(item.price * item.quantity).toFixed(2)}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="border-t pt-3">
-                    <div className="flex justify-between items-center text-lg font-bold">
-                      <span>Total:</span>
-                      <span>₱{cartTotal.toFixed(2)}</span>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Shipping & Payment</h3>
-                  <form className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-1">First Name *</label>
-                        <input
-                          type="text"
-                          value={checkoutForm.firstName}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, firstName: e.target.value }))}
-                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-1">Last Name *</label>
-                        <input
-                          type="text"
-                          value={checkoutForm.lastName}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, lastName: e.target.value }))}
-                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Email *</label>
-                      <input
-                        type="email"
-                        value={checkoutForm.email}
-                        onChange={(e) => setCheckoutForm(prev => ({ ...prev, email: e.target.value }))}
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Phone Number</label>
-                      <input
-                        type="tel"
-                        value={checkoutForm.phone}
-                        onChange={(e) => setCheckoutForm(prev => ({ ...prev, phone: e.target.value }))}
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-black"
-                      />
-                    </div>
-                    <div className="border-t pt-4">
-                      <h4 className="font-semibold mb-3 flex items-center gap-2"><MapPin size={18} /> Shipping Address</h4>
-                      <input
-                        type="text"
-                        value={checkoutForm.address}
-                        onChange={(e) => setCheckoutForm(prev => ({ ...prev, address: e.target.value }))}
-                        placeholder="Street Address"
-                        className="w-full p-2 border border-gray-300 rounded"
-                        required
-                      />
-                      <div className="grid grid-cols-2 gap-4 mt-4">
-                        <input
-                          type="text"
-                          value={checkoutForm.city}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, city: e.target.value }))}
-                          placeholder="City"
-                          className="w-full p-2 border border-gray-300 rounded"
-                          required
-                        />
-                        <input
-                          type="text"
-                          value={checkoutForm.state}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, state: e.target.value }))}
-                          placeholder="State"
-                          className="w-full p-2 border border-gray-300 rounded"
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 mt-4">
-                        <input
-                          type="text"
-                          value={checkoutForm.zipCode}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, zipCode: e.target.value }))}
-                          placeholder="ZIP Code"
-                          className="w-full p-2 border border-gray-300 rounded"
-                          required
-                        />
-                        <select
-                          value={checkoutForm.country}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, country: e.target.value }))}
-                          className="w-full p-2 border border-gray-300 rounded"
-                        >
-                          <option value="">Country</option>
-                          <option value="US">United States</option>
-                          <option value="CA">Canada</option>
-                          <option value="UK">UK</option>
-                          <option value="AU">Australia</option>
-                          <option value="PH">Philippines</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="border-t pt-4">
-                      <h4 className="font-semibold mb-3 flex items-center gap-2"><CreditCard size={18} /> Payment Info</h4>
-                      <input
-                        type="text"
-                        value={checkoutForm.cardName}
-                        onChange={(e) => setCheckoutForm(prev => ({ ...prev, cardName: e.target.value }))}
-                        placeholder="Cardholder Name"
-                        className="w-full p-2 border border-gray-300 rounded"
-                        required
-                      />
-                      <input
-                        type="text"
-                        value={checkoutForm.cardNumber}
-                        onChange={(e) => setCheckoutForm(prev => ({ ...prev, cardNumber: e.target.value }))}
-                        placeholder="Card Number"
-                        className="w-full p-2 border border-gray-300 rounded mt-4"
-                        required
-                      />
-                      <div className="grid grid-cols-2 gap-4 mt-4">
-                        <input
-                          type="text"
-                          value={checkoutForm.expiryDate}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, expiryDate: e.target.value }))}
-                          placeholder="MM/YY"
-                          className="w-full p-2 border border-gray-300 rounded"
-                          required
-                        />
-                        <input
-                          type="text"
-                          value={checkoutForm.cvv}
-                          onChange={(e) => setCheckoutForm(prev => ({ ...prev, cvv: e.target.value }))}
-                          placeholder="CVV"
-                          className="w-full p-2 border border-gray-300 rounded"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="flex gap-4 pt-6">
-                      <button
-                        type="button"
-                        onClick={handleCheckout}
-                        className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700"
-                      >
-                        Complete Order (₱{cartTotal.toFixed(2)})
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setShowCheckout(false)}
-                        className="flex-1 border border-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-50"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+        {/* Shipping Address */}
+        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><MapPin size={20} /> Shipping Address</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <input type="text" placeholder="First Name" value={checkoutForm.firstName} onChange={(e) => setCheckoutForm({ ...checkoutForm, firstName: e.target.value })} className="p-3 border border-gray-300 rounded-lg" required />
+          <input type="text" placeholder="Last Name" value={checkoutForm.lastName} onChange={(e) => setCheckoutForm({ ...checkoutForm, lastName: e.target.value })} className="p-3 border border-gray-300 rounded-lg" required />
+        </div>
+        <div className="mb-4">
+          <input type="text" placeholder="Address" value={checkoutForm.address} onChange={(e) => setCheckoutForm({ ...checkoutForm, address: e.target.value })} className="w-full p-3 border border-gray-300 rounded-lg" required />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <input type="text" placeholder="City" value={checkoutForm.city} onChange={(e) => setCheckoutForm({ ...checkoutForm, city: e.target.value })} className="p-3 border border-gray-300 rounded-lg" required />
+          <input type="text" placeholder="State / Province" value={checkoutForm.state} onChange={(e) => setCheckoutForm({ ...checkoutForm, state: e.target.value })} className="p-3 border border-gray-300 rounded-lg" />
+          <input type="text" placeholder="ZIP Code" value={checkoutForm.zipCode} onChange={(e) => setCheckoutForm({ ...checkoutForm, zipCode: e.target.value })} className="p-3 border border-gray-300 rounded-lg" required />
+        </div>
+        <div className="mb-6">
+          <input type="text" placeholder="Country" value={checkoutForm.country} onChange={(e) => setCheckoutForm({ ...checkoutForm, country: e.target.value })} className="w-full p-3 border border-gray-300 rounded-lg" />
+        </div>
+        
+        {/* Payment Information */}
+        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2"><CreditCard size={20} /> Payment Method</h3>
+        <div className="mb-6 space-y-4">
+          <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all hover:bg-gray-50">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="paypal"
+              checked={checkoutForm.paymentMethod === 'paypal'}
+              onChange={(e) => setCheckoutForm({ ...checkoutForm, paymentMethod: e.target.value })}
+              className="form-radio h-5 w-5 text-black"
+            />
+            <span className="font-semibold text-lg">PayPal</span>
+          </label>
+          <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all hover:bg-gray-50">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="gcash"
+              checked={checkoutForm.paymentMethod === 'gcash'}
+              onChange={(e) => setCheckoutForm({ ...checkoutForm, paymentMethod: e.target.value })}
+              className="form-radio h-5 w-5 text-black"
+            />
+            <span className="font-semibold text-lg">GCash</span>
+          </label>
+          <label className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all hover:bg-gray-50">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="cod"
+              checked={checkoutForm.paymentMethod === 'cod'}
+              onChange={(e) => setCheckoutForm({ ...checkoutForm, paymentMethod: e.target.value })}
+              className="form-radio h-5 w-5 text-black"
+            />
+            <span className="font-semibold text-lg">Cash on Delivery</span>
+          </label>
+        </div>
+
+        {/* Conditional Payment Details */}
+        {checkoutForm.paymentMethod === 'gcash' && (
+          <div className="mt-4 p-4 border rounded-lg bg-gray-50">
+            <h4 className="font-semibold text-lg mb-2">GCash Payment Details</h4>
+            <p className="text-gray-700">{gcashMessage}</p>
+            <p className="text-xl font-bold text-green-600 my-2">{gcashNumber}</p>
           </div>
-        </div>
-      )}
+        )}
+
+        {checkoutForm.paymentMethod === 'paypal' && (
+          <div className="mt-4 p-4 border rounded-lg bg-gray-50">
+            <h4 className="font-semibold text-lg mb-2">PayPal Payment Details</h4>
+            <p className="text-gray-700">{paypalMessage}</p>
+            <p className="text-xl font-bold text-blue-600 my-2">{paypalId}</p>
+          </div>
+        )}
+        
+        <button
+          type="submit"
+          className="w-full bg-black text-white py-4 rounded-lg font-bold text-lg hover:bg-gray-800 transition"
+        >
+          {checkoutForm.paymentMethod === 'cod' ? 'Place Order' : 'Proceed to Pay'} ₱{cartTotal.toFixed(2)}
+        </button>
+      </form>
+    </div>
+  </div>
+)}
 {/* Footer */}
 <footer className="bg-white border-t border-gray-200 py-8 px-8 text-black">
   <div className="max-w-7xl mx-auto">
