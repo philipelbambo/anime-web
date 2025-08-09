@@ -88,21 +88,9 @@ const topProducts = [
   { name: 'Killua Zoldyck Pants', sales: 134, revenue: 4690, type: 'Pants' },
 ];
 
-// Neumorphic style
-const neumorphicStyle = {
-  background: '#e0e0e0',
-  boxShadow: '8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff',
-  border: 'none',
-};
-
 const BreadcrumbSearch = () => {
   return (
     <div className="flex items-center justify-between mb-6">
-      <nav className="flex items-center space-x-2 text-sm">
-        <span className="text-gray-600">Dashboard</span>
-        <span className="text-gray-400">/</span>
-        <span className="text-gray-900 font-medium">Anime Apparel Store</span>
-      </nav>
       <div className="flex items-center space-x-4">
         <input
           type="search"
@@ -121,15 +109,9 @@ const Dashboard = () => {
   const lowStockItems = stockData.filter(item => item.lowStock || item.totalStock <= item.reorderLevel).length;
 
   return (
-    <div className="h-screen bg-gray-200 p-5">
+    <div className="h-screen bg-white p-5">
       <BreadcrumbSearch />
-
       {/* Dashboard Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-black mb-2">Anime Apparel Store Dashboard</h1>
-        <p className="text-black opacity-80">Track your anime merchandise sales and inventory</p>
-      </div>
-
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {[
@@ -138,7 +120,7 @@ const Dashboard = () => {
           { title: 'Total Stock', value: totalStock.toLocaleString(), change: '-5.2%', icon: Package },
           { title: 'Low Stock Alerts', value: lowStockItems.toString(), change: '+2', icon: AlertTriangle },
         ].map((card, index) => (
-          <div key={index} className="p-6 rounded-lg" style={neumorphicStyle}>
+          <div key={index} className="p-6 rounded-lg bg-white">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-black opacity-70">{card.title}</p>
@@ -163,7 +145,7 @@ const Dashboard = () => {
       {/* Sales Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Daily/Monthly Sales Chart */}
-        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+        <div className="p-6 rounded-lg bg-white">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-black">Product Sales</h3>
             <div className="flex space-x-2">
@@ -209,7 +191,7 @@ const Dashboard = () => {
         </div>
 
         {/* Anime Category Distribution */}
-        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+        <div className="p-6 rounded-lg bg-white">
           <h3 className="text-lg font-semibold text-black mb-4">Popular Anime Series</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -235,7 +217,7 @@ const Dashboard = () => {
       {/* Stock Management and Top Products Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Stock Management */}
-        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+        <div className="p-6 rounded-lg bg-white">
           <h3 className="text-lg font-semibold text-black mb-4 flex items-center">
             <Box className="w-5 h-5 mr-2" />
             Inventory Status
@@ -272,11 +254,11 @@ const Dashboard = () => {
         </div>
 
         {/* Top Products */}
-        <div className="p-6 rounded-lg" style={neumorphicStyle}>
+        <div className="p-6 rounded-lg bg-white border-white">
           <h3 className="text-lg font-semibold text-black mb-4">Best Sellers</h3>
           <div className="space-y-4">
             {topProducts.map((product, index) => (
-              <div key={index} className="flex items-center justify-between border-b border-gray-300 pb-3">
+              <div key={index} className="flex items-center justify-between border-b border-white pb-3">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-400 to-red-500 flex items-center justify-center text-white font-bold text-sm">
                     {index + 1}
@@ -305,7 +287,7 @@ const Dashboard = () => {
       </div>
 
       {/* Revenue Trend */}
-      <div className="p-6 rounded-lg mb-8" style={neumorphicStyle}>
+      <div className="p-6 rounded-lg mb-8 bg-white border-white">
         <h3 className="text-lg font-semibold text-black mb-4">Monthly Revenue Trend</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={monthlySalesData}>

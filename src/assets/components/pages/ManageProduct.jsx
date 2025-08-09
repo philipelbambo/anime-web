@@ -114,10 +114,7 @@ const ManageProduct = () => {
 
         {/* Page Header */}
         <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">Manage Products</h1>
-            <p className="text-gray-600">Manage your anime merchandise inventory</p>
-          </div>
+        
           <button
             onClick={() => setShowAddModal(true)}
             className="flex items-center space-x-2 px-4 py-2 rounded-lg text-white font-medium transition-all duration-300"

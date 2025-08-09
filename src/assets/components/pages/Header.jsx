@@ -15,18 +15,6 @@ const Header = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
 
-  const neumorphicStyle = {
-    background: '#131419', // Dark base color
-    boxShadow: 'inset -2px -2px 6px rgba(255, 255, 255, 0.05), inset 2px 2px 6px rgba(0, 0, 0, 0.8)'
-  };
-
-  const buttonStyle = {
-    background: '#131419', // Dark base color
-    boxShadow: rightMenuOpen ?
-      'inset 2px 2px 6px rgba(0, 0, 0, 0.8), inset -2px -2px 6px rgba(255, 255, 255, 0.05)' :
-      'inset -2px -2px 6px rgba(255, 255, 255, 0.05), inset 2px 2px 6px rgba(0, 0, 0, 0.8)'
-  };
-
   const requestLogout = () => {
     setRightMenuOpen(false);
     setShowLogoutModal(true);
@@ -48,16 +36,12 @@ const Header = () => {
 
   return (
     <div className="w-full sticky top-0 z-100">
-      <header className="flex items-center justify-between px-6 py-2 text-white relative z-50" style={neumorphicStyle}>
+      <header className="flex items-center justify-between px-6 py-2 text-white bg-gray-900">
         <div className="w-10"></div>
         <div className="flex items-center space-x-4">
           <button
             onClick={() => setRightMenuOpen(!rightMenuOpen)}
-            className="p-3 rounded-lg transition-all duration-200 hover:scale-105 focus:outline-none"
-            style={rightMenuOpen ?
-              { ...buttonStyle, boxShadow: 'inset 2px 2px 6px rgba(0, 0, 0, 0.8), inset -2px -2px 6px rgba(255, 255, 255, 0.05)' } :
-              buttonStyle
-            }
+            className="p-3 rounded-lg transition-all duration-200 hover:bg-gray-800 focus:outline-none"
           >
             {rightMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -65,7 +49,7 @@ const Header = () => {
       </header>
 
       {rightMenuOpen && (
-        <div className="absolute right-6 top-16 w-64 text-white rounded-lg p-4 z-40 transition-all duration-300" style={neumorphicStyle}>
+        <div className="absolute right-6 top-16 w-64 text-white rounded-lg p-4 z-40 bg-gray-900">
           <div className="space-y-2">
             <a href="#" className="block py-2 px-4 rounded hover:bg-white hover:bg-opacity-10 transition-colors">
               Settings
@@ -96,7 +80,7 @@ const Header = () => {
       {showLogoutModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
           <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={cancelLogout}></div>
-          <div className="relative w-full max-w-sm rounded-lg p-6 text-white text-center" style={neumorphicStyle}>
+          <div className="relative w-full max-w-sm rounded-lg p-6 text-white text-center bg-gray-900">
             <div className="flex flex-col items-center justify-center space-y-4">
               <AlertCircle size={48} className="text-red-400" />
               <h2 className="text-xl font-bold">Confirm Logout</h2>

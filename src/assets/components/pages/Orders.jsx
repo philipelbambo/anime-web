@@ -251,16 +251,7 @@ const Orders = () => {
           
           {/* Header Section */}
           <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mb-6">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              <div>
-                <h1 className="text-3xl font-bold text-black mb-2">
-                   Anime Store Orders
-                </h1>
-                <p className="text-gray-600">
-                  Manage your anime merchandise orders - T-shirts, Hoodies & Pants
-                </p>
-              </div>
-              
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"> 
               <div className="flex flex-col sm:flex-row gap-3">
                 <button className="border border-black text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
                   Add Order

@@ -496,7 +496,7 @@ const handleCheckout = () => {
                   </a>
 
                   <a
-                    href="/Mapping"
+                    href="/components/Mapping"
                     className="flex items-center gap-3 text-black text-xl hover:underline"
                     onClick={() => setMenuOpen(false)}
                   >
@@ -969,22 +969,35 @@ const handleCheckout = () => {
         {/* We Accept & Get in Touch */}
         <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* We Accept */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M4 4a2 2 0 00-2 2v2.5A.5.5 0 012.5 9H17.5a.5.5 0 01.5.5V6a2 2 0 00-2-2H4zm13.5 6H2.5a.5.5 0 00-.5.5v2A2.5 2.5 0 004.5 15h11a2.5 2.5 0 002.5-2.5v-2a.5.5 0 00-.5-.5z" />
-              </svg>
-              We Accept
-            </h3>
-            <div className="flex gap-3">
-              <div className="w-12 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">
-                GCash
-              </div>
-              <div className="w-12 h-8 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">
-                PayPal
-              </div>
-            </div>
-          </div>
+         <div>
+  <h3 className="text-lg font-bold mb-4 flex items-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 mr-2"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path d="M4 4a2 2 0 00-2 2v2.5A.5.5 0 012.5 9H17.5a.5.5 0 01.5.5V6a2 2 0 00-2-2H4zm13.5 6H2.5a.5.5 0 00-.5.5v2A2.5 2.5 0 004.5 15h11a2.5 2.5 0 002.5-2.5v-2a.5.5 0 00-.5-.5z" />
+    </svg>
+    We Accept
+  </h3>
+
+  <div className="flex gap-4">
+    {/* GCash Logo */}
+    <img
+      src="/Gallery1/Gcash.png" // <-- Your logo path
+      alt="GCash"
+      className="w-20 h-12 object-contain"
+    />
+
+    {/* PayPal Logo */}
+    <img
+      src="/Gallery1/paypal.png" // <-- Your logo path
+      alt="PayPal"
+      className="w-20 h-12 object-contain"
+    />
+  </div>
+</div>
 
           {/* Get in Touch */}
           <div>
@@ -995,17 +1008,17 @@ const handleCheckout = () => {
               </svg>
               Get in Touch
             </h3>
-            <form onSubmit={handleSubscribe} className="flex gap-2">
+           <form onSubmit={handleSubscribe} className="flex gap-2 flex-wrap">
               <input
                 type="email"
                 value={subscriptionEmail}
                 onChange={(e) => setSubscriptionEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-black w-full"
+                className="px-4 py-3 border border-gray-300 rounded text-base focus:outline-none focus:border-black w-[500px] max-w-full"
               />
               <button
                 type="submit"
-                className="bg-black text-white px-3 py-1 rounded text-sm hover:bg-gray-800 whitespace-nowrap"
+                className="bg-black text-white px-5 py-3 rounded text-base hover:bg-gray-800 whitespace-nowrap"
               >
                 Subscribe
               </button>

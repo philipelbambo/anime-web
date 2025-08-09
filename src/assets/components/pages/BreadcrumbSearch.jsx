@@ -36,7 +36,7 @@ export default function BreadcrumbSearch() {
     <div className="w-full" style={{paddingRight: '8px'}}>
       {/* Breadcrumb Container with Neumorphism */}
       <div
-        className="bg-gray-300 rounded-lg mb-6 flex items-center justify-between px-6 py-4"
+        className="bg-gray-300 rounded-lg mb-3 flex items-center justify-between px-6 py-4"
         style={{
           background: '#e0e0e0',
           boxShadow: '8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff'
