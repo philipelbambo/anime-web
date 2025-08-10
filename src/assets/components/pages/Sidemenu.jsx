@@ -21,12 +21,23 @@ const SideMenu = () => {
   ];
 
   return (
-    <div className="w-64 h-full py-5 flex flex-col sticky top-0 left-0 bg-black">
+    <div 
+      className="w-64 h-full py-5 flex flex-col sticky top-0 left-0"
+      style={{
+      background: '#239BA7',
+      boxShadow: 'inset -2px -2px 6px rgba(0, 0, 0, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.05)'
+    }}
+    >
       {/* Admin Panel Header */}
       <div className="px-5 pb-5 mb-5">
-        <div className="p-4 rounded-lg min-h-[95px] flex flex-col justify-center items-center bg-gray-900">
-          <LayoutDashboard size={32} className="text-white mb-2" />
-          <h1 className="text-white text-2xl font-bold">Admin Panel</h1>
+        <div 
+          className="p-4 rounded-full min-h-[95px] flex flex-col justify-center items-center"
+          style={{
+            background: 'white'
+          }}
+        >
+          <LayoutDashboard size={32} className="text-black mb-2" />
+          <h1 className="text-black text-2xl font-bold">Admin Panel</h1>
         </div>
       </div>
 
@@ -39,7 +50,11 @@ const SideMenu = () => {
               <li key={index}>
                 <a
                   href={item.href}
-                  className="flex items-center text-white py-3 px-4 text-base rounded-lg bg-gray-800 hover:bg-gray-400 transition-all duration-200"
+                  className="flex items-center text-black py-3 px-4 text-base rounded-full transition-all duration-200 neumorphic-button"
+                  style={{
+                    background: 'white',
+                    boxShadow: 'inset -2px -2px 6px rgba(0, 0, 0, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.05)'
+                  }}
                 >
                   <IconComponent size={18} className="mr-3" />
                   {item.text}
@@ -52,7 +67,12 @@ const SideMenu = () => {
 
       {/* Logo at bottom with 3D animation */}
       <div className="px-5 pt-5 flex justify-center">
-        <div className="logo-container">
+        <div 
+          className="logo-container p-4 rounded-full"
+          style={{
+            background: 'white'
+          }}
+        >
           <img 
             src="../Gallery1/animecat.png" 
             alt="Logo" 
@@ -62,6 +82,16 @@ const SideMenu = () => {
       </div>
 
       <style jsx>{`
+        .neumorphic-button:hover {
+          box-shadow: -2px -2px 8px rgba(0, 0, 0, 0.15), 2px 2px 8px rgba(0, 0, 0, 0.1) !important;
+          transform: translateY(-1px);
+        }
+        
+        .neumorphic-button:active {
+          box-shadow: inset -1px -1px 3px rgba(0, 0, 0, 0.08), inset 1px 1px 3px rgba(0, 0, 0, 0.15) !important;
+          transform: translateY(0px);
+        }
+        
         .logo-container {
           perspective: 1000px;
         }

@@ -49,20 +49,20 @@ const Header = () => {
       </header>
 
       {rightMenuOpen && (
-        <div className="absolute right-6 top-16 w-64 text-white rounded-lg p-4 z-40 bg-black">
+        <div className="absolute right-6 top-16 w-30 text-black rounded-lg p-4 z-40 bg-cyan-500">
           <div className="space-y-2">
-            <a href="#" className="block py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-10 transition-colors">
+            <a href="#" className="block py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-10 transition-colors text-right">
               Settings
             </a>
-            <a href="#" className="block py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-10 transition-colors">
+            <a href="#" className="block py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-10 transition-colors text-right">
               Profile
             </a>
             <button
               onClick={requestLogout}
-              className="w-full text-right py-2 px-4 rounded text-white hover:bg-red-600 transition-colors flex items-center space-x-2"
+              className="w-full text-right py-2 px-4 rounded text-red-900 hover:bg-red-400 transition-colors flex items-center justify-end space-x-2"
             >
-              <LogOut size={20} />
               <span>Logout</span>
+              <LogOut size={20} />
             </button>
           </div>
         </div>

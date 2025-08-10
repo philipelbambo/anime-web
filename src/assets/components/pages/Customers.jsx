@@ -14,7 +14,7 @@ const Customers = () => {
       phone: '+1 234-567-8901',
       orderDate: '2024-08-09',
       items: 'Premium Coffee Beans (2kg), Espresso Cups Set',
-      totalAmount: '$89.99',
+      totalAmount: '₱89.99',
       status: 'pending',
       priority: 'high'
     },
@@ -25,7 +25,7 @@ const Customers = () => {
       phone: '+1 234-567-8902',
       orderDate: '2024-08-08',
       items: 'Organic Tea Collection, Honey Sticks (50pcs)',
-      totalAmount: '$64.50',
+      totalAmount: '₱64.50',
       status: 'pending',
       priority: 'medium'
     },
@@ -36,7 +36,7 @@ const Customers = () => {
       phone: '+1 234-567-8903',
       orderDate: '2024-08-07',
       items: 'French Press, Coffee Grinder, Dark Roast (1kg)',
-      totalAmount: '$124.99',
+      totalAmount: '₱124.99',
       status: 'accepted',
       priority: 'high'
     },
@@ -47,7 +47,7 @@ const Customers = () => {
       phone: '+1 234-567-8904',
       orderDate: '2024-08-06',
       items: 'Herbal Tea Mix, Ceramic Mugs (4pcs)',
-      totalAmount: '$45.25',
+      totalAmount: '₱45.25',
       status: 'rejected',
       priority: 'low'
     },
@@ -58,7 +58,7 @@ const Customers = () => {
       phone: '+1 234-567-8905',
       orderDate: '2024-08-09',
       items: 'Cold Brew Kit, Medium Roast (500g)',
-      totalAmount: '$78.00',
+      totalAmount: '₱78.00',
       status: 'pending',
       priority: 'medium'
     }
@@ -67,13 +67,13 @@ const Customers = () => {
   const [filter, setFilter] = useState('all');
 
   const handleAcceptOrder = (orderId) => {
-    setOrders(orders.map(order => 
+    setOrders(orders.map(order =>
       order.id === orderId ? { ...order, status: 'accepted' } : order
     ));
   };
 
   const handleRejectOrder = (orderId) => {
-    setOrders(orders.map(order => 
+    setOrders(orders.map(order =>
       order.id === orderId ? { ...order, status: 'rejected' } : order
     ));
   };
@@ -84,7 +84,7 @@ const Customers = () => {
       accepted: 'bg-green-100 text-green-800 border-green-200',
       rejected: 'bg-red-100 text-red-800 border-red-200'
     };
-    
+
     return `px-3 py-1 rounded-full text-xs font-medium border ${statusStyles[status]}`;
   };
 
@@ -94,11 +94,11 @@ const Customers = () => {
       medium: 'bg-blue-50 text-blue-700 border-blue-200',
       low: 'bg-gray-50 text-gray-700 border-gray-200'
     };
-    
+
     return `px-2 py-1 rounded text-xs font-medium border ${priorityStyles[priority]}`;
   };
 
-  const filteredOrders = orders.filter(order => 
+  const filteredOrders = orders.filter(order =>
     filter === 'all' || order.status === filter
   );
 
@@ -120,11 +120,10 @@ const Customers = () => {
             <span className="text-black font-medium">Customer Orders</span>
           </div>
         </nav>
-
         {/* Header Section */}
         <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6"> 
-          </div>  
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+          </div>
           {/* Summary Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg shadow-sm border p-6">
@@ -140,7 +139,6 @@ const Customers = () => {
                 </div>
               </div>
             </div>
-
             <div className="bg-white rounded-lg shadow-sm border p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -154,7 +152,6 @@ const Customers = () => {
                 </div>
               </div>
             </div>
-
             <div className="bg-white rounded-lg shadow-sm border p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -170,7 +167,6 @@ const Customers = () => {
             </div>
           </div>
         </div>
-
         {/* Filter Tabs */}
         <div className="mb-6">
           <div className="bg-white rounded-lg shadow-sm border p-1">
@@ -196,7 +192,6 @@ const Customers = () => {
             </div>
           </div>
         </div>
-
         {/* Orders Table */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
@@ -267,7 +262,7 @@ const Customers = () => {
               </tbody>
             </table>
           </div>
-          
+
           {filteredOrders.length === 0 && (
             <div className="text-center py-12">
               <div className="text-gray-400 text-lg mb-2">No orders found</div>
