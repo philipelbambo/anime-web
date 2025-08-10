@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SideMenu from './Sidemenu';
-import Header from './header';
+import Header from './Header';
 import BreadcrumbSearch from './BreadcrumbSearch';
 import { customers } from '../../../utils/constants';
 
@@ -114,10 +114,10 @@ const Customers = () => {
       <div className="w-full">
         {/* Improved Breadcrumbs - Clean and Modern */}
         <nav className="mb-6">
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
+          <div className="flex items-center space-x-2 text-sm text-black">
             <span className="hover:text-gray-900 cursor-pointer transition-colors">Dashboard</span>
             <span>/</span>
-            <span className="text-gray-900 font-medium">Customer Orders</span>
+            <span className="text-black font-medium">Customer Orders</span>
           </div>
         </nav>
 

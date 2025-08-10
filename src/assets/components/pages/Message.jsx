@@ -226,12 +226,12 @@ const initialConversations = [
 
 const BreadcrumbSearch = () => (
   <div className="flex items-center justify-between mb-6">
-    <nav className="flex items-center space-x-2 text-sm text-gray-600">
+    <nav className="flex items-center space-x-2 text-sm text-black">
       <span>Dashboard</span>
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
       </svg>
-      <span className="text-gray-800 font-medium">Messages</span>
+      <span className="text-black font-medium">Messages</span>
     </nav>
     <div className="flex items-center gap-4">
       <div className="relative">
@@ -409,7 +409,7 @@ const EnhancedMessage = () => {
   };
 
   return (
-    <div className="h-full bg-gray-100 p-5 overflow-y-hidden">
+    <div className="h-full bg-white p-5 overflow-y-hidden">
       <div className="h-full w-full">
         <BreadcrumbSearch />
         <div 

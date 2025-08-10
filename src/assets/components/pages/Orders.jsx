@@ -230,15 +230,14 @@ const getAnimeIcon = (anime) => {
       return <div style={{...iconStyle, backgroundColor: '#f3f4f6', borderRadius: '4px'}}></div>;
   }
 };
-
 const Orders = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
 
   const filteredOrders = ordersData.filter(order => {
     const matchesSearch = order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         order.anime.toLowerCase().includes(searchTerm.toLowerCase());
+                          order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          order.anime.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'All' || order.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
@@ -248,15 +247,24 @@ const Orders = () => {
       <div className="flex-1 flex flex-col justify-start items-start p-6">
         <div className="w-full">
           <BreadcrumbSearch />
-          
-          {/* Header Section */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8 mb-6">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"> 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button className="border border-black text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
-                  Add Order
-                </button>
-              </div>
+
+          {/* Summary Stats moved to the top */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+              <h3 className="text-lg font-bold text-black mb-2">Total Orders</h3>
+              <p className="text-3xl font-bold text-black">{ordersData.length}</p>
+            </div>
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+              <h3 className="text-lg font-bold text-black mb-2">Delivered</h3>
+              <p className="text-3xl font-bold text-green-600">
+                {ordersData.filter(o => o.status === 'Delivered').length}
+              </p>
+            </div>
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+              <h3 className="text-lg font-bold text-black mb-2">Preparing</h3>
+              <p className="text-3xl font-bold text-blue-600">
+                {ordersData.filter(o => o.status === 'Preparing').length}
+              </p>
             </div>
           </div>
 
@@ -273,7 +281,7 @@ const Orders = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              
+
               <div className="relative">
                 <Filter className="absolute left-3 top-3 text-gray-400" size={20} />
                 <select
@@ -309,8 +317,8 @@ const Orders = () => {
                 </thead>
                 <tbody>
                   {filteredOrders.map((order, index) => (
-                    <tr 
-                      key={order.id} 
+                    <tr
+                      key={order.id}
                       className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
                         index % 2 === 0 ? 'bg-white' : 'bg-gray-25'
                       }`}
@@ -321,18 +329,18 @@ const Orders = () => {
                           <div className="text-sm text-gray-600">{order.date}</div>
                         </div>
                       </td>
-                      
+
                       <td className="py-6 px-6">
                         <div className="font-semibold text-black">{order.customer}</div>
                       </td>
-                      
+
                       <td className="py-6 px-6">
                         <div className="flex items-center gap-3">
                           {getAnimeIcon(order.anime)}
                           <span className="font-medium text-black">{order.anime}</span>
                         </div>
                       </td>
-                      
+
                       <td className="py-6 px-6">
                         <div className="text-sm text-black max-w-xs">
                           {order.items}
@@ -341,17 +349,17 @@ const Orders = () => {
                           Type: {order.productType}
                         </div>
                       </td>
-                      
+
                       <td className="py-6 px-6">
                         <span className="font-bold text-black text-lg">{order.total}</span>
                       </td>
-                      
+
                       <td className="py-6 px-6">
                         <span className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(order.status)}`}>
                           {order.status}
                         </span>
                       </td>
-                      
+
                       <td className="py-6 px-6">
                         {order.rating ? (
                           <div className="flex items-center gap-1">
@@ -368,7 +376,7 @@ const Orders = () => {
                           <span className="text-gray-400 text-sm">No rating</span>
                         )}
                       </td>
-                      
+
                       <td className="py-6 px-6">
                         <button className="bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition-colors">
                           <Eye size={16} />
@@ -378,26 +386,6 @@ const Orders = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
-
-          {/* Summary Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-black mb-2">Total Orders</h3>
-              <p className="text-3xl font-bold text-black">{ordersData.length}</p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-black mb-2">Delivered</h3>
-              <p className="text-3xl font-bold text-green-600">
-                {ordersData.filter(o => o.status === 'Delivered').length}
-              </p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-black mb-2">Preparing</h3>
-              <p className="text-3xl font-bold text-blue-600">
-                {ordersData.filter(o => o.status === 'Preparing').length}
-              </p>
             </div>
           </div>
         </div>

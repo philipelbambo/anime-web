@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
-import { TrendingUp, TrendingDown, Users, ShoppingCart, DollarSign, Package, AlertTriangle, Shirt, Box } from 'lucide-react';
+import { TrendingUp, TrendingDown, Users, ShoppingCart, Package, AlertTriangle, Shirt, Box } from 'lucide-react';
+
+// Custom component for the Philippine Peso icon
+const PhilippinePesoIcon = () => (
+  <div className="w-20 h-20 flex items-center justify-center text-black font-bold text-5xl">
+    ₱
+  </div>
+);
 
 // Sample data for daily sales
 const dailySalesData = [
@@ -35,43 +42,43 @@ const animeCategories = [
 
 // Stock data
 const stockData = [
-  { 
-    product: 'Naruto T-Shirts', 
+  {
+    product: 'Naruto T-Shirts',
     sizes: { S: 45, M: 32, L: 28, XL: 15, XXL: 8 },
     totalStock: 128,
     lowStock: false,
     reorderLevel: 50
   },
-  { 
-    product: 'One Piece Hoodies', 
+  {
+    product: 'One Piece Hoodies',
     sizes: { S: 23, M: 18, L: 12, XL: 8, XXL: 5 },
     totalStock: 66,
     lowStock: false,
     reorderLevel: 40
   },
-  { 
-    product: 'Jujutsu Kaisen Pants', 
+  {
+    product: 'Jujutsu Kaisen Pants',
     sizes: { S: 8, M: 12, L: 15, XL: 6, XXL: 4 },
     totalStock: 45,
     lowStock: true,
     reorderLevel: 50
   },
-  { 
-    product: 'Demon Slayer T-Shirts', 
+  {
+    product: 'Demon Slayer T-Shirts',
     sizes: { S: 18, M: 25, L: 22, XL: 12, XXL: 7 },
     totalStock: 84,
     lowStock: false,
     reorderLevel: 50
   },
-  { 
-    product: 'Hunter x Hunter Hoodies', 
+  {
+    product: 'Hunter x Hunter Hoodies',
     sizes: { S: 15, M: 20, L: 18, XL: 10, XXL: 5 },
     totalStock: 68,
     lowStock: false,
     reorderLevel: 40
   },
-  { 
-    product: 'Mushoku Tensei T-Shirts', 
+  {
+    product: 'Mushoku Tensei T-Shirts',
     sizes: { S: 12, M: 16, L: 14, XL: 8, XXL: 5 },
     totalStock: 55,
     lowStock: false,
@@ -95,7 +102,7 @@ const BreadcrumbSearch = () => {
         <input
           type="search"
           placeholder="Search products..."
-          className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 rounded-lg border border-black focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
     </div>
@@ -104,7 +111,6 @@ const BreadcrumbSearch = () => {
 
 const Dashboard = () => {
   const [viewMode, setViewMode] = useState('daily');
-
   const totalStock = stockData.reduce((sum, item) => sum + item.totalStock, 0);
   const lowStockItems = stockData.filter(item => item.lowStock || item.totalStock <= item.reorderLevel).length;
 
@@ -115,7 +121,7 @@ const Dashboard = () => {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {[
-          { title: 'Daily Revenue', value: '$4,247', change: '+18.2%', icon: DollarSign },
+          { title: 'Daily Revenue', value: '₱4,247', change: '+18.2%', icon: PhilippinePesoIcon },
           { title: 'Items Sold Today', value: '198', change: '+12.5%', icon: Shirt },
           { title: 'Total Stock', value: totalStock.toLocaleString(), change: '-5.2%', icon: Package },
           { title: 'Low Stock Alerts', value: lowStockItems.toString(), change: '+2', icon: AlertTriangle },
@@ -136,12 +142,11 @@ const Dashboard = () => {
                   </span>
                 </div>
               </div>
-              <card.icon className={`w-12 h-12 ${card.title === 'Low Stock Alerts' && lowStockItems > 0 ? 'text-red-500' : 'text-black'}`} />
+              {React.createElement(card.icon, { className: `text-black ${card.title === 'Low Stock Alerts' && lowStockItems > 0 ? 'text-red-500' : ''}` })}
             </div>
           </div>
         ))}
       </div>
-
       {/* Sales Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Daily/Monthly Sales Chart */}
@@ -189,7 +194,6 @@ const Dashboard = () => {
             )}
           </ResponsiveContainer>
         </div>
-
         {/* Anime Category Distribution */}
         <div className="p-6 rounded-lg bg-white">
           <h3 className="text-lg font-semibold text-black mb-4">Popular Anime Series</h3>
@@ -213,7 +217,6 @@ const Dashboard = () => {
           </ResponsiveContainer>
         </div>
       </div>
-
       {/* Stock Management and Top Products Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Stock Management */}
@@ -230,7 +233,7 @@ const Dashboard = () => {
                   <div className="flex items-center space-x-2">
                     <span className={`px-2 py-1 rounded text-xs ${
                       item.lowStock || item.totalStock <= item.reorderLevel
-                        ? 'bg-red-100 text-red-800' 
+                        ? 'bg-red-100 text-red-800'
                         : 'bg-green-100 text-green-800'
                     }`}>
                       {item.totalStock} units
@@ -252,7 +255,6 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
-
         {/* Top Products */}
         <div className="p-6 rounded-lg bg-white border-white">
           <h3 className="text-lg font-semibold text-black mb-4">Best Sellers</h3>
@@ -278,14 +280,13 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <p className="font-semibold text-black text-sm">
-                  ${product.revenue.toLocaleString()}
+                  ₱{product.revenue.toLocaleString()}
                 </p>
               </div>
             ))}
           </div>
         </div>
       </div>
-
       {/* Revenue Trend */}
       <div className="p-6 rounded-lg mb-8 bg-white border-white">
         <h3 className="text-lg font-semibold text-black mb-4">Monthly Revenue Trend</h3>
@@ -294,12 +295,12 @@ const Dashboard = () => {
             <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
             <XAxis dataKey="month" stroke="#000" />
             <YAxis stroke="#000" />
-            <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, 'Revenue']} />
+            <Tooltip formatter={(value) => [`₱${value.toLocaleString()}`, 'Revenue']} />
             <Legend />
-            <Line 
-              type="monotone" 
-              dataKey="revenue" 
-              stroke="#000" 
+            <Line
+              type="monotone"
+              dataKey="revenue"
+              stroke="#000"
               strokeWidth={3}
               dot={{ fill: '#000', strokeWidth: 2, r: 6 }}
               name="Monthly Revenue"

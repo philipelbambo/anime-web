@@ -36,12 +36,12 @@ const Header = () => {
 
   return (
     <div className="w-full sticky top-0 z-100">
-      <header className="flex items-center justify-between px-6 py-2 text-white bg-gray-900">
+      <header className="flex items-center justify-between px-6 py-2 text-black bg-white">
         <div className="w-10"></div>
         <div className="flex items-center space-x-4">
           <button
             onClick={() => setRightMenuOpen(!rightMenuOpen)}
-            className="p-3 rounded-lg transition-all duration-200 hover:bg-gray-800 focus:outline-none"
+            className="p-3 rounded-lg transition-all duration-200 hover:bg-gray-500 focus:outline-none"
           >
             {rightMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -49,17 +49,17 @@ const Header = () => {
       </header>
 
       {rightMenuOpen && (
-        <div className="absolute right-6 top-16 w-64 text-white rounded-lg p-4 z-40 bg-gray-900">
+        <div className="absolute right-6 top-16 w-64 text-white rounded-lg p-4 z-40 bg-black">
           <div className="space-y-2">
-            <a href="#" className="block py-2 px-4 rounded hover:bg-white hover:bg-opacity-10 transition-colors">
+            <a href="#" className="block py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-10 transition-colors">
               Settings
             </a>
-            <a href="#" className="block py-2 px-4 rounded hover:bg-white hover:bg-opacity-10 transition-colors">
+            <a href="#" className="block py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-10 transition-colors">
               Profile
             </a>
             <button
               onClick={requestLogout}
-              className="w-full text-left py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600 transition-colors flex items-center space-x-2"
+              className="w-full text-right py-2 px-4 rounded text-white hover:bg-red-600 transition-colors flex items-center space-x-2"
             >
               <LogOut size={20} />
               <span>Logout</span>

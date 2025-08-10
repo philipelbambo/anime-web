@@ -48,7 +48,7 @@ export default function BreadcrumbSearch() {
               <li className="flex items-center gap-3">
                 <a
                   href=""
-                  className="text-gray-600 hover:text-gray-800 transition-colors duration-200 text-sm font-medium"
+                  className="text-black hover:text-gray-800 transition-colors duration-200 text-sm font-medium"
                 >
                   {setLocation()}
                 </a>
@@ -64,14 +64,14 @@ export default function BreadcrumbSearch() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search products..."
-            className="pl-9 pr-18 py-1.5 rounded-md border-none outline-none text-gray-700 placeholder-gray-500 text-sm w-full"
+            className="pl-9 pr-18 py-1.5 rounded-md border-none outline-none text-black placeholder-gray-500 text-sm w-full"
             style={{
               background: '#e0e0e0',
               boxShadow: 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff'
             }}
             onKeyPress={(e) => e.key === 'Enter' && handleSearch(e)}
           />
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-black" />
           <button
             type="submit"
             className="absolute right-1.5 top-1/2 transform -translate-y-1/2 px-2.5 py-1 rounded text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors duration-200"

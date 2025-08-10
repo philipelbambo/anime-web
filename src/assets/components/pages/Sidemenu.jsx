@@ -21,7 +21,7 @@ const SideMenu = () => {
   ];
 
   return (
-    <div className="w-64 h-full py-5 flex flex-col sticky top-0 left-0 bg-gray-900">
+    <div className="w-64 h-full py-5 flex flex-col sticky top-0 left-0 bg-black">
       {/* Admin Panel Header */}
       <div className="px-5 pb-5 mb-5">
         <div className="p-4 rounded-lg min-h-[95px] flex flex-col justify-center items-center bg-gray-900">
@@ -39,7 +39,7 @@ const SideMenu = () => {
               <li key={index}>
                 <a
                   href={item.href}
-                  className="flex items-center text-white py-3 px-4 text-base rounded-lg bg-gray-800 hover:bg-gray-700 transition-all duration-200"
+                  className="flex items-center text-white py-3 px-4 text-base rounded-lg bg-gray-800 hover:bg-gray-400 transition-all duration-200"
                 >
                   <IconComponent size={18} className="mr-3" />
                   {item.text}
