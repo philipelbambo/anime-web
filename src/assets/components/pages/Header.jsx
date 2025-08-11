@@ -49,7 +49,7 @@ const Header = () => {
       </header>
 
       {rightMenuOpen && (
-        <div className="absolute right-6 top-16 w-30 text-black rounded-lg p-4 z-40 bg-cyan-500">
+        <div className="absolute right-6 top-16 w-30 text-white rounded-lg p-4 z-40 bg-black">
           <div className="space-y-2">
             <a href="#" className="block py-2 px-4 rounded hover:bg-gray-500 hover:bg-opacity-10 transition-colors text-right">
               Settings
@@ -59,7 +59,7 @@ const Header = () => {
             </a>
             <button
               onClick={requestLogout}
-              className="w-full text-right py-2 px-4 rounded text-red-900 hover:bg-red-400 transition-colors flex items-center justify-end space-x-2"
+              className="w-full text-right py-2 px-4 rounded text-red-600 hover:bg-red-400 transition-colors flex items-center justify-end space-x-2"
             >
               <span>Logout</span>
               <LogOut size={20} />
@@ -79,8 +79,8 @@ const Header = () => {
 
       {showLogoutModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-          <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={cancelLogout}></div>
-          <div className="relative w-full max-w-sm rounded-lg p-6 text-white text-center bg-gray-900">
+          <div className="fixed inset-0 bg-transparent bg-opacity-50 backdrop-blur-sm" onClick={cancelLogout}></div>
+          <div className="relative w-full max-w-sm rounded-lg p-6 text-white text-center bg-black">
             <div className="flex flex-col items-center justify-center space-y-4">
               <AlertCircle size={48} className="text-red-400" />
               <h2 className="text-xl font-bold">Confirm Logout</h2>

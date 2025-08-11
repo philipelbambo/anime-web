@@ -135,7 +135,7 @@ const AddProductModal = ({ show, onClose, onAdd }) => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               Add Product
             </button>
@@ -259,7 +259,7 @@ const ManageProduct = () => {
       <div className="flex justify-end mb-8"> 
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
+          className="flex items-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
         >
           <Plus size={20} />
           <span>Add Product</span>

@@ -192,9 +192,12 @@ const Reports = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="p-6">
-        {/* Header */}
+       {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold text-gray-900">Reports</h2>
+
+            {/* Right side: Time Filter + Export */}
             <div className="flex items-center space-x-3">
               <select
                 value={timeFilter}
@@ -205,19 +208,16 @@ const Reports = () => {
                 <option value="30days">Last 30 days</option>
                 <option value="3months">Last 3 months</option>
                 <option value="6months">Last 6 months</option>
-                <option value="1year">Last year</option>
               </select>
-              {/* ✅ Export Button with Function */}
               <button
                 onClick={exportToCSV}
-                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Download className="w-4 h-4" />
                 <span>Export</span>
               </button>
             </div>
           </div>
-
           {/* Navigation Tabs */}
           <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
             {['overview', 'products', 'customers', 'orders'].map((view) => (

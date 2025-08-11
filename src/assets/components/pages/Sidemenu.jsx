@@ -24,9 +24,9 @@ const SideMenu = () => {
     <div 
       className="w-64 h-full py-5 flex flex-col sticky top-0 left-0"
       style={{
-      background: '#239BA7',
-      boxShadow: 'inset -2px -2px 6px rgba(0, 0, 0, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.05)'
-    }}
+        background: '#ffffff'
+        // Removed the inset box-shadow to make border transparent
+      }}
     >
       {/* Admin Panel Header */}
       <div className="px-5 pb-5 mb-5">
@@ -36,7 +36,7 @@ const SideMenu = () => {
             background: 'white'
           }}
         >
-          <LayoutDashboard size={32} className="text-black mb-2" />
+          <LayoutDashboard size={40} className="text-black mb-2" />
           <h1 className="text-black text-2xl font-bold">Admin Panel</h1>
         </div>
       </div>
@@ -50,13 +50,13 @@ const SideMenu = () => {
               <li key={index}>
                 <a
                   href={item.href}
-                  className="flex items-center text-black py-3 px-4 text-base rounded-full transition-all duration-200 neumorphic-button"
+                  className="flex items-center text-white py-3 px-4 text-base rounded-full transition-all duration-200 neumorphic-button"
                   style={{
-                    background: 'white',
+                    background: '#1a1a1a',
                     boxShadow: 'inset -2px -2px 6px rgba(0, 0, 0, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.05)'
                   }}
                 >
-                  <IconComponent size={18} className="mr-3" />
+                  <IconComponent size={22} className="mr-3" />
                   {item.text}
                 </a>
               </li>
