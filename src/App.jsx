@@ -6,7 +6,7 @@ const LoadingPage = lazy(() => import('./assets/components/pages/LoadingPage'));
 const MainLayout = lazy(() => import('./assets/components/layouts/MainLayout'));
 const NotFoundPage = lazy(() => import('./assets/components/pages/NotFoundPage'));
 
-const Dashboard = lazy(() => import('./assets/components/pages/Dashboard'));
+const Dashboard = lazy(() => import('./assets/components/pages/dashboard'));
 const ProductsPage = lazy(() => import('./assets/components/pages/ManageProduct'));
 const MessagePage = lazy(() => import('./assets/components/pages/Message'));
 const OrdersPage = lazy(() => import('./assets/components/pages/Orders'));
@@ -18,8 +18,8 @@ const MappingPage = lazy(() => import('./assets/components/pages/Mapping'));
 
 
 import "./App.css"; // Assuming you have a global CSS file
-import Login from "./assets/components/pages/login";
-import Header from "./assets/components/pages/header";
+import Login from "./assets/components/pages/Login";
+import Header from "./assets/components/pages/Header";
 import Breadcrumbs from "./assets/components/pages/BreadcrumbSearch"; // Importing the SideMenu component
 import Homepage from './assets/components/pages/Homepage';
 
@@ -45,11 +45,11 @@ function App() {
           <Route path='customers' element={<Suspense fallback={<LoadingPage />}><CustomersPage /></Suspense>}/>
           <Route path='summary' element={<Suspense fallback={<LoadingPage />}><SummaryPage /></Suspense>}/>
           <Route path='reports' element={<Suspense fallback={<LoadingPage />}><ReportsPage /></Suspense>}/>
-          <Route path='mapping' element={<Suspense fallback={<LoadingPage />}><MappingPage /></Suspense>}/>
-         
-        </Route>
 
+        </Route>
+          <Route path='/mapping' element={<Suspense fallback={<LoadingPage />}><MappingPage /></Suspense>}/>
         <Route path='*' element={<NotFoundPage />}/>
+        
       </Routes>
       </BrowserRouter>
     </div>

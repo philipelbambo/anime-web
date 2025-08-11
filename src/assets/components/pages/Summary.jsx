@@ -83,7 +83,7 @@ const Summary = () => (
     <div className="flex-1 flex flex-col justify-start items-start">
       <div className="w-full">
         <BreadcrumbSearch />
-        <div className="w-full rounded-lg p-6 bg-white border border-gray-200">
+        <div className="w-full rounded-lg p-6 bg-white ">
           <h2 className="text-2xl font-bold mb-6 text-black">Otaku Threads Store Summary</h2>
           
           <div className="mb-8">

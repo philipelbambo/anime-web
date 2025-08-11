@@ -267,7 +267,7 @@ const ManageProduct = () => {
       </div>
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="bg-[#e0e0e0] border border-gray-200 rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Total Products</p>
@@ -277,7 +277,7 @@ const ManageProduct = () => {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="bg-[#e0e0e0] border border-gray-200 rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Active Products</p>
@@ -287,7 +287,7 @@ const ManageProduct = () => {
             </div>
           </div>
           
-          <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+          <div className="bg-[#e0e0e0] border border-gray-200 rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Total Inventory Value</p>

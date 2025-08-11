@@ -110,7 +110,7 @@ const Customers = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-white to-gray-100 p-6">
       <div className="w-full">
         {/* Improved Breadcrumbs - Clean and Modern */}
         <nav className="mb-6">
@@ -126,7 +126,7 @@ const Customers = () => {
           </div>
           {/* Summary Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="bg-[#e0e0e0] rounded-lg shadow-sm  p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm text-gray-500">Pending Orders</div>
@@ -139,7 +139,7 @@ const Customers = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="bg-[#e0e0e0] rounded-lg shadow-sm p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm text-gray-500">Accepted Today</div>
@@ -152,7 +152,7 @@ const Customers = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="bg-[#e0e0e0] rounded-lg shadow-sm p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm text-gray-500">Rejected Orders</div>
@@ -169,7 +169,7 @@ const Customers = () => {
         </div>
         {/* Filter Tabs */}
         <div className="mb-6">
-          <div className="bg-white rounded-lg shadow-sm border p-1">
+          <div className="bg-white rounded-lg shadow-sm p-1">
             <div className="flex space-x-1">
               {[
                 { key: 'all', label: 'All Orders', count: orderCounts.all },

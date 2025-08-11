@@ -496,7 +496,7 @@ const handleCheckout = () => {
                   </a>
 
                   <a
-                    href="/components/Mapping"
+                    href="/mapping"
                     className="flex items-center gap-3 text-black text-xl hover:underline"
                     onClick={() => setMenuOpen(false)}
                   >

@@ -169,7 +169,7 @@ const Reports = () => {
   const StatCard = ({ title, value, icon: Icon, growth, growthLabel }) => (
     <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
       <div className="flex items-center justify-between mb-4">
-        <div className="p-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600">
+        <div className="p-3 rounded-lg bg-gradient-to-r from-black to-black">
           <Icon className="w-6 h-6 text-white" />
         </div>
         {growth && (
@@ -190,7 +190,7 @@ const Reports = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <div className="p-6">
        {/* Header */}
         <div className="mb-8">
@@ -259,15 +259,14 @@ const Reports = () => {
             growth={12.1}
             growthLabel="repeat customers"
           />
-          <StatCard
-            title="Profit Margin"
-            value="42.5%"
-            icon={DollarSign}
-            growth={3.2}
-            growthLabel="vs last period"
-          />
+        <StatCard
+          title="Profit Margin"
+          value="42.5%"
+          icon={() => <span className="text-xl font-bold text-white">₱</span>}
+          growth={3.2}
+          growthLabel="vs last period"
+        />
         </div>
-
         {/* Inventory Alerts & Customer Satisfaction */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Inventory Alerts */}

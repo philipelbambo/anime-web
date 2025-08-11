@@ -4,7 +4,7 @@ import { TrendingUp, TrendingDown, Users, ShoppingCart, Package, AlertTriangle, 
 
 // Custom component for the Philippine Peso icon
 const PhilippinePesoIcon = () => (
-  <div className="w-20 h-20 flex items-center justify-center text-white font-bold text-5xl">
+  <div className="w-20 h-20 flex items-center justify-center text-black font-bold text-5xl">
     ₱
   </div>
 );
@@ -126,11 +126,11 @@ const Dashboard = () => {
           { title: 'Total Stock', value: totalStock.toLocaleString(), change: '-5.2%', icon: Package },
           { title: 'Low Stock Alerts', value: lowStockItems.toString(), change: '+2', icon: AlertTriangle },
         ].map((card, index) => (
-          <div key={index} className="p-6 rounded-lg bg-black">
+         <div key={index} className="p-6 rounded-lg bg-[#e0e0e0]">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-white opacity-70">{card.title}</p>
-                <p className="text-2xl font-bold text-white">{card.value}</p>
+                <p className="text-sm font-medium text-black opacity-70">{card.title}</p>
+                <p className="text-2xl font-bold text-black">{card.value}</p>
                 <div className="flex items-center mt-2">
                   {card.change.startsWith('+') ? (
                     <TrendingUp className="w-4 h-4 mr-1 text-green-600" />
