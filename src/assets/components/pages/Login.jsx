@@ -47,7 +47,7 @@ const Login = () => {
   return (
     <div
       className="h-screen w-screen flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/Gallery2/animebackground.jpg')" }}
+      style={{ backgroundImage: "url('/Gallery3/BackgroundLogin.jpg')" }}
     >
       <ToastContainer
         position="top-center"
@@ -70,10 +70,10 @@ const Login = () => {
         </div>
       )}
 
-      <div className="w-full max-w-md p-8 rounded-xl bg-white border border-gray-300">
+      <div className="w-full max-w-md p-8 rounded-xl bg-white border border-black">
         <div className="text-center mb-8">
           <img
-            src="/Gallery2/logo.png"
+            src="/Gallery3/coffee.png"
             alt="Logo"
             className="w-16 h-16 mx-auto mb-4 object-contain"
           />
@@ -103,7 +103,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-300 rounded-lg text-black placeholder-black"
+                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-black rounded-lg text-black placeholder-black"
                 placeholder="Enter your email"
                 required
               />
@@ -126,7 +126,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-300 rounded-lg text-black placeholder-black"
+                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-black rounded-lg text-black placeholder-black"
                 placeholder="Enter your password"
                 required
               />
@@ -148,7 +148,7 @@ const Login = () => {
           {/* Forgot password */}
           <button
             type="button"
-            className="flex items-center text-sm text-blue-900 hover:text-blue-500 hover:underline"
+            className="flex items-center text-sm text-black hover:text-gray-700 hover:underline"
             onClick={() => console.log('Forgot password clicked')}
           >
             Forgot password?
@@ -172,13 +172,13 @@ const Login = () => {
             type="button"
             onClick={handleSubmit}
             disabled={isLoading}
-            className="w-full flex items-center justify-center bg-blue-900 hover:bg-blue-500 text-white font-medium py-4 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full flex items-center justify-center bg-black hover:bg-gray-700 text-white font-medium py-4 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             {isLoading ? (
               'Logging in...'
             ) : (
               <>
-                Login
+                LOG IN
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 ml-2"
