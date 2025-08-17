@@ -12,9 +12,9 @@ const MessagePage = lazy(() => import('./assets/components/pages/Message'));
 const OrdersPage = lazy(() => import('./assets/components/pages/Orders'));
 const CustomersPage = lazy(() => import('./assets/components/pages/Customers'));
 const SummaryPage = lazy(() => import('./assets/components/pages/Summary'));
-
 const ReportsPage = lazy(() => import('./assets/components/pages/Reports'));
-const MappingPage = lazy(() => import('./assets/components/pages/Mapping'));
+const Order = lazy(() => import('./assets/components/pages/Order'));
+
 
 
 import "./App.css"; // Assuming you have a global CSS file
@@ -47,7 +47,8 @@ function App() {
           <Route path='reports' element={<Suspense fallback={<LoadingPage />}><ReportsPage /></Suspense>}/>
 
         </Route>
-          <Route path='/mapping' element={<Suspense fallback={<LoadingPage />}><MappingPage /></Suspense>}/>
+
+          <Route path='/order' element={<Suspense fallback={<LoadingPage />}><Order /></Suspense>}/>
         <Route path='*' element={<NotFoundPage />}/>
         
       </Routes>

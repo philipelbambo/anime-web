@@ -30,7 +30,7 @@ const SideMenu = () => {
       {/* Admin Panel Header */}
       <div className="px-5 pb-5 mb-5">
         <div 
-          className="p-4 rounded-full min-h-[95px] flex flex-col justify-center items-center"
+          className="p-4 rounded-lg min-h-[95px] flex flex-col justify-center items-center"
           style={{
             background: '#3A3A10' // darker shade
           }}
@@ -49,10 +49,9 @@ const SideMenu = () => {
               <li key={index}>
                 <a
                   href={item.href}
-                  className="flex items-center text-white py-3 px-4 text-base rounded-full transition-all duration-200 neumorphic-button"
+                  className="flex items-center text-white py-3 px-4 text-base rounded-lg transition-all duration-200 hover:bg-[#6E6C22] active:bg-[#4C4B16]"
                   style={{
-                    background: '#5E5D1D', // lighter green-brown button
-                    boxShadow: 'inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.5)'
+                    background: '#5E5D1D' // lighter green-brown button
                   }}
                 >
                   <IconComponent size={22} className="mr-3 text-white" />
@@ -67,7 +66,7 @@ const SideMenu = () => {
       {/* Logo at bottom with 3D animation */}
       <div className="px-5 pt-5 flex justify-center">
         <div 
-          className="logo-container p-4 rounded-full"
+          className="p-4 rounded-full"
           style={{
             background: '#3A3A10' // same as header circle
           }}
@@ -81,22 +80,6 @@ const SideMenu = () => {
       </div>
 
       <style jsx>{`
-        .neumorphic-button:hover {
-          background: #6E6C22 !important; /* hover state */
-          box-shadow: -2px -2px 8px rgba(255, 255, 255, 0.15), 2px 2px 8px rgba(0, 0, 0, 0.5) !important;
-          transform: translateY(-1px);
-        }
-        
-        .neumorphic-button:active {
-          background: #4C4B16 !important;
-          box-shadow: inset -1px -1px 3px rgba(255, 255, 255, 0.1), inset 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
-          transform: translateY(0px);
-        }
-        
-        .logo-container {
-          perspective: 1000px;
-        }
-        
         .logo-3d {
           animation: rotate3D 4s infinite ease-in-out;
           transform-style: preserve-3d;

@@ -173,7 +173,7 @@ const CoffeeShopLanding = () => {
 
           /* Background image styles - REMOVED OVERLAY */
           .main-background {
-            background-image: url('https://images.pexels.com/photos/27811290/pexels-photo-27811290.jpeg');
+            background-image: url('/Gallery3/coffeebeans.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
