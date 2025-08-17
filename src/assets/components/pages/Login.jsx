@@ -47,7 +47,7 @@ const Login = () => {
   return (
     <div
       className="h-screen w-screen flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/Gallery3/BackgroundLogin.jpg')" }}
+      style={{ backgroundImage: "url('/Gallery3/coffeebeans.jpg')" }}
     >
       <ToastContainer
         position="top-center"

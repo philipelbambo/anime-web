@@ -11,29 +11,29 @@ const CoffeeShopLanding = () => {
   const [coffeeMode, setCoffeeMode] = useState(false);
 
   const coffeeProducts = [
-    { id: 1, name: 'Espresso', image: 'https://static.vecteezy.com/system/resources/thumbnails/047/312/174/small_2x/coffee-beans-and-grounds-png.png' },
-    { id: 2, name: 'Cappuccino', image: 'https://www.pngall.com/wp-content/uploads/2016/03/Bread-PNG-7.png' },
-    { id: 3, name: 'Latte', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Latte.png' },
-    { id: 4, name: 'Americano', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Americano.png' },
-    { id: 5, name: 'Mocha', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Mocha.png' },
-    { id: 6, name: 'Macchiato', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Macchiato.png' },
-    { id: 7, name: 'Flat White', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Flat+White.png' },
-    { id: 8, name: 'Irish Coffee', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Irish+Coffee.png' },
-    { id: 9, name: 'Iced Coffee', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Iced+Coffee.png' },
-    { id: 10, name: 'Affogato', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Affogato.png' },
-    { id: 11, name: 'Cold Brew', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Cold+Brew.png' },
-    { id: 12, name: 'Turkish Coffee', image: 'https://via.placeholder.com/300x300/8B4513/FFFFFF?text=Turkish+Coffee.png' }
+    { id: 1, name: 'Espresso', image: '/OurCoffee/coffee1.png' },
+    { id: 2, name: 'Cappuccino', image: '/OurCoffee/coffee2.png' },
+    { id: 3, name: 'Latte', image: '/OurCoffee/coffee3.png' },
+    { id: 4, name: 'Americano', image: '/OurCoffee/coffee4.png' },
+    { id: 5, name: 'Mocha', image: '/OurCoffee/coffee5.png' },
+    { id: 6, name: 'Macchiato', image: '/OurCoffee/coffee6.png' },
+    { id: 7, name: 'Flat White', image: '/OurCoffee/coffee7.png' },
+    { id: 8, name: 'Irish Coffee', image: '/OurCoffee/coffee8.png' },
+    { id: 9, name: 'Iced Coffee', image: '/OurCoffee/coffee9.png' },
+    { id: 10, name: 'Affogato', image: '/OurCoffee/coffee10.png' },
+    { id: 11, name: 'Cold Brew', image: '/OurCoffee/coffee11.png' },
+    { id: 12, name: 'Turkish Coffee', image: '/OurCoffee/coffee12.png' }
   ];
 
   const desserts = [
-    { id: 7, name: 'Croissant', price: 2.50, image: 'https://pngimg.com/d/croissant_PNG46653.png' },
-    { id: 8, name: 'Muffin', price: 3.00, image: 'https://via.placeholder.com/300x300/D2691E/FFFFFF?text=Muffin.png' },
-    { id: 9, name: 'Cheesecake', price: 4.50, image: 'https://via.placeholder.com/300x300/D2691E/FFFFFF?text=Cheesecake.png' },
-    { id: 10, name: 'Crème brûlée', price: 5.50, image: 'https://via.placeholder.com/300x300/D2691E/FFFFFF?text=Creme-Brulee.png' },
-    { id: 11, name: 'Brownie', price: 3.50, image: 'https://via.placeholder.com/300x300/D2691E/FFFFFF?text=Brownie.png' },
-    { id: 12, name: 'Macaron', price: 2.75, image: 'https://via.placeholder.com/300x300/D2691E/FFFFFF?text=Macaron.png' },
-    { id: 13, name: 'Tiramisu', price: 4.75, image: 'https://via.placeholder.com/300x300/D2691E/FFFFFF?text=Tiramisu.png' },
-    { id: 14, name: 'Donut', price: 2.25, image: 'https://via.placeholder.com/300x300/D2691E/FFFFFF?text=Donut.png' }
+    { id: 7, name: 'Croissant', price: 2.50, image: '/SliderGallery/bread1.png' },
+    { id: 8, name: 'Muffin', price: 3.00, image: '/SliderGallery/bread2.png' },
+    { id: 9, name: 'Cheesecake', price: 4.50, image: '/SliderGallery/bread3.png' },
+    { id: 10, name: 'Crème brûlée', price: 5.50, image: '/SliderGallery/bread4.png' },
+    { id: 11, name: 'Brownie', price: 3.50, image: '/SliderGallery/bread5.png' },
+    { id: 12, name: 'Macaron', price: 2.75, image: '/SliderGallery/bread8.png' },
+    { id: 13, name: 'Tiramisu', price: 4.75, image: '/SliderGallery/bread7.png' },
+    { id: 14, name: 'Donut', price: 2.25, image: '/SliderGallery/bread6.png' }
   ];
 
   // Gallery images organized in 3 rows
@@ -230,7 +230,7 @@ const CoffeeShopLanding = () => {
         {/* Slide-out Menu */}
         {menuOpen && (
           <div className="fixed inset-0 z-50 bg-blur bg-opacity-50">
-            <div className={`absolute left-0 top-0 h-full w-50 shadow-lg ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-white'}`}>
+            <div className={`absolute left-0 top-0 h-full w-50 shadow-lg ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-[#e0e0e0]'}`}>
               <div className="p-6">
                 <div className="flex justify-between items-center mb-8">
                 <h3 className="text-xl font-bold">
@@ -358,19 +358,21 @@ const CoffeeShopLanding = () => {
           Our Coffee
         </h3>
 
-        {/* Full-width description with fade-in + stylish font */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-2xl md:text-3xl font-semibold tracking-wide text-center mb-12 text-[#4C4B16] w-full font-serif"
-        >
-          At BrewMaster, every cup is crafted to bring warmth and comfort. 
-          We roast our beans with care, brew with precision, and serve 
-          with passion—so you can enjoy rich flavors, smooth textures, 
-          and the perfect aroma in every sip.
-        </motion.p>
-
+     {/* Full-width description with fade-in + stylish font */}
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className={`text-lg md:text-xl font-semibold tracking-wide text-center mb-12 w-full font-serif ${
+          coffeeMode ? 'text-amber-100' : 'text-[#4C4B16]'
+        }`}
+      >
+        At BrewMaster, every cup is crafted to bring warmth and comfort. 
+        We roast our beans with care, brew with precision, and serve 
+        with passion—so you can enjoy rich flavors, smooth textures, 
+        and the perfect aroma in every sip.
+      </motion.p>
+      
         <div className="grid md:grid-cols-4 gap-8">
           {coffeeProducts.map((coffee) => (
             <div
@@ -421,22 +423,30 @@ const CoffeeShopLanding = () => {
           </div>
         </section>
 
-        {/* Desserts */}
-        <section className={`container mx-auto px-4 py-16 relative z-10 ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-white'}`}>
-          <h3 className={`text-4xl font-bold text-center mb-12 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>Sweet Treats</h3>
-          <div className="grid md:grid-cols-4 gap-6">
-            {desserts.map(dessert => (
-              <div key={dessert.id} className={`text-center border p-4 transition-colors group ${coffeeMode ? ' bg-[#4C4B16] hover:bg-lime-950 hover:text-amber-50 text-amber-50' : 'bg-white border-white hover:bg-[#4C4B16] hover:text-white text-[#4C4B16]'}`}>
-                <img
-                  src={dessert.image}
-                  alt={dessert.name}
-                  className="w-full h-42 object-contain mb-4"
-                />
-                <h4 className="text-lg font-semibold mb-2">{dessert.name}</h4>
-              </div>
-            ))}
+      {/* Desserts */}
+    <section className={`container mx-auto px-4 py-16 relative z-10 ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-white'}`}>
+      <h3 className={`text-4xl font-bold text-center mb-8 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>Sweet Treats</h3>
+      
+      {/* Customer-friendly description */}
+      <div className="max-w-7xl mx-auto text-center mb-12">
+        <p className={`text-lg leading-relaxed ${coffeeMode ? 'text-amber-100' : 'text-[#4C4B16]'}`}>
+          Indulge in our carefully curated collection of decadent desserts, each crafted to provide the perfect sweet ending to your meal. From rich, velvety textures to delightfully crisp bites, our sweet treats are made with premium ingredients and designed to satisfy every craving. Whether you're looking for a classic favorite or something uniquely special, each dessert promises a moment of pure indulgence that will leave you planning your next visit.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-4 gap-6">
+        {desserts.map(dessert => (
+          <div key={dessert.id} className={`text-center border p-4 transition-colors group ${coffeeMode ? ' bg-[#4C4B16] hover:bg-lime-950 hover:text-amber-50 text-amber-50' : 'bg-white border-white hover:bg-[#4C4B16] hover:text-white text-[#4C4B16]'}`}>
+            <img
+              src={dessert.image}
+              alt={dessert.name}
+              className="w-full h-42 object-contain mb-4"
+            />
+            <h4 className="text-lg font-semibold mb-2">{dessert.name}</h4>
           </div>
-        </section>
+        ))}
+      </div>
+    </section>
 
         {/* Our Gallery */}
         <section id="gallery" className="py-16 overflow-hidden relative z-10">
@@ -466,7 +476,7 @@ const CoffeeShopLanding = () => {
       </div>
 
       {/* Footer - separate from background */}
-      <footer id="contact" className={`py-12 relative z-10 ${coffeeMode ? 'bg-[#4C4B16] text-amber-50' : 'bg-[#4B352A] text-white'}`}>
+      <footer id="contact" className={`py-12 relative z-10 ${coffeeMode ? 'bg-[#4C4B16] text-amber-50' : 'bg-[#4C4B16] text-white'}`}>
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex items-start space-x-6">
