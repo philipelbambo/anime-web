@@ -1,546 +1,436 @@
 import React, { useState } from 'react';
-import { Menu, X } from "lucide-react";
-// Added FaImage for the Gallery icon and FaMoon for dark mode
-import { FaHome, FaUtensils, FaEnvelope, FaInfoCircle, FaFacebook, FaTwitter, FaInstagram, FaClock, FaBullhorn, FaImage, FaMoon } from 'react-icons/fa';
-import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Coffee, Phone, Facebook, Instagram, Twitter, MessageCircle, Mail } from 'lucide-react';
 
+const BrewCoffeeHomepage = () => {
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    message: ''
+  });
 
-
-const CoffeeShopLanding = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [coffeeMode, setCoffeeMode] = useState(false);
-
-  const coffeeProducts = [
-    { id: 1, name: 'Espresso', image: '/OurCoffee/coffee1.png' },
-    { id: 2, name: 'Cappuccino', image: '/OurCoffee/coffee2.png' },
-    { id: 3, name: 'Latte', image: '/OurCoffee/coffee3.png' },
-    { id: 4, name: 'Americano', image: '/OurCoffee/coffee4.png' },
-    { id: 5, name: 'Mocha', image: '/OurCoffee/coffee5.png' },
-    { id: 6, name: 'Macchiato', image: '/OurCoffee/coffee6.png' },
-    { id: 7, name: 'Flat White', image: '/OurCoffee/coffee7.png' },
-    { id: 8, name: 'Irish Coffee', image: '/OurCoffee/coffee8.png' },
-    { id: 9, name: 'Iced Coffee', image: '/OurCoffee/coffee9.png' },
-    { id: 10, name: 'Affogato', image: '/OurCoffee/coffee10.png' },
-    { id: 11, name: 'Cold Brew', image: '/OurCoffee/coffee11.png' },
-    { id: 12, name: 'Turkish Coffee', image: '/OurCoffee/coffee12.png' }
-  ];
-
-  const desserts = [
-    { id: 7, name: 'Croissant', price: 2.50, image: '/SliderGallery/bread1.png' },
-    { id: 8, name: 'Muffin', price: 3.00, image: '/SliderGallery/bread2.png' },
-    { id: 9, name: 'Cheesecake', price: 4.50, image: '/SliderGallery/bread3.png' },
-    { id: 10, name: 'Crème brûlée', price: 5.50, image: '/SliderGallery/bread4.png' },
-    { id: 11, name: 'Brownie', price: 3.50, image: '/SliderGallery/bread5.png' },
-    { id: 12, name: 'Macaron', price: 2.75, image: '/SliderGallery/bread8.png' },
-    { id: 13, name: 'Tiramisu', price: 4.75, image: '/SliderGallery/bread7.png' },
-    { id: 14, name: 'Donut', price: 2.25, image: '/SliderGallery/bread6.png' }
-  ];
-
-  // Gallery images organized in 3 rows
-  const galleryRows = [
-    // Row 1 - moves left to right
-    [
-      "/SliderGallery/cup1.png",
-      "/SliderGallery/cup2.png",
-      "/SliderGallery/cup3.png",
-      "/SliderGallery/cup4.png",
-      "/SliderGallery/cup5.png",
-      "/SliderGallery/cup6.png"
-    ],
-    // Row 2 - moves right to left
-    [
-      "/SliderGallery/cup7.png",
-      "/SliderGallery/cup8.png",
-      "/SliderGallery/cup9.png",
-      "/SliderGallery/cup10.png",
-      "/SliderGallery/cup11.png",
-      "/SliderGallery/cup12.png"
-    ],
-    // Row 3 - moves left to right
-    [
-      "/SliderGallery/cup13.png",
-      "/SliderGallery/cup14.png",
-      "/SliderGallery/cup15.png",
-      "/SliderGallery/cup16.png",
-      "/SliderGallery/cup17.png",
-      "/SliderGallery/cup18.png"
-    ],
-    // Row 4 - moves right to left
-    [
-      "/SliderGallery/bread1.png",
-      "/SliderGallery/bread2.png",
-      "/SliderGallery/bread3.png",
-      "/SliderGallery/bread4.png",
-      "/SliderGallery/bread5.png",
-      "/SliderGallery/bread6.png"
-    ],
-  ];
-
-  // Generate coffee beans for falling animation
-  const generateCoffeeBeans = () => {
-    const beans = [];
-    for (let i = 0; i < 25; i++) {
-      beans.push({
-        id: i,
-        left: Math.random() * 100,
-        animationDelay: Math.random() * 5,
-        animationDuration: 3 + Math.random() * 4,
-        size: 20 + Math.random() * 15,
-      });
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+      comment: "The best coffee I've ever had! The atmosphere is perfect for working and relaxing."
+    },
+    {
+      name: "Mike Chen",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      comment: "Amazing quality and service. My morning isn't complete without my daily brew from here!"
+    },
+    {
+      name: "Emily Davis",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      comment: "Love the variety of coffee options. The baristas really know their craft!"
+    },
+    {
+      name: "Alex Rivera",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      comment: "Great place to meet friends. Coffee is excellent and the staff is so friendly!"
     }
-    return beans;
+  ];
+
+  const menuItems = [
+    {
+      name: "Espresso",
+      price: "₱3.50",
+      image: "/OurCoffee/coffee1.png"
+    },
+    {
+      name: "Cappuccino",
+      price: "₱4.25",
+      image: "/OurCoffee/coffee2.png "
+    },
+    {
+      name: "Latte",
+      price: "₱4.75",
+      image: " /OurCoffee/coffee3.png"
+    },
+    {
+      name: "Americano",
+      price: "₱3.25",
+      image: "/OurCoffee/coffee4.png"
+    },
+    {
+      name: "Mocha",
+      price: "₱5.00",
+      image: " /OurCoffee/coffee5.png"
+    },
+    {
+      name: "Cold Brew",
+      price: "₱4.00",
+      image: "/OurCoffee/coffee6.png "
+    },
+    {
+      name: "Macchiato",
+      price: "₱4.50",
+      image: "/OurCoffee/coffee7.png "
+    },
+    {
+      name: "Frappé",
+      price: "₱5.25",
+      image: "/OurCoffee/coffee5.png "
+    },
+    {
+      name: "Turkish Coffee",
+      price: "₱3.75",
+      image: "/OurCoffee/coffee9.png "
+    },
+    {
+      name: "Flat White",
+      price: "₱4.25",
+      image: "/OurCoffee/coffee10.png "
+    },
+    {
+      name: "Affogato",
+      price: "₱5.50",
+      image: "/OurCoffee/coffee12.png "
+    },
+    {
+      name: "Irish Coffee",
+      price: "₱6.00",
+      image: "/OurCoffee/coffee5.png"
+    }
+  ];
+
+
+  const galleryImages = [
+    "/SliderGallery/cup1.png",
+    "/SliderGallery/cup2.png",
+    "/SliderGallery/cup3.png ",
+    "/SliderGallery/cup4.png",
+    "/SliderGallery/cup5.png",
+    "/SliderGallery/cup6.png",
+    "/SliderGallery/cup7.png",
+    "/SliderGallery/cup8.png",
+    "/SliderGallery/cup9.png",
+    "/SliderGallery/cup10.png",
+    "/SliderGallery/cup11.png",
+    "/SliderGallery/cup12.png"
+  ];
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
   };
 
-  const coffeeBeans = generateCoffeeBeans();
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert('Message sent successfully!');
+    setFormData({ fullName: '', email: '', message: '' });
+  };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <style jsx>{`
-        @keyframes slide-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
-        }
-        
-        @keyframes slide-right {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(0); }
-        }
-        
-        @keyframes fall {
-          0% {
-            transform: translateY(-10px) rotate(0deg);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(100vh) rotate(360deg);
-            opacity: 0;
-          }
-        }
-        
-        .slide-left {
-          animation: slide-left 20s linear infinite;
-        }
-        
-        .slide-right {
-          animation: slide-right 20s linear infinite;
-        }
-        
-        .coffee-bean {
-          position: fixed;
-          pointer-events: none;
-          z-index: 1;
-          animation: fall linear infinite;
-        }
-        
-        .coffee-bean {
-            position: relative;
-            width: 40px;
-            height: 20px;
-            margin: 50px auto;
-          }
+    <div className="min-h-screen">
+      {/* Hero Section */}
+        <section className="min-h-screen flex items-center justify-between px-8 lg:px-16" style={{backgroundColor: '#4C4B16'}}>
+      <div className="flex-1 text-white text-center lg:text-left">
+        {/* Image Above the Heading */}
+        <img 
+          src="/Gallery3/animecafe.png" 
+          alt="Coffee Decoration"
+          className="mx-auto lg:mx-0 mb-6 w-40 h-auto"
+        />
 
-          .coffee-bean::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(140deg, #6f3a00 0%, #4b2600 50%, #8B4513 100%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            box-shadow: 
-              inset -6px 4px 10px rgba(0, 0, 0, 0.6),
-              inset 2px -2px 5px rgba(255, 255, 255, 0.2),
-              0 4px 8px rgba(0, 0, 0, 0.3);
-            
-            /* 3D effect via transform */
-            transform: rotate(15deg) scale(1);
-            transform-origin: center;
-            transition: transform 0.3s ease;
-          }
+        <h1 className="text-3xl lg:text-6xl font-bold mb-6 leading-snug tracking-wide max-w-3xl">
+          Take A Break, Have The Best Coffee
+        </h1>
 
-          /* Optional: Add a highlight for more depth */
-          .coffee-bean::after {
-            content: '';
-            position: absolute;
-            width: 25%;
-            height: 40%;
-            top: 30%;
-            left: 25%;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            transform: rotate(-20deg);
-            opacity: 0.8;
-          }
-
-          /* Background image styles - REMOVED OVERLAY */
-          .main-background {
-            background-image: url('/Gallery3/coffeebeans.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: calc(100vh - 80px); /* Adjust based on header height */
-          }
-
-          /* REMOVED THE OVERLAY - No ::before pseudo-element anymore */
-      `}
-      </style>
-
-      {/* Falling Coffee Seeds Animation - only when coffee mode is active */}
-      {coffeeMode && (
-        <div className="fixed inset-0 pointer-events-none z-1">
-          {coffeeBeans.map((bean) => (
-            <div
-              key={bean.id}
-              className="coffee-bean"
-              style={{
-                left: `${bean.left}%`,
-                animationDelay: `${bean.animationDelay}s`,
-                animationDuration: `${bean.animationDuration}s`,
-                fontSize: `${bean.size}px`,
-              }}
-            />
-          ))}
+        <div className="flex gap-3 flex-wrap justify-center lg:justify-start">
+          <button className="bg-white hover:bg-amber-100 text-black px-4 py-2 rounded text-sm font-medium transition-colors duration-300">
+            Order Now
+          </button>
+          <button className="border border-white hover:bg-white hover:text-gray-800 text-white px-4 py-2 rounded text-sm font-medium transition-colors duration-300">
+            Contact Us
+          </button>
         </div>
-      )}
-
-      {/* Header - separate from background */}
-      <header className={`relative border-b z-50 ${coffeeMode ? 'border-b-lime-950 bg-[#4C4B16]' : 'border-white bg-white'}`}>
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Hamburger Menu */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className={`p-2 border rounded-lg transition-colors ${coffeeMode ? ' text-amber-50 hover:bg-amber-700 bg-[#4C4B16]' : 'bg-[#4C4B16] text-white hover:bg-[#5a5221] border-[#4C4B16]'}`}
-            >
-              <Menu size={24} />
-            </button>
-            {/* Logo and Brand Name on the right side */}
-            <div className="flex items-center space-x-4 ml-auto">
-              <h1 className={`text-2xl font-bold ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>Brew-Coffee</h1>
-              <img
-                src="/Gallery3/coffee.png"
-                alt="Coffee Shop Logo"
-                className="w-12 h-12"
-              />
-            </div>
-            {/* Spacer */}
-            <div className="w-12"></div>
-          </div>
-        </div>
-
-        {/* Slide-out Menu */}
-        {menuOpen && (
-          <div className="fixed inset-0 z-50 bg-blur bg-opacity-50">
-            <div className={`absolute left-0 top-0 h-full w-50 shadow-lg ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-[#e0e0e0]'}`}>
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-8">
-                <h3 className="text-xl font-bold">
-                <img src="/Gallery3/coffee.png" alt="Logo" className="h-10 w-auto" />
-              </h3>
-                  <button
-                    onClick={() => setMenuOpen(false)}
-                    className={`p-2 transition-colors ${coffeeMode ? 'hover:bg-amber-800 text-amber-50' : 'hover:bg-gray-100 text-[#4C4B16]'}`}
-                  >
-                    <X size={24} />
-                  </button>
-                </div>
-
-                <nav>
-                  <ul className="space-y-6">
-                    <li>
-                      <a
-                        href="#home"
-                        className={`flex items-center text-lg transition-colors py-2 ${coffeeMode ? 'text-amber-50 hover:text-amber-200' : 'text-[#4C4B16] hover:text-[#5a5221]'}`}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        <FaHome className="mr-2" /> Home
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#menu"
-                        className={`flex items-center text-lg transition-colors py-2 ${coffeeMode ? 'text-amber-50 hover:text-amber-200' : 'text-[#4C4B16] hover:text-[#5a5221]'}`}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        <FaUtensils className="mr-2" /> Menu
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#contact"
-                        className={`flex items-center text-lg transition-colors py-2 ${coffeeMode ? 'text-amber-50 hover:text-amber-200' : 'text-[#4C4B16] hover:text-[#5a5221]'}`}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        <FaEnvelope className="mr-2" /> Contact Us
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#about"
-                        className={`flex items-center text-lg transition-colors py-2 ${coffeeMode ? 'text-amber-50 hover:text-amber-200' : 'text-[#4C4B16] hover:text-[#5a5221]'}`}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        <FaInfoCircle className="mr-2" /> About Us
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#gallery"
-                        className={`flex items-center text-lg transition-colors py-2 ${coffeeMode ? 'text-amber-50 hover:text-amber-200' : 'text-[#4C4B16] hover:text-[#5a5221]'}`}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        <FaImage className="mr-2" /> Gallery
-                      </a>
-                      {/* Coffee Mode toggle below Gallery */}
-                      <div className="flex items-center space-x-2 mt-3 ml-2">
-                        <FaMoon className={`text-lg ${coffeeMode ? 'text-amber-200' : 'text-[#4C4B16]'}`} />
-                        <button
-                          onClick={() => setCoffeeMode(!coffeeMode)}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-gray-300'}`}
-                        >
-                          <span
-                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${coffeeMode ? 'translate-x-6' : 'translate-x-1'}`}
-                          />
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/* Hero Section with background */}
-      <div className={`main-background relative ${coffeeMode ? 'coffee-mode' : ''}`}>
-        <section id="home" className="container mx-auto px-4 py-16 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-center  md:text-left">
-              <img
-                src="/Gallery3/animecafe.png"
-                alt="Coffee Logo"
-                className="mx-auto md:mx-0 mb-0 w-70 h-70 object-contain"
-              />
-              <h2 className={`text-6xl font-bold leading-tight -mt-2 ${coffeeMode ? 'text-lime-950' : 'text-[#4C4B16]'}`}>
-                Take A Break<br />
-                Have The Best Coffee
-              </h2>
-              <a href="/order">
-                <button className={`rounded-lg px-8 py-4 text-lg transition-colors mt-6 ${coffeeMode ? 'bg-[#4C4B16] text-amber-50 hover:bg-amber-600' : 'bg-[#4C4B16] text-white hover:bg-[#5a5221]'}`}>
-                  ORDER NOW
-                </button>
-              </a>
-            </div>
-            <div className="flex justify-center relative">
-              <div className="relative w-[600px] h-[600px] flex items-center justify-center">
-                <img
-                  src="/Gallery3/CoffeeP.png"
-                  alt="Coffee Cup"
-                  className="w-[460px] h-[460px] object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
 
-      {/* Rest of content with original background */}
-      <div className={`transition-colors duration-300 ${coffeeMode ? 'bg-[#4C4B16] text-amber-50' : 'text-[#4C4B16] bg-white'}`}>
-        {/* Coffee Menu */}
-        
-      {/* Coffee Menu */}
-      <section id="menu" className="container mx-auto px-4 py-16 relative z-10">
-        <h3
-          className={`text-4xl font-bold text-center mb-6 ${
-            coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'
-          }`}
-        >
-          Our Coffee
-        </h3>
+      <div className="flex-1 flex justify-center items-center">
+        <img 
+          src="/Gallery3/coffeeP-v1.png" 
+          alt="Coffee Cup PNG"
+          className="w-140 h-140 max-w-full drop-shadow-2xl"
+        />
+      </div>
+    </section>
 
-     {/* Full-width description with fade-in + stylish font */}
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className={`text-lg md:text-xl font-semibold tracking-wide text-center mb-12 w-full font-serif ${
-          coffeeMode ? 'text-amber-100' : 'text-[#4C4B16]'
-        }`}
-      >
-        At BrewMaster, every cup is crafted to bring warmth and comfort. 
-        We roast our beans with care, brew with precision, and serve 
-        with passion—so you can enjoy rich flavors, smooth textures, 
-        and the perfect aroma in every sip.
-      </motion.p>
-      
-        <div className="grid md:grid-cols-4 gap-8">
-          {coffeeProducts.map((coffee) => (
-            <div
-              key={coffee.id}
-              className={`text-center border p-6 transition-colors group ${
-                coffeeMode
-                  ? 'border-b-lime-950 hover:bg-amber-800 hover:text-amber-50 text-amber-50 bg-[#4C4B16]'
-                  : 'border-white hover:bg-[#4C4B16] hover:text-white text-[#4C4B16] bg-white'
-              }`}
-            >
-              <img
-                src={coffee.image}
-                alt={coffee.name}
-                className="w-full h-48 object-contain mb-4"
+      {/* About Us Section */}
+      <section className="min-h-screen bg-white py-16 px-8 lg:px-16">
+        <h2 className="text-5xl font-bold text-center mb-16 text-black">About Us</h2>
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <div className="flex-1 pr-12">
+            <img 
+              src="Gallery3/animecafe-v3.png" 
+              alt="Coffee Shop PNG"
+              className="w-100 h-100 object-contain rounded-full  "
+            />
+          </div>
+          <div className="flex-1 pl-12">
+            <p className="text-lg text-black leading-relaxed mb-6">
+              Welcome to Brew Coffee, where passion meets perfection in every cup. Since our establishment, 
+              we have been dedicated to sourcing the finest coffee beans from around the world and crafting 
+              exceptional beverages that awaken your senses.
+            </p>
+            <p className="text-lg text-black leading-relaxed mb-6">
+              Our skilled baristas combine traditional brewing methods with modern techniques to create 
+              unique flavor profiles that cater to every coffee lover's palate. We believe that great 
+              coffee brings people together, creating moments of connection and joy.
+            </p>
+            <p className="text-lg text-black leading-relaxed">
+              From our cozy atmosphere to our commitment to sustainability, every aspect of Brew Coffee 
+              is designed to provide you with an unforgettable coffee experience. Come join our community 
+              of coffee enthusiasts and discover your new favorite brew.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Menu Section */}
+      <section className="min-h-screen py-16 px-8 lg:px-16" style={{backgroundColor: '#4C4B16'}}>
+        <h2 className="text-5xl font-bold text-center mb-16 text-white">Our Menu</h2>
+        <div className="max-w-full mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+          {menuItems.map((item, index) => (
+            <div key={index} className=" overflow-hidden hover:transform hover:scale-105 transition-transform duration-300">
+              <img 
+                src={item.image} 
+                alt={item.name}
+                className="w-full h-64 object-contain"
               />
-              <h4 className="text-xl font-semibold">{coffee.name}</h4>
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-white mb-2">{item.name}</h3>
+                <p className="text-3xl font-bold text-white">{item.price}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-        {/* About Us */}
-        <section id="about" className="container mx-auto px-4 py-16 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <img
-                src="https://png.pngtree.com/png-vector/20241015/ourmid/pngtree-latte-coffee-art-in-a-cup-png-image_14096762.png"
-                alt="Coffee Shop Interior"
-                className="w-135 h-135"
-              />
-            </div>
-            <div>
-              <h3 className={`text-4xl font-bold mb-6 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>About Us</h3>
-              <p className={`text-lg mb-4 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
-                Welcome to BrewMaster, where passion meets perfection in every cup. Since 2010, we've been dedicated to serving the finest coffee experience in the city.
-              </p>
-              <p className={`text-lg mb-4 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
-                Our advantages include:
-              </p>
-              <ul className={`text-lg space-y-2 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
-                <li>• Premium quality beans sourced directly from farmers</li>
-                <li>• Expert baristas with years of experience</li>
-                <li>• Cozy atmosphere perfect for work or relaxation</li>
-                <li>• Freshly roasted coffee daily</li>
-                <li>• Sustainable and ethical sourcing practices</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-      {/* Desserts */}
-    <section className={`container mx-auto px-4 py-16 relative z-10 ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-white'}`}>
-      <h3 className={`text-4xl font-bold text-center mb-8 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>Sweet Treats</h3>
-      
-      {/* Customer-friendly description */}
-      <div className="max-w-7xl mx-auto text-center mb-12">
-        <p className={`text-lg leading-relaxed ${coffeeMode ? 'text-amber-100' : 'text-[#4C4B16]'}`}>
-          Indulge in our carefully curated collection of decadent desserts, each crafted to provide the perfect sweet ending to your meal. From rich, velvety textures to delightfully crisp bites, our sweet treats are made with premium ingredients and designed to satisfy every craving. Whether you're looking for a classic favorite or something uniquely special, each dessert promises a moment of pure indulgence that will leave you planning your next visit.
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-4 gap-6">
-        {desserts.map(dessert => (
-          <div key={dessert.id} className={`text-center border p-4 transition-colors group ${coffeeMode ? ' bg-[#4C4B16] hover:bg-lime-950 hover:text-amber-50 text-amber-50' : 'bg-white border-white hover:bg-[#4C4B16] hover:text-white text-[#4C4B16]'}`}>
-            <img
-              src={dessert.image}
-              alt={dessert.name}
-              className="w-full h-42 object-contain mb-4"
+     {/* Testimonials Section */}
+    <section className="min-h-screen bg-white py-20 px-8 lg:px-16">
+      <h2 className="text-6xl font-bold text-center mb-20 text-black">Testimonials</h2>
+      <div className="max-w-6xl mx-auto">
+        <div className="relative bg-gray-50 rounded-lg p-16 shadow-xl min-h-96">
+          <div className="text-center">
+            <img 
+              src={testimonials[currentTestimonial].image} 
+              alt={testimonials[currentTestimonial].name}
+              className="w-32 h-32 rounded-full mx-auto mb-8 object-cover border-6"
+              style={{ borderColor: "#4C4B16" }}
             />
-            <h4 className="text-lg font-semibold mb-2">{dessert.name}</h4>
+            <p className="text-2xl text-black italic mb-8 leading-relaxed max-w-4xl mx-auto">
+              "{testimonials[currentTestimonial].comment}"
+            </p>
+            <h4 className="text-3xl font-bold text-black">
+              {testimonials[currentTestimonial].name}
+            </h4>
           </div>
-        ))}
+          
+          <button 
+            onClick={prevTestimonial}
+            className="absolute left-6 top-1/2 transform -translate-y-1/2 text-white p-4 rounded-full transition-colors duration-300 shadow-lg"
+            style={{ backgroundColor: "#4C4B16" }}
+          >
+            <ChevronLeft size={28} />
+          </button>
+          
+          <button 
+            onClick={nextTestimonial}
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 text-white p-4 rounded-full transition-colors duration-300 shadow-lg"
+            style={{ backgroundColor: "#4C4B16" }}
+          >
+            <ChevronRight size={28} />
+          </button>
+        </div>
+        
+        <div className="flex justify-center mt-10 space-x-3">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentTestimonial(index)}
+              className={`w-4 h-4 rounded-full transition-colors duration-300 ${
+                index === currentTestimonial ? 'active-dot' : 'bg-gray-300'
+              }`}
+              style={index === currentTestimonial ? { backgroundColor: "#4C4B16" } : {}}
+            />
+          ))}
+        </div>
       </div>
     </section>
 
-        {/* Our Gallery */}
-        <section id="gallery" className="py-16 overflow-hidden relative z-10">
-          <div className="container mx-auto px-4 mb-12">
-            <h3 className={`text-4xl font-bold text-center ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>Our Gallery</h3>
-          </div>
-          <div className="space-y-6">
-            {galleryRows.map((row, rowIndex) => (
-              <div key={rowIndex} className="relative w-full overflow-hidden">
-                <div className={`flex space-x-6 ${rowIndex % 2 === 0 ? 'slide-left' : 'slide-right'}`}>
-                  {[...row, ...row, ...row].map((imageUrl, imageIndex) => (
-                    <div key={imageIndex} className="flex-shrink-0">
-                      <div className={`w-80 h-64 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow p-2 ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-white'}`}>
-                        <img
-                          src={imageUrl}
-                          alt={`Gallery ${rowIndex + 1}-${imageIndex + 1}`}
-                          className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    </div>
-                  ))}
+    {/* Gallery Section */}
+      <section className="bg-white py-16 px-8 lg:px-16 overflow-hidden">
+        <h2 className="text-5xl font-bold text-center mb-16 text-black">Gallery</h2>
+        <div className="space-y-8">
+          {/* First Row - Sliding Left */}
+          <div className="w-full overflow-hidden">
+            <div className="flex animate-pulse hover:animate-none" style={{
+              animation: 'slideLeft 40s linear infinite',
+              width: 'calc(100% * 3)'
+            }}>
+              {[...galleryImages, ...galleryImages, ...galleryImages].map((image, index) => (
+                <div key={`left-${index}`} className="flex-shrink-0 mx-4">
+                  <img 
+                    src={image} 
+                    alt={`Gallery ${(index % galleryImages.length) + 1}`}
+                    className="w-64 h-64 object-contain shadow-lg hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      {/* Footer - separate from background */}
-      <footer id="contact" className={`py-12 relative z-10 ${coffeeMode ? 'bg-[#4C4B16] text-amber-50' : 'bg-[#4C4B16] text-white'}`}>
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="flex items-start space-x-6">
-              <img
-                src="/Gallery3/coffee.png"
-                alt="Coffee Shop Logo"
-                className="w-30 h-30"
-              />
-              <div className="ml-24">
-                <h4 className={`text-xl font-bold mb-4 flex items-center space-x-2 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>
-                  <FaClock />
-                  <span>Opening Hours</span>
-                </h4>
-                <ul className={`space-y-2 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>
-                  <li>
-                    <p className="font-semibold">Monday - Friday:</p>
-                    <p>7:00 AM - 9:00 PM</p>
-                  </li>
-                  <li>
-                    <p className="font-semibold">Saturday:</p>
-                    <p>8:00 AM - 10:00 PM</p>
-                  </li>
-                  <li>
-                    <p className="font-semibold">Sunday:</p>
-                    <p>8:00 AM - 6:00 PM</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <h4 className={`text-xl font-bold mb-4 flex items-center space-x-2 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>
-                <FaInfoCircle />
-                <span>Contact Information</span>
-              </h4>
-              <p className={`mb-2 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>456 Maple Avenue</p>
-              <p className={`mb-2 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>Vancouver, BC V5K 0A1</p>
-              <p className={`mb-2 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>Phone: (604) 987-6543</p>
-              <p className={`${coffeeMode ? 'text-amber-50' : 'text-white'}`}>Email: info@brewmaster.com</p>
-            </div>
-            <div className="ml-20">
-              <h4 className={`text-xl font-bold mb-4 flex items-center space-x-2 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>
-                <FaBullhorn />
-                <span>Follow Us</span>
-              </h4>
-              <div className={`flex space-x-4 ${coffeeMode ? 'text-amber-50' : 'text-white'}`}>
-                <a href="https://facebook.com" aria-label="Facebook">
-                  <FaFacebook size={24} />
-                </a>
-                <a href="https://twitter.com" aria-label="Twitter">
-                  <FaTwitter size={24} />
-                </a>
-                <a href="https://instagram.com" aria-label="Instagram">
-                  <FaInstagram size={24} />
-                </a>
-              </div>
+              ))}
             </div>
           </div>
-          <div className={`border-t mt-5 pt-5 text-center ${coffeeMode ? 'border-white text-amber-50' : 'border-white text-white'}`}>
-            <p>&copy; 2025 Brew-Coffee Shop. Build by: PhilipElbambo.</p>
+          
+          {/* Second Row - Sliding Right */}
+          <div className="w-full overflow-hidden">
+            <div className="flex hover:animate-none" style={{
+              animation: 'slideRight 40s linear infinite',
+              width: 'calc(100% * 3)',
+              transform: 'translateX(-33.333%)'
+            }}>
+              {[...galleryImages, ...galleryImages, ...galleryImages].map((image, index) => (
+                <div key={`right-${index}`} className="flex-shrink-0 mx-4">
+                  <img 
+                    src={image} 
+                    alt={`Gallery ${(index % galleryImages.length) + 1}`}
+                    className="w-64 h-64 object-contain shadow-lg hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </footer>
+        
+        <style jsx>{`
+          @keyframes slideLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-33.333%); }
+          }
+          
+          @keyframes slideRight {
+            0% { transform: translateX(-33.333%); }
+            100% { transform: translateX(0); }
+          }
+        `}</style>
+      </section>
+      {/* Contact Us Section */}
+      <section className="bg-white py-16 px-8 lg:px-16">
+        <h2 className="text-5xl font-bold text-center mb-16 text-black">Contact Us</h2>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+          
+          {/* Left Side - Contact Info and Social Media */}
+          <div>
+            <h3 className="text-3xl font-bold text-gray-800 mb-8">Get In Touch</h3>
+            
+            <div className="space-y-6">
+              <div className="flex items-center space-x-4">
+                <Phone className="text-amber-600" size={24} />
+                <span className="text-lg text-gray-700">+1 (555) 123-4567</span>
+              </div>
+              
+              <div className="flex items-center space-x-4">
+                <Mail className="text-amber-600" size={24} />
+                <span className="text-lg text-gray-700">info@brewcoffee.com</span>
+              </div>
+            </div>
+
+            <h4 className="text-2xl font-bold text-gray-800 mt-12 mb-6">Follow Us</h4>
+            <div className="flex space-x-4">
+              <a href="#" className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-colors duration-300">
+                <Facebook size={24} />
+              </a>
+              <a href="#" className="bg-pink-600 hover:bg-pink-700 text-white p-3 rounded-full transition-colors duration-300">
+                <Instagram size={24} />
+              </a>
+              <a href="#" className="bg-blue-400 hover:bg-blue-500 text-white p-3 rounded-full transition-colors duration-300">
+                <Twitter size={24} />
+              </a>
+              <a href="#" className="bg-gray-800 hover:bg-gray-900 text-white p-3 rounded-full transition-colors duration-300">
+                <Coffee size={24} />
+              </a>
+              <a href="#" className="bg-green-600 hover:bg-green-700 text-white p-3 rounded-full transition-colors duration-300">
+                <MessageCircle size={24} />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Side - Contact Form */}
+          <div>
+            <h3 className="text-3xl font-bold text-gray-800 mb-8">Send us a Message</h3>
+            <div className="space-y-6">
+              <div>
+                <label htmlFor="fullName" className="block text-lg font-semibold text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-transparent outline-none text-lg"
+                  placeholder="Enter your full name"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="email" className="block text-lg font-semibold text-gray-700 mb-2">
+                  Email Account
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-transparent outline-none text-lg"
+                  placeholder="Enter your email address"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="message" className="block text-lg font-semibold text-gray-700 mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-transparent outline-none text-lg resize-vertical"
+                  placeholder="Enter your message"
+                />
+              </div>
+              
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="w-full bg-[#4C4B16] hover:bg-green-600 text-white py-4 px-6 rounded-lg text-xl font-semibold transition-colors duration-300"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default CoffeeShopLanding;
+export default BrewCoffeeHomepage;
