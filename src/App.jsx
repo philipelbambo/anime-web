@@ -9,11 +9,10 @@ const NotFoundPage = lazy(() => import('./assets/components/pages/NotFoundPage')
 const Dashboard = lazy(() => import('./assets/components/pages/dashboard'));
 const ProductsPage = lazy(() => import('./assets/components/pages/ManageProduct'));
 const MessagePage = lazy(() => import('./assets/components/pages/Message'));
-const OrdersPage = lazy(() => import('./assets/components/pages/Orders'));
 const CustomersPage = lazy(() => import('./assets/components/pages/Customers'));
 const SummaryPage = lazy(() => import('./assets/components/pages/Summary'));
 const ReportsPage = lazy(() => import('./assets/components/pages/Reports'));
-const Order = lazy(() => import('./assets/components/pages/Order'));
+const OrderNow = lazy(() => import('./assets/components/pages/OrderNow'));
 
 
 
@@ -41,14 +40,14 @@ function App() {
           <Route index element={<Suspense fallback={<LoadingPage />}><Dashboard /></Suspense>} />
           <Route path='products' element={<Suspense fallback={<LoadingPage />}><ProductsPage /></Suspense>}/>
           <Route path='message' element={<Suspense fallback={<LoadingPage />}><MessagePage /></Suspense>}/>
-          <Route path='orders' element={<Suspense fallback={<LoadingPage />}><OrdersPage /></Suspense>}/>
           <Route path='customers' element={<Suspense fallback={<LoadingPage />}><CustomersPage /></Suspense>}/>
           <Route path='summary' element={<Suspense fallback={<LoadingPage />}><SummaryPage /></Suspense>}/>
           <Route path='reports' element={<Suspense fallback={<LoadingPage />}><ReportsPage /></Suspense>}/>
 
         </Route>
 
-          <Route path='/order' element={<Suspense fallback={<LoadingPage />}><Order /></Suspense>}/>
+          <Route path='/OrderNow' element={<Suspense fallback={<LoadingPage />}><OrderNow /></Suspense>}/>
+
         <Route path='*' element={<NotFoundPage />}/>
         
       </Routes>
