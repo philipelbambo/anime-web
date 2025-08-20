@@ -18,6 +18,8 @@ const BrewCoffeeOrderSystem = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [selectedCoffee, setSelectedCoffee] = useState(null);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [selectedDesserts, setSelectedDesserts] = useState({});
 
   // Checkout form state
   const [checkoutForm, setCheckoutForm] = useState({
@@ -37,7 +39,6 @@ const BrewCoffeeOrderSystem = () => {
       id: 1,
       name: 'Espresso',
       price: 195.0,
-      description: 'Rich, bold shot of pure coffee perfection',
       fullDescription:
         'A concentrated coffee beverage brewed by forcing a small amount of nearly boiling water under pressure through finely-ground coffee beans. Our espresso is made from premium Arabica beans, delivering an intense flavor with a thick, golden crema on top. Perfect for coffee purists who appreciate the authentic taste of coffee.',
       image: '/SliderGallery/cup1.png',
@@ -50,10 +51,9 @@ const BrewCoffeeOrderSystem = () => {
       id: 2,
       name: 'Americano',
       price: 220.0,
-      description: 'Smooth espresso with hot water',
       fullDescription:
         'A simple yet elegant coffee drink made by diluting espresso with hot water. This creates a drink similar in strength to drip coffee but with a distinctly different flavor profile. Our Americano maintains the rich flavor of espresso while providing a smoother, less intense drinking experience.',
-      image: 'https://your-image-url.com/americano.png',
+      image: '/SliderGallery/cup2.png',
       category: 'Hot',
       ingredients: ['Espresso', 'Hot Water'],
       caffeine: 'High',
@@ -63,10 +63,9 @@ const BrewCoffeeOrderSystem = () => {
       id: 3,
       name: 'Cappuccino',
       price: 250.0,
-      description: 'Espresso with steamed milk and foam',
       fullDescription:
         'A perfect balance of rich espresso, steamed milk, and velvety microfoam. Our cappuccino is crafted with equal parts espresso, steamed milk, and milk foam, creating a harmonious blend that\'s both creamy and bold. Traditionally served in a 6oz cup for the perfect coffee-to-milk ratio.',
-      image: 'https://your-image-url.com/cappuccino.png',
+      image: '/SliderGallery/cup3.png',
       category: 'Hot',
       ingredients: ['Espresso', 'Steamed Milk', 'Milk Foam'],
       caffeine: 'Medium',
@@ -76,10 +75,9 @@ const BrewCoffeeOrderSystem = () => {
       id: 4,
       name: 'Latte',
       price: 280.0,
-      description: 'Smooth espresso with steamed milk',
       fullDescription:
         'A creamy and mild coffee drink made with espresso and steamed milk, topped with a thin layer of milk foam. Our latte is perfect for those who enjoy coffee with a smooth, creamy texture. The milk\'s sweetness balances the espresso\'s intensity, creating a comforting and satisfying beverage.',
-      image: 'https://your-image-url.com/latte.png',
+      image: '/SliderGallery/cup4.png',
       category: 'Hot',
       ingredients: ['Espresso', 'Steamed Milk', 'Light Foam'],
       caffeine: 'Medium',
@@ -89,10 +87,9 @@ const BrewCoffeeOrderSystem = () => {
       id: 5,
       name: 'Mocha',
       price: 310.0,
-      description: 'Espresso with chocolate and steamed milk',
       fullDescription:
         'The perfect marriage of coffee and chocolate. Our mocha combines rich espresso with premium chocolate syrup and steamed milk, topped with whipped cream. It\'s like drinking a liquid chocolate bar with the perfect coffee kick. Ideal for those who want to indulge their sweet tooth.',
-      image: 'https://your-image-url.com/mocha.png',
+      image: '/SliderGallery/cup5.png',
       category: 'Hot',
       ingredients: ['Espresso', 'Chocolate Syrup', 'Steamed Milk', 'Whipped Cream'],
       caffeine: 'Medium',
@@ -102,10 +99,9 @@ const BrewCoffeeOrderSystem = () => {
       id: 6,
       name: 'Cold Brew',
       price: 240.0,
-      description: 'Smooth, cold-steeped coffee',
       fullDescription:
         'Coffee brewed with cold water over 12-24 hours, resulting in a smooth, less acidic beverage with a naturally sweet flavor. Our cold brew is made from coarsely ground coffee beans steeped in cold water, creating a concentrate that\'s diluted to perfection. Refreshing and energizing.',
-      image: 'https://your-image-url.com/coldbrew.png',
+      image: '/SliderGallery/cup6.png',
       category: 'Cold',
       ingredients: ['Cold Brew Concentrate', 'Water', 'Ice'],
       caffeine: 'High',
@@ -115,10 +111,9 @@ const BrewCoffeeOrderSystem = () => {
       id: 7,
       name: 'Iced Latte',
       price: 295.0,
-      description: 'Chilled espresso with cold milk',
       fullDescription:
         'A refreshing take on the classic latte, served over ice. Our iced latte combines rich espresso with cold milk and ice, creating a smooth and creamy beverage perfect for warm days. The cold temperature brings out different flavor notes in the coffee while maintaining that creamy texture you love.',
-      image: 'https://your-image-url.com/icedlatte.png',
+      image: '/SliderGallery/cup7.png',
       category: 'Cold',
       ingredients: ['Espresso', 'Cold Milk', 'Ice'],
       caffeine: 'Medium',
@@ -128,14 +123,35 @@ const BrewCoffeeOrderSystem = () => {
       id: 8,
       name: 'Frappé',
       price: 335.0,
-      description: 'Blended iced coffee with whipped cream',
       fullDescription:
         'A decadent blended coffee drink that\'s part beverage, part dessert. Our frappé combines espresso with milk, ice, and sugar, blended to a smooth, frothy consistency and topped with whipped cream. It\'s the ultimate indulgent coffee treat that\'s both refreshing and satisfying.',
-      image: 'https://your-image-url.com/frappe.png',
+      image: '/SliderGallery/cup8.png',
       category: 'Cold',
       ingredients: ['Espresso', 'Milk', 'Ice', 'Sugar', 'Whipped Cream'],
       caffeine: 'Medium',
       size: '16 oz',
+    },
+  ];
+
+  // Desserts
+  const desserts = [
+    {
+      id: 'dessert1',
+      name: 'Chocolate Cake',
+      price: 150.0,
+      image: '/SliderGallery/bread1.png',
+    },
+    {
+      id: 'dessert2',
+      name: 'Croissant',
+      price: 95.0,
+      image: '/SliderGallery/bread2.png',
+    },
+    {
+      id: 'dessert3',
+      name: 'Cookie',
+      price: 60.0,
+      image: '/SliderGallery/bread3.png',
     },
   ];
 
@@ -176,18 +192,21 @@ const BrewCoffeeOrderSystem = () => {
     'Bangsamoro Autonomous Region',
   ];
 
-  const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prevCart, { ...product, quantity: 1 }];
-    });
+  // Add coffee + desserts to cart
+  const addToCart = (coffee) => {
+    const cartItem = {
+      ...coffee,
+      id: `${coffee.id}-${Date.now()}`, // unique ID for cart item
+      quantity: 1,
+      desserts: Object.keys(selectedDesserts).map((dessertId) => {
+        const dessert = desserts.find((d) => d.id === dessertId);
+        const qty = selectedDesserts[dessertId];
+        return { ...dessert, quantity: qty };
+      }),
+    };
+    setCart((prev) => [...prev, cartItem]);
+    setSelectedDesserts({});
+    setIsAddingToCart(false);
   };
 
   const updateQuantity = (id, newQuantity) => {
@@ -202,12 +221,45 @@ const BrewCoffeeOrderSystem = () => {
     }
   };
 
+  const updateDessertQuantity = (cartItemId, dessertId, newQty) => {
+    if (newQty <= 0) {
+      setCart((prevCart) =>
+        prevCart.map((item) => {
+          if (item.id !== cartItemId) return item;
+          return {
+            ...item,
+            desserts: item.desserts.filter((d) => d.id !== dessertId),
+          };
+        })
+      );
+    } else {
+      setCart((prevCart) =>
+        prevCart.map((item) => {
+          if (item.id !== cartItemId) return item;
+          return {
+            ...item,
+            desserts: item.desserts.map((d) =>
+              d.id === dessertId ? { ...d, quantity: newQty } : d
+            ),
+          };
+        })
+      );
+    }
+  };
+
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    return cart.reduce((total, item) => {
+      const coffeeTotal = item.price * item.quantity;
+      const dessertTotal = item.desserts?.reduce(
+        (sum, d) => sum + d.price * d.quantity,
+        0
+      ) || 0;
+      return total + coffeeTotal + dessertTotal;
+    }, 0).toFixed(2);
   };
 
   const formatPrice = (price) => {
@@ -215,7 +267,10 @@ const BrewCoffeeOrderSystem = () => {
   };
 
   const getTotalItems = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+    return cart.reduce((total, item) => {
+      const dessertCount = item.desserts?.reduce((sum, d) => sum + d.quantity, 0) || 0;
+      return total + item.quantity + dessertCount;
+    }, 0);
   };
 
   const handleFormChange = (field, value) => {
@@ -271,7 +326,7 @@ const BrewCoffeeOrderSystem = () => {
   };
 
   const CoffeeImage = ({ coffee }) => (
-    <div className="w-full h-48 mb-4 rounded-xl overflow-hidden shadow">
+    <div className="w-full h-60 mb-4 rounded-xl overflow-hidden">
       {coffee.image ? (
         <img
           src={coffee.image}
@@ -294,7 +349,6 @@ const BrewCoffeeOrderSystem = () => {
       {/* Header */}
       <header className="border-b border-gray-200 sticky top-0 z-50 bg-white">
         <div className="container mx-auto px-6 py-4 flex items-center">
-          {/* Back Button */}
           <button
             onClick={() => window.history.back()}
             className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -303,13 +357,11 @@ const BrewCoffeeOrderSystem = () => {
             <ArrowLeft className="w-6 h-6 text-[#4C4B16]" />
           </button>
 
-          {/* Logo */}
           <div className="flex items-center space-x-3">
             <Coffee className="w-8 h-8 text-[#4C4B16]" />
             <h1 className="text-3xl font-bold text-[#4C4B16]">Brew Coffee</h1>
           </div>
 
-          {/* Cart Button - Pushed to the right */}
           <div className="ml-auto">
             <button
               onClick={() => setIsCartOpen(true)}
@@ -341,13 +393,13 @@ const BrewCoffeeOrderSystem = () => {
           {coffeeProducts.map((coffee) => (
             <div
               key={coffee.id}
-              className="bg-gray-50 rounded-2xl p-6 border border-gray-200 transform transition-all duration-300 hover:scale-105 cursor-pointer shadow"
+              className=" p-6  transform transition-all duration-300 hover:scale-105 cursor-pointer "
               onClick={() => setSelectedCoffee(coffee)}
             >
               <CoffeeImage coffee={coffee} />
               <div className="text-center">
-                <h3 className="text-2xl font-bold mb-2">{coffee.name}</h3>
-                <p className="text-gray-600 mb-4 text-sm">{coffee.description}</p>
+                <h3 className="text-2xl font-bold mb-0">{coffee.name}</h3>
+                <p className="text-gray-600 mb-1 text-sm">{coffee.description}</p>
                 <div className="flex justify-between items-center">
                   <span className="text-2xl font-bold text-[#4C4B16]">{formatPrice(coffee.price)}</span>
                   <span className="bg-[#4C4B16] text-white px-3 py-1 rounded-full text-sm">
@@ -357,9 +409,9 @@ const BrewCoffeeOrderSystem = () => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    addToCart(coffee);
+                    setIsAddingToCart(coffee);
                   }}
-                  className="w-full mt-4 bg-[#4C4B16] hover:bg-[#3a3912] text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow"
+                  className="w-full mt-3 bg-[#4C4B16] hover:bg-[#3a3912] text-white py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow"
                 >
                   Add to Cart
                 </button>
@@ -374,19 +426,19 @@ const BrewCoffeeOrderSystem = () => {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
             <div className="relative">
-              <div className="h-64 overflow-hidden">
-                {selectedCoffee.image ? (
-                  <img
-                    src={selectedCoffee.image}
-                    alt={selectedCoffee.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-100 flex items-center justify-center border border-gray-300">
-                    <Coffee className="w-24 h-24 text-gray-500" />
-                  </div>
-                )}
-              </div>
+            <div className="h-64 flex items-center justify-center">
+              {selectedCoffee.image ? (
+                <img
+                  src={selectedCoffee.image}
+                  alt={selectedCoffee.name}
+                  className="w-60 h-60 object-cover rounded-lg "
+                />
+              ) : (
+                <div className="w-60 h-60 bg-gray-100 flex items-center justify-center border border-gray-300 rounded-lg">
+                  <Coffee className="w-24 h-24 text-gray-500" />
+                </div>
+              )}
+            </div>
               <button
                 onClick={() => setSelectedCoffee(null)}
                 className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
@@ -455,6 +507,70 @@ const BrewCoffeeOrderSystem = () => {
         </div>
       )}
 
+      {/* Add to Cart Modal (Coffee + Desserts) */}
+      {isAddingToCart && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
+            <h3 className="text-2xl font-bold mb-4">Add Desserts</h3>
+            <p className="text-gray-600 mb-6">Would you like to add desserts to your {isAddingToCart.name}?</p>
+
+            <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
+              {desserts.map((dessert) => (
+                <div key={dessert.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <img src={dessert.image} alt={dessert.name} className="w-12 h-12 rounded object-cover" />
+                    <div>
+                      <p className="font-medium">{dessert.name}</p>
+                      <p className="text-sm text-gray-500">{formatPrice(dessert.price)}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() =>
+                        setSelectedDesserts((prev) => ({
+                          ...prev,
+                          [dessert.id]: Math.max(0, (prev[dessert.id] || 0) - 1),
+                        }))
+                      }
+                      className="bg-gray-200 hover:bg-gray-300 p-1 rounded w-8 text-center"
+                    >
+                      <Minus className="w-4 h-4 mx-auto" />
+                    </button>
+                    <span className="w-8 text-center font-semibold">{selectedDesserts[dessert.id] || 0}</span>
+                    <button
+                      onClick={() =>
+                        setSelectedDesserts((prev) => ({
+                          ...prev,
+                          [dessert.id]: (prev[dessert.id] || 0) + 1,
+                        }))
+                      }
+                      className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-1 rounded w-8 text-center"
+                    >
+                      <Plus className="w-4 h-4 mx-auto" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex space-x-4">
+              <button
+                onClick={() => setIsAddingToCart(false)}
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-[#4C4B16] py-3 rounded-lg font-semibold"
+              >
+                Skip
+              </button>
+              <button
+                onClick={() => addToCart(isAddingToCart)}
+                className="flex-1 bg-[#4C4B16] hover:bg-[#3a3912] text-white py-3 rounded-lg font-semibold"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Cart Modal */}
       {isCartOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -476,53 +592,70 @@ const BrewCoffeeOrderSystem = () => {
               {cart.length === 0 ? (
                 <p className="text-center text-gray-500 py-8">Your cart is empty</p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {cart.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex items-center justify-between bg-gray-50 p-4 rounded-xl"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 shadow border border-gray-200">
-                          {item.image ? (
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-full h-full object-cover hover:scale-105 transition-transform"
-                            />
-                          ) : (
-                            <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                              <Coffee className="w-12 h-12 text-gray-500" />
-                            </div>
-                          )}
+                    <div key={item.id} className="bg-gray-50 p-4 rounded-xl">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden">
+                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">{item.name}</h3>
+                            <p className="text-[#4C4B16] font-bold">{formatPrice(item.price)}</p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="font-semibold">{item.name}</h3>
-                          <p className="text-[#4C4B16] font-bold">{formatPrice(item.price)}</p>
+                        <div className="flex items-center space-x-3">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="bg-gray-200 hover:bg-gray-300 p-2 rounded-full"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="font-semibold w-8 text-center">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-2 rounded-full"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => removeFromCart(item.id)}
+                            className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full ml-2"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
 
-                      <div className="flex items-center space-x-3">
-                        <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="bg-gray-200 hover:bg-gray-300 p-2 rounded-full transition-colors"
-                        >
-                          <Minus className="w-4 h-4" />
-                        </button>
-                        <span className="font-semibold text-lg w-8 text-center">{item.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-2 rounded-full transition-colors"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => removeFromCart(item.id)}
-                          className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-colors ml-2"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
+                      {/* Desserts */}
+                      {item.desserts && item.desserts.length > 0 && (
+                        <div className="ml-20 mt-3 space-y-2 border-t pt-3">
+                          <p className="text-sm font-semibold text-gray-700">With Desserts:</p>
+                          {item.desserts.map((d) => (
+                            <div key={d.id} className="flex justify-between items-center text-sm">
+                              <span>
+                                {d.name} x{d.quantity}
+                              </span>
+                              <div className="flex items-center space-x-2">
+                                <button
+                                  onClick={() => updateDessertQuantity(item.id, d.id, d.quantity - 1)}
+                                  className="bg-gray-200 hover:bg-gray-300 p-1 rounded w-6"
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </button>
+                                <span className="font-medium">{formatPrice(d.price * d.quantity)}</span>
+                                <button
+                                  onClick={() => updateDessertQuantity(item.id, d.id, d.quantity + 1)}
+                                  className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-1 rounded w-6"
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -667,15 +800,9 @@ const BrewCoffeeOrderSystem = () => {
                               <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
                                 <h4 className="font-medium text-blue-900 mb-2">GCash Payment Details:</h4>
                                 <div className="text-sm text-blue-800">
-                                  <p>
-                                    <strong>GCash Number:</strong> {method.number}
-                                  </p>
-                                  <p>
-                                    <strong>Account Name:</strong> {method.accountName}
-                                  </p>
-                                  <p className="mt-2 text-blue-700">
-                                    Please send your payment and upload a screenshot below (optional).
-                                  </p>
+                                  <p><strong>GCash Number:</strong> {method.number}</p>
+                                  <p><strong>Account Name:</strong> {method.accountName}</p>
+                                  <p className="mt-2 text-blue-700">Please send your payment and upload a screenshot below (optional).</p>
                                 </div>
                               </div>
                             )}
@@ -716,16 +843,20 @@ const BrewCoffeeOrderSystem = () => {
                     <h3 className="text-lg font-bold mb-4">Order Summary</h3>
                     <div className="space-y-3">
                       {cart.map((item) => (
-                        <div key={item.id} className="flex justify-between items-center">
-                          <div>
-                            <span className="font-medium">{item.name}</span>
-                            <span className="text-gray-600 ml-2">x{item.quantity}</span>
+                        <div key={item.id} className="border-b pb-2">
+                          <div className="flex justify-between font-medium">
+                            <span>{item.name} x{item.quantity}</span>
+                            <span>{formatPrice(item.price * item.quantity)}</span>
                           </div>
-                          <span className="font-medium">{formatPrice(item.price * item.quantity)}</span>
+                          {item.desserts?.map((d) => (
+                            <div key={d.id} className="text-sm text-gray-600 ml-4">
+                              {d.name} x{d.quantity} = {formatPrice(d.price * d.quantity)}
+                            </div>
+                          ))}
                         </div>
                       ))}
-                      <div className="border-t border-gray-300 pt-3 mt-3">
-                        <div className="flex justify-between items-center">
+                      <div className="border-t pt-3 mt-3">
+                        <div className="flex justify-between">
                           <span className="text-lg font-bold">Total</span>
                           <span className="text-2xl font-bold text-[#4C4B16]">{formatPrice(getTotalPrice())}</span>
                         </div>

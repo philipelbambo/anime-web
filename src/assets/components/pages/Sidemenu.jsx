@@ -62,53 +62,6 @@ const SideMenu = () => {
           })}
         </ul>
       </nav>
-
-      {/* Logo at bottom with 3D animation */}
-      <div className="px-5 pt-5 flex justify-center">
-        <div 
-          className="p-4 rounded-full"
-          style={{
-            background: '#3A3A10' // same as header circle
-          }}
-        >
-          <img 
-            src="../Gallery1/animecat.png" 
-            alt="Logo" 
-            className="w-24 h-24 object-contain logo-3d"
-          />
-        </div>
-      </div>
-
-      <style jsx>{`
-        .logo-3d {
-          animation: rotate3D 4s infinite ease-in-out;
-          transform-style: preserve-3d;
-          transition: transform 0.3s ease;
-        }
-        
-        .logo-3d:hover {
-          animation-play-state: paused;
-          transform: rotateY(180deg) scale(1.1);
-        }
-        
-        @keyframes rotate3D {
-          0% {
-            transform: rotateY(0deg) rotateX(0deg);
-          }
-          25% {
-            transform: rotateY(90deg) rotateX(10deg);
-          }
-          50% {
-            transform: rotateY(180deg) rotateX(0deg);
-          }
-          75% {
-            transform: rotateY(270deg) rotateX(-10deg);
-          }
-          100% {
-            transform: rotateY(360deg) rotateX(0deg);
-          }
-        }
-      `}</style>
     </div>
   );
 };

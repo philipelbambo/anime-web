@@ -1,11 +1,8 @@
-
 import React, { useState } from 'react';
 import { Menu, X } from "lucide-react";
 // Added FaImage for the Gallery icon and FaMoon for dark mode
 import { FaHome, FaUtensils, FaEnvelope, FaInfoCircle, FaFacebook, FaTwitter, FaInstagram, FaClock, FaBullhorn, FaImage, FaMoon } from 'react-icons/fa';
 import { motion } from "framer-motion";
-
-
 
 const CoffeeShopLanding = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -109,6 +106,24 @@ const CoffeeShopLanding = () => {
           }
         }
         
+        @keyframes autoRotate3D {
+          0% {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+          }
+          25% {
+            transform: perspective(1000px) rotateX(15deg) rotateY(90deg) rotateZ(5deg);
+          }
+          50% {
+            transform: perspective(1000px) rotateX(0deg) rotateY(180deg) rotateZ(0deg);
+          }
+          75% {
+            transform: perspective(1000px) rotateX(-15deg) rotateY(270deg) rotateZ(-5deg);
+          }
+          100% {
+            transform: perspective(1000px) rotateX(0deg) rotateY(360deg) rotateZ(0deg);
+          }
+        }
+        
         .slide-left {
           animation: slide-left 20s linear infinite;
         }
@@ -122,6 +137,15 @@ const CoffeeShopLanding = () => {
           pointer-events: none;
           z-index: 1;
           animation: fall linear infinite;
+        }
+        
+        .auto-rotating-preview {
+          animation: simple3DRotate 8s linear infinite;
+          transform-style: preserve-3d;
+          transform-origin: center center;
+          perspective: 1000px;
+          filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.3));
+          will-change: transform;
         }
         
         .coffee-bean {
@@ -163,14 +187,12 @@ const CoffeeShopLanding = () => {
             opacity: 0.8;
           }
 
-          /* Background image styles - REMOVED OVERLAY */
+          /* Background color styles */
           .main-background {
-            background-image: url('/Gallery3/coffeebeans.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: #4C4B16;
             min-height: calc(100vh - 80px); /* Adjust based on header height */
           }
+
 
           /* REMOVED THE OVERLAY - No ::before pseudo-element anymore */
       `}
@@ -209,7 +231,7 @@ const CoffeeShopLanding = () => {
             <div className="flex items-center space-x-4 ml-auto">
               <h1 className={`text-2xl font-bold ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>Brew-Coffee</h1>
               <img
-                src="/Gallery3/coffee.png"
+                src="/Gallery3/catcoffeeC.png"
                 alt="Coffee Shop Logo"
                 className="w-12 h-12"
               />
@@ -222,11 +244,11 @@ const CoffeeShopLanding = () => {
         {/* Slide-out Menu */}
         {menuOpen && (
           <div className="fixed inset-0 z-50 bg-blur bg-opacity-50">
-            <div className={`absolute left-0 top-0 h-full w-50 shadow-lg ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-[#e0e0e0]'}`}>
+            <div className={`absolute left-0 top-0 h-full w-50 shadow-lg ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-white'}`}>
               <div className="p-6">
                 <div className="flex justify-between items-center mb-8">
                 <h3 className="text-xl font-bold">
-                <img src="/Gallery3/coffee.png" alt="Logo" className="h-10 w-auto" />
+                <img src="/Gallery3/catcoffeeC.png" alt="Logo" className="h-10 w-auto" />
               </h3>
                   <button
                     onClick={() => setMenuOpen(false)}
@@ -313,22 +335,46 @@ const CoffeeShopLanding = () => {
                 alt="Coffee Logo"
                 className="mx-auto md:mx-0 mb-0 w-70 h-70 object-contain"
               />
-              <h2 className={`text-6xl font-bold leading-tight -mt-2 ${coffeeMode ? 'text-lime-950' : 'text-[#4C4B16]'}`}>
+              <h2 className={`text-6xl font-bold leading-tight -mt-2 ${coffeeMode ? 'text-white' : 'text-white'}`}>
                 Take A Break<br />
                 Have The Best Coffee
               </h2>
+
+              {/* Coffee Quote */}
+              <p className={`mt-4 text-lg italic ${coffeeMode ? 'text-gray-200' : 'text-gray-300'}`}>
+                "Every cup of coffee is more than a drink — it’s a moment to pause and enjoy.  
+                At Brew-Coffee, we craft each blend with care and passion.  
+                Because the best breaks deserve the best brew."
+              </p>
+
+              {/* Author */}
+              <p className={`mt-2 text-md font-semibold ${coffeeMode ? 'text-white' : 'text-white'}`}>
+                — Philip Elbambo
+              </p>
               <a href="/OrderNow" className="inline-block">
-                <button className={`rounded-lg px-8 py-4 text-lg transition-colors mt-6 ${coffeeMode ? 'bg-[#4C4B16] text-amber-50 hover:bg-amber-600' : 'bg-[#4C4B16] text-white hover:bg-[#5a5221]'}`}>
-                  ORDER NOW
-                </button>
+              <button
+                className={`rounded-lg px-6 py-3 text-xl font-extrabold tracking-wide uppercase shadow-md transition-all mt-6
+                  ${coffeeMode 
+                    ? 'bg-white text-[#4C4B16] hover:bg-[#3a3411] hover:text-white' 
+                    : 'bg-white text-[#4C4B16] hover:bg-[#3a3411] hover:text-white'
+                  }`}
+              >
+                ORDER NOW
+              </button>
               </a>
             </div>
             <div className="flex justify-center relative">
-              <div className="relative w-[600px] h-[600px] flex items-center justify-center">
+              <div 
+                className="relative w-[600px] h-[600px] flex items-center justify-center"
+                style={{
+                  perspective: '1500px',
+                  perspectiveOrigin: '50% 50%'
+                }}
+              >
                 <img
-                  src="/Gallery3/CoffeeP.png"
+                  src="/Gallery3/cupcat.png"
                   alt="Coffee Cup"
-                  className="w-[460px] h-[460px] object-contain"
+                  className="w-[460px] h-[460px] object-contain auto-rotating-preview"
                 />
               </div>
             </div>
@@ -386,35 +432,33 @@ const CoffeeShopLanding = () => {
         </div>
       </section>
 
-        {/* About Us */}
-        <section id="about" className="container mx-auto px-4 py-16 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <img
-                src="/Gallery3/mingming-v3.jpg"
-                alt="Coffee Shop Interior"
-                className="w-135 h-135"
-              />
-            </div>
-            <div>
-              <h3 className={`text-4xl font-bold mb-6 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>About Us</h3>
-              <p className={`text-lg mb-4 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
-                Welcome to BrewMaster, where passion meets perfection in every cup. Since 2010, we've been dedicated to serving the finest coffee experience in the city.
-              </p>
-              <p className={`text-lg mb-4 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
-                Our advantages include:
-              </p>
-              <ul className={`text-lg space-y-2 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
-                <li>• Premium quality beans sourced directly from farmers</li>
-                <li>• Expert baristas with years of experience</li>
-                <li>• Cozy atmosphere perfect for work or relaxation</li>
-                <li>• Freshly roasted coffee daily</li>
-                <li>• Sustainable and ethical sourcing practices</li>
-              </ul>
-            </div>
+   {/* About Us */}
+      <section id="about" className="container mx-auto px-4 py-16 relative z-10">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <img src="/Gallery3/cupcat-v2.png" alt="Coffee Shop Interior" className="w-135 h-135" />
           </div>
-        </section>
-
+          <div>
+            <h3 className={`text-4xl font-bold mb-6 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
+              About Us
+            </h3>
+            <p className={`text-lg mb-4 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
+              Welcome to BrewMaster — where the coffee is slow, the vibes are warm, and every cup is made with heart. 
+              Since 2010, we’ve been your neighborhood corner for a quiet moment, a good chat, and a really, really good brew.
+            </p>
+            <p className={`text-lg mb-4 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
+              This is what we stand by:
+            </p>
+            <ul className={`text-lg space-y-2 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
+              <li>• Beans we know by name — sourced straight from farmers we trust.</li>
+              <li>• Baristas who treat espresso like an art, not a rush job.</li>
+              <li>• A space that feels like your favorite sweater — soft, familiar, and cozy.</li>
+              <li>• Coffee roasted fresh every morning, never yesterday’s batch.</li>
+              <li>• A commitment to people and planet, from seed to sip.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       {/* Desserts */}
     <section className={`container mx-auto px-4 py-16 relative z-10 ${coffeeMode ? 'bg-[#4C4B16]' : 'bg-white'}`}>
       <h3 className={`text-4xl font-bold text-center mb-8 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>Sweet Treats</h3>
@@ -473,7 +517,7 @@ const CoffeeShopLanding = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex items-start space-x-6">
               <img
-                src="/Gallery3/coffee.png"
+                src="/Gallery3/catcoffeeC.png"
                 alt="Coffee Shop Logo"
                 className="w-30 h-30"
               />
