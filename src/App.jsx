@@ -13,6 +13,7 @@ const CustomersPage = lazy(() => import('./assets/components/pages/Customers'));
 const SummaryPage = lazy(() => import('./assets/components/pages/Summary'));
 const ReportsPage = lazy(() => import('./assets/components/pages/Reports'));
 const OrderNow = lazy(() => import('./assets/components/pages/OrderNow'));
+const OrderDesert = lazy(() => import('./assets/components/pages/OrderingDesert'));
 
 
 
@@ -44,11 +45,12 @@ function App() {
           <Route path='customers' element={<Suspense fallback={<LoadingPage />}><CustomersPage /></Suspense>}/>
           <Route path='summary' element={<Suspense fallback={<LoadingPage />}><SummaryPage /></Suspense>}/>
           <Route path='reports' element={<Suspense fallback={<LoadingPage />}><ReportsPage /></Suspense>}/>
+          
 
         </Route>
 
           <Route path='/OrderNow' element={<Suspense fallback={<LoadingPage />}><OrderNow /></Suspense>}/>
-
+          <Route path='/OrderDesert' element={<Suspense fallback={<LoadingPage />}><OrderDesert /></Suspense>}/>
         <Route path='*' element={<NotFoundPage />}/>
         
       </Routes>

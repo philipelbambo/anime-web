@@ -510,7 +510,7 @@ const CoffeeShopLanding = () => {
       <section id="about" className="container mx-auto px-4 py-16 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <img src="/Gallery3/mingming-v3.jpg" alt="Coffee Shop Interior" className="w-135 h-135" />
+            <img src="/Gallery3/CoffeeP.png" alt="Coffee Shop Interior" className="w-110 h-120" />
           </div>
           <div>
             <h3 className={`text-4xl font-bold mb-6 ${coffeeMode ? 'text-amber-50' : 'text-[#4C4B16]'}`}>
@@ -534,75 +534,75 @@ const CoffeeShopLanding = () => {
         </div>
       </section>
     
-{/* Desserts */}
-<section
-  className={`container mx-auto px-4 py-16 relative z-10 ${
-    coffeeMode ? "bg-[#4C4B16]" : "bg-white"
-  }`}
->
-  <h3
-    className={`text-4xl font-bold text-center mb-8 ${
-      coffeeMode ? "text-amber-50" : "text-[#4C4B16]"
-    }`}
-  >
-    Sweet Treats
-  </h3>
-
-  <div className="grid md:grid-cols-2 gap-12 items-center">
-    {/* Left Side: Quotes/Description */}
-    <div className="space-y-6 text-lg leading-relaxed">
-      <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
-        "Life is short, eat dessert first," and when you taste ours, you'll
-        never forget the name — <span className="font-semibold">Philip Elbambo</span>.
-      </p>
-      <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
-        Each dessert is crafted to melt in your mouth, turning every bite into
-        "a sweet memory you'll always crave."
-      </p>
-      <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
-        "Good food is all the sweeter when shared with good friends," so bring
-        someone along and let <span className="font-semibold">Philip Elbambo's</span> desserts speak for themselves.
-      </p>
-      <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
-        From rich chocolate to creamy cheesecakes, every slice whispers, "this
-        is the flavor of joy."
-      </p>
-      <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
-        Because "dessert is the fairy tale of the kitchen," and in every story
-        worth telling, the name <span className="font-semibold">Philip Elbambo</span> lingers like the perfect sweet ending.
-      </p>
-    </div>
-
-    {/* Right Side: Large PNG + Order CTA */}
-    <div className="flex flex-col items-center text-center">
-      {/* Dessert Showcase Picture */}
-      <img
-        src="SliderGallery/bread1.png"
-        alt="Dessert Showcase"
-        className="w-110 h-110 object-contain mb-6 slow-spin"
-      />
-
-      {/* Order CTA */}
-      <h4
-        className={`text-2xl font-bold mb-4 ${
-          coffeeMode ? "text-amber-50" : "text-[#4C4B16]"
+      {/* Desserts */}
+      <section
+        className={`container mx-auto px-4 py-16 relative z-10 ${
+          coffeeMode ? "bg-[#4C4B16]" : "bg-white"
         }`}
       >
-        Order Your Favorite Dessert
-      </h4>
-      <a
-        href="#order-section"
-        className={`px-6 py-3 rounded-xl font-semibold transition-colors ${
-          coffeeMode
-            ? "bg-amber-100 text-[#4C4B16] hover:bg-amber-200"
-            : "bg-[#4C4B16] text-white hover:bg-lime-900"
-        }`}
-      >
-        Start Ordering
-      </a>
-    </div>
-  </div>
-</section>
+        <h3
+          className={`text-4xl font-bold text-center mb-8 ${
+            coffeeMode ? "text-amber-50" : "text-[#4C4B16]"
+          }`}
+        >
+          Sweet Treats
+        </h3>
+
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left Side: Quotes/Description */}
+          <div className="space-y-6 text-lg leading-relaxed">
+            <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
+              "Life is short, eat dessert first," and when you taste ours, you'll
+              never forget the name — <span className="font-semibold">Philip Elbambo</span>.
+            </p>
+            <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
+              Each dessert is crafted to melt in your mouth, turning every bite into
+              "a sweet memory you'll always crave."
+            </p>
+            <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
+              "Good food is all the sweeter when shared with good friends," so bring
+              someone along and let <span className="font-semibold">Philip Elbambo's</span> desserts speak for themselves.
+            </p>
+            <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
+              From rich chocolate to creamy cheesecakes, every slice whispers, "this
+              is the flavor of joy."
+            </p>
+            <p className={coffeeMode ? "text-amber-100" : "text-[#4C4B16]"}>
+              Because "dessert is the fairy tale of the kitchen," and in every story
+              worth telling, the name <span className="font-semibold">Philip Elbambo</span> lingers like the perfect sweet ending.
+            </p>
+          </div>
+
+          {/* Right Side: Large PNG + Order CTA */}
+          <div className="flex flex-col items-center text-center">
+            {/* Dessert Showcase Picture */}
+            <img
+              src="SliderGallery/bread1.png"
+              alt="Dessert Showcase"
+              className="w-110 h-110 object-contain mb-6 slow-spin"
+            />
+
+            {/* Order CTA */}
+            <h4
+              className={`text-2xl font-bold mb-4 ${
+                coffeeMode ? "text-amber-50" : "text-[#4C4B16]"
+              }`}
+            >
+              Order Your Favorite Dessert
+            </h4>
+            <a
+              href="OrderDesert"
+              className={`px-6 py-3 rounded-xl font-semibold transition-colors ${
+                coffeeMode
+                  ? "bg-amber-100 text-[#4C4B16] hover:bg-amber-200"
+                  : "bg-[#4C4B16] text-white hover:bg-lime-900"
+              }`}
+            >
+              Order Now
+            </a>
+          </div>
+        </div>
+      </section>
 
 
         {/* Our Gallery */}

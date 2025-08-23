@@ -12,6 +12,8 @@ import {
   CheckCircle,
   ArrowLeft,
 } from 'lucide-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const BrewCoffeeOrderSystem = () => {
   const [cart, setCart] = useState([]);
@@ -20,6 +22,8 @@ const BrewCoffeeOrderSystem = () => {
   const [selectedCoffee, setSelectedCoffee] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [selectedDesserts, setSelectedDesserts] = useState({});
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [placedOrderData, setPlacedOrderData] = useState(null);
 
   // Checkout form state
   const [checkoutForm, setCheckoutForm] = useState({
@@ -196,7 +200,7 @@ const BrewCoffeeOrderSystem = () => {
   const addToCart = (coffee) => {
     const cartItem = {
       ...coffee,
-      id: `${coffee.id}-${Date.now()}`, // unique ID for cart item
+      id: `${coffee.id}-${Date.now()}`,
       quantity: 1,
       desserts: Object.keys(selectedDesserts).map((dessertId) => {
         const dessert = desserts.find((d) => d.id === dessertId);
@@ -299,18 +303,66 @@ const BrewCoffeeOrderSystem = () => {
 
   const handlePlaceOrder = () => {
     if (!validateForm()) {
-      alert('Please fill in all required fields.');
+      toast.error('Please fill in all required fields.', {
+        position: "top-center",
+        autoClose: 3000,
+      });
       return;
     }
 
-    alert(
-      `Order placed successfully! \n\nOrder Details:\n- Total: ${formatPrice(
-        getTotalPrice()
-      )}\n- Items: ${getTotalItems()}\n- Payment Method: ${
-        paymentMethods.find((p) => p.id === checkoutForm.paymentMethod)?.name
-      }\n- Customer: ${checkoutForm.firstName} ${checkoutForm.lastName}\n\nThank you for your order!`
+    const orderData = {
+      customer: `${checkoutForm.firstName} ${checkoutForm.lastName}`,
+      email: checkoutForm.email,
+      contact: checkoutForm.contactNumber,
+      address: checkoutForm.shippingAddress,
+      region: checkoutForm.region,
+      paymentMethod: paymentMethods.find((p) => p.id === checkoutForm.paymentMethod)?.name,
+      items: cart.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        desserts: item.desserts || [],
+      })),
+      total: getTotalPrice(),
+      date: new Date().toLocaleString(),
+    };
+
+    setPlacedOrderData(orderData);
+    setOrderPlaced(true);
+
+    // Show toast at the top-center
+    toast(
+      <div className="text-center text-black">
+        <p className="font-bold text-lg mb-2">🎉 Order Confirmed!</p>
+        <p className="text-sm mb-4">Your order has been placed successfully.</p>
+        <div className="flex justify-center space-x-3 ">
+          <button
+            onClick={() => {
+              window.print();
+              toast.dismiss();
+            }}
+            className="bg-[#4C4B16] text-white px-5 py-2 rounded font-semibold hover:bg-[#3a3912] transition text-sm"
+          >
+            Print Receipt
+          </button>
+          <button
+            onClick={() => toast.dismiss()}
+            className="bg-gray-300 text-[#4C4B16] px-5 py-2 rounded font-semibold hover:bg-gray-400 transition text-sm"
+          >
+            Close
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        style: { width: '400px', padding: '16px', textAlign: 'left' },
+      }
     );
 
+    // Reset cart and form
     setCart([]);
     setCheckoutForm({
       firstName: '',
@@ -345,552 +397,607 @@ const BrewCoffeeOrderSystem = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white text-[#4C4B16]">
-      {/* Header */}
-      <header className="border-b border-gray-200 sticky top-0 z-50 bg-white">
-        <div className="container mx-auto px-6 py-4 flex items-center">
-          <button
-            onClick={() => window.history.back()}
-            className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
-            aria-label="Go back"
-          >
-            <ArrowLeft className="w-6 h-6 text-[#4C4B16]" />
-          </button>
+    <>
+      {/* Printable Receipt (Only shown when printing) */}
+      {orderPlaced && placedOrderData && (
+        <div id="printable-receipt" className="print:block hidden fixed inset-0 bg-white p-8">
+          <div className="max-w-md mx-auto bg-white p-6 border border-gray-300 shadow-none">
+            <h1 className="text-3xl font-bold text-center text-[#4C4B16] mb-2">Brew Coffee</h1>
+            <p className="text-center text-gray-600 mb-6">Thank you for your order!</p>
+            <hr className="my-4 border-gray-300" />
 
-          <div className="flex items-center space-x-3">
-            <Coffee className="w-8 h-8 text-[#4C4B16]" />
-            <h1 className="text-3xl font-bold text-[#4C4B16]">Brew Coffee</h1>
-          </div>
+            <div className="space-y-2 text-sm">
+              <p><strong>Customer:</strong> {placedOrderData.customer}</p>
+              <p><strong>Email:</strong> {placedOrderData.email}</p>
+              <p><strong>Contact:</strong> {placedOrderData.contact}</p>
+              <p><strong>Address:</strong> {placedOrderData.address}, {placedOrderData.region}</p>
+              <p><strong>Payment:</strong> {placedOrderData.paymentMethod}</p>
+              <p><strong>Date:</strong> {placedOrderData.date}</p>
+            </div>
 
-          <div className="ml-auto">
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative bg-[#4C4B16] hover:bg-[#3a3912] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow flex items-center space-x-2"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              <span>Cart ({getTotalItems()})</span>
-              {getTotalItems() > 0 && (
-                <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold animate-pulse">
-                  {getTotalItems()}
-                </div>
-              )}
-            </button>
+            <hr className="my-4 border-gray-300" />
+
+            <h2 className="font-bold text-lg mb-3">Order Details</h2>
+            {placedOrderData.items.map((item, idx) => (
+              <div key={idx} className="mb-3">
+                <p className="font-medium">{item.name} x{item.quantity} - {formatPrice(item.price * item.quantity)}</p>
+                {item.desserts.map(d => (
+                  <p key={d.id} className="text-sm text-gray-700 ml-4">
+                    • {d.name} x{d.quantity} - {formatPrice(d.price * d.quantity)}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+            <hr className="my-4 border-gray-300" />
+            <div className="text-right">
+              <p className="text-lg font-bold">Total: {formatPrice(placedOrderData.total)}</p>
+            </div>
+
+            <div className="text-center mt-6 text-gray-500 text-xs">
+              <p>Order # {Date.now().toString().slice(-6)}</p>
+              <p>We hope to see you again soon!</p>
+            </div>
           </div>
         </div>
-      </header>
+      )}
 
-      {/* Hero Section */}
-      <section className="text-center py-16 px-6">
-        <h2 className="text-5xl font-bold mb-4">Premium Coffee Experience</h2>
-        <p className="text-xl max-w-2xl mx-auto">
-          Handcrafted beverages made with the finest beans from around the world
-        </p>
-      </section>
-
-      {/* Coffee Grid */}
-      <section className="container mx-auto px-6 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {coffeeProducts.map((coffee) => (
-            <div
-              key={coffee.id}
-              className=" p-6  transform transition-all duration-300 hover:scale-105 cursor-pointer "
-              onClick={() => setSelectedCoffee(coffee)}
+      {/* Main App (Hidden during print) */}
+      <div className="no-print min-h-screen bg-white text-[#4C4B16]">
+        {/* Header */}
+        <header className="border-b border-gray-200 sticky top-0 z-50 bg-white">
+          <div className="container mx-auto px-6 py-4 flex items-center">
+            <button
+              onClick={() => window.history.back()}
+              className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Go back"
             >
-              <CoffeeImage coffee={coffee} />
-              <div className="text-center">
-                <h3 className="text-2xl font-bold mb-0">{coffee.name}</h3>
-                <p className="text-gray-600 mb-1 text-sm">{coffee.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-[#4C4B16]">{formatPrice(coffee.price)}</span>
-                  <span className="bg-[#4C4B16] text-white px-3 py-1 rounded-full text-sm">
-                    {coffee.category}
-                  </span>
+              <ArrowLeft className="w-6 h-6 text-[#4C4B16]" />
+            </button>
+
+            <div className="flex items-center space-x-3">
+              <Coffee className="w-8 h-8 text-[#4C4B16]" />
+              <h1 className="text-3xl font-bold text-[#4C4B16]">Brew Coffee</h1>
+            </div>
+
+            <div className="ml-auto">
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative bg-[#4C4B16] hover:bg-[#3a3912] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow flex items-center space-x-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                <span>Cart ({getTotalItems()})</span>
+                {getTotalItems() > 0 && (
+                  <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold animate-pulse">
+                    {getTotalItems()}
+                  </div>
+                )}
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Hero Section */}
+        <section className="text-center py-16 px-6">
+          <h2 className="text-5xl font-bold mb-4">Premium Coffee Experience</h2>
+          <p className="text-xl max-w-2xl mx-auto">
+            Handcrafted beverages made with the finest beans from around the world
+          </p>
+        </section>
+
+        {/* Coffee Grid */}
+        <section className="container mx-auto px-6 pb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {coffeeProducts.map((coffee) => (
+              <div
+                key={coffee.id}
+                className=" p-6  transform transition-all duration-300 hover:scale-105 cursor-pointer "
+                onClick={() => setSelectedCoffee(coffee)}
+              >
+                <CoffeeImage coffee={coffee} />
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold mb-0">{coffee.name}</h3>
+                  <p className="text-gray-600 mb-1 text-sm">{coffee.description}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-2xl font-bold text-[#4C4B16]">{formatPrice(coffee.price)}</span>
+                    <span className="bg-[#4C4B16] text-white px-3 py-1 rounded-full text-sm">
+                      {coffee.category}
+                    </span>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsAddingToCart(coffee);
+                    }}
+                    className="w-full mt-3 bg-[#4C4B16] hover:bg-[#3a3912] text-white py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Coffee Details Modal */}
+        {selectedCoffee && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+              <div className="relative">
+                <div className="h-64 flex items-center justify-center">
+                  {selectedCoffee.image ? (
+                    <img
+                      src={selectedCoffee.image}
+                      alt={selectedCoffee.name}
+                      className="w-60 h-60 object-cover rounded-lg "
+                    />
+                  ) : (
+                    <div className="w-60 h-60 bg-gray-100 flex items-center justify-center border border-gray-300 rounded-lg">
+                      <Coffee className="w-24 h-24 text-gray-500" />
+                    </div>
+                  )}
                 </div>
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsAddingToCart(coffee);
-                  }}
-                  className="w-full mt-3 bg-[#4C4B16] hover:bg-[#3a3912] text-white py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow"
+                  onClick={() => setSelectedCoffee(null)}
+                  className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <div className="absolute top-4 left-4">
+                  <span className="bg-[#4C4B16] text-white px-4 py-2 rounded-full font-semibold">
+                    {selectedCoffee.category}
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h2 className="text-3xl font-bold mb-2">{selectedCoffee.name}</h2>
+                    <p className="text-lg text-gray-600">{selectedCoffee.description}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-3xl font-bold text-[#4C4B16]">{formatPrice(selectedCoffee.price)}</span>
+                    <p className="text-sm text-gray-500">{selectedCoffee.size}</p>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-semibold mb-3">Description</h3>
+                  <p className="text-gray-700 leading-relaxed">{selectedCoffee.fullDescription}</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div>
+                    <h4 className="font-semibold mb-3 flex items-center">
+                      <Coffee className="w-5 h-5 mr-2 text-[#4C4B16]" />
+                      Ingredients
+                    </h4>
+                    <ul className="space-y-1">
+                      {selectedCoffee.ingredients.map((ingredient, index) => (
+                        <li key={index} className="text-gray-600 text-sm">
+                          • {ingredient}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold mb-3">Coffee Info</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Caffeine Level:</span>
+                        <span className="font-medium">{selectedCoffee.caffeine}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Serving Size:</span>
+                        <span className="font-medium">{selectedCoffee.size}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Category:</span>
+                        <span className="font-medium">{selectedCoffee.category}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Add to Cart Modal */}
+        {isAddingToCart && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
+              <h3 className="text-2xl font-bold mb-4">Add Desserts</h3>
+              <p className="text-gray-600 mb-6">Would you like to add desserts to your {isAddingToCart.name}?</p>
+
+              <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
+                {desserts.map((dessert) => (
+                  <div key={dessert.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <img src={dessert.image} alt={dessert.name} className="w-12 h-12 rounded object-cover" />
+                      <div>
+                        <p className="font-medium">{dessert.name}</p>
+                        <p className="text-sm text-gray-500">{formatPrice(dessert.price)}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() =>
+                          setSelectedDesserts((prev) => ({
+                            ...prev,
+                            [dessert.id]: Math.max(0, (prev[dessert.id] || 0) - 1),
+                          }))
+                        }
+                        className="bg-gray-200 hover:bg-gray-300 p-1 rounded w-8 text-center"
+                      >
+                        <Minus className="w-4 h-4 mx-auto" />
+                      </button>
+                      <span className="w-8 text-center font-semibold">{selectedDesserts[dessert.id] || 0}</span>
+                      <button
+                        onClick={() =>
+                          setSelectedDesserts((prev) => ({
+                            ...prev,
+                            [dessert.id]: (prev[dessert.id] || 0) + 1,
+                          }))
+                        }
+                        className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-1 rounded w-8 text-center"
+                      >
+                        <Plus className="w-4 h-4 mx-auto" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex space-x-4">
+                <button
+                  onClick={() => setIsAddingToCart(false)}
+                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-[#4C4B16] py-3 rounded-lg font-semibold"
+                >
+                  Skip
+                </button>
+                <button
+                  onClick={() => addToCart(isAddingToCart)}
+                  className="flex-1 bg-[#4C4B16] hover:bg-[#3a3912] text-white py-3 rounded-lg font-semibold"
                 >
                   Add to Cart
                 </button>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Coffee Details Modal */}
-      {selectedCoffee && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
-            <div className="relative">
-            <div className="h-64 flex items-center justify-center">
-              {selectedCoffee.image ? (
-                <img
-                  src={selectedCoffee.image}
-                  alt={selectedCoffee.name}
-                  className="w-60 h-60 object-cover rounded-lg "
-                />
-              ) : (
-                <div className="w-60 h-60 bg-gray-100 flex items-center justify-center border border-gray-300 rounded-lg">
-                  <Coffee className="w-24 h-24 text-gray-500" />
-                </div>
-              )}
-            </div>
-              <button
-                onClick={() => setSelectedCoffee(null)}
-                className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-              <div className="absolute top-4 left-4">
-                <span className="bg-[#4C4B16] text-white px-4 py-2 rounded-full font-semibold">
-                  {selectedCoffee.category}
-                </span>
-              </div>
-            </div>
-
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h2 className="text-3xl font-bold mb-2">{selectedCoffee.name}</h2>
-                  <p className="text-lg text-gray-600">{selectedCoffee.description}</p>
-                </div>
-                <div className="text-right">
-                  <span className="text-3xl font-bold text-[#4C4B16]">{formatPrice(selectedCoffee.price)}</span>
-                  <p className="text-sm text-gray-500">{selectedCoffee.size}</p>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold mb-3">Description</h3>
-                <p className="text-gray-700 leading-relaxed">{selectedCoffee.fullDescription}</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div>
-                  <h4 className="font-semibold mb-3 flex items-center">
-                    <Coffee className="w-5 h-5 mr-2 text-[#4C4B16]" />
-                    Ingredients
-                  </h4>
-                  <ul className="space-y-1">
-                    {selectedCoffee.ingredients.map((ingredient, index) => (
-                      <li key={index} className="text-gray-600 text-sm">
-                        • {ingredient}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold mb-3">Coffee Info</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Caffeine Level:</span>
-                      <span className="font-medium">{selectedCoffee.caffeine}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Serving Size:</span>
-                      <span className="font-medium">{selectedCoffee.size}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Category:</span>
-                      <span className="font-medium">{selectedCoffee.category}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Add to Cart Modal (Coffee + Desserts) */}
-      {isAddingToCart && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
-            <h3 className="text-2xl font-bold mb-4">Add Desserts</h3>
-            <p className="text-gray-600 mb-6">Would you like to add desserts to your {isAddingToCart.name}?</p>
-
-            <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
-              {desserts.map((dessert) => (
-                <div key={dessert.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <img src={dessert.image} alt={dessert.name} className="w-12 h-12 rounded object-cover" />
-                    <div>
-                      <p className="font-medium">{dessert.name}</p>
-                      <p className="text-sm text-gray-500">{formatPrice(dessert.price)}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() =>
-                        setSelectedDesserts((prev) => ({
-                          ...prev,
-                          [dessert.id]: Math.max(0, (prev[dessert.id] || 0) - 1),
-                        }))
-                      }
-                      className="bg-gray-200 hover:bg-gray-300 p-1 rounded w-8 text-center"
-                    >
-                      <Minus className="w-4 h-4 mx-auto" />
-                    </button>
-                    <span className="w-8 text-center font-semibold">{selectedDesserts[dessert.id] || 0}</span>
-                    <button
-                      onClick={() =>
-                        setSelectedDesserts((prev) => ({
-                          ...prev,
-                          [dessert.id]: (prev[dessert.id] || 0) + 1,
-                        }))
-                      }
-                      className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-1 rounded w-8 text-center"
-                    >
-                      <Plus className="w-4 h-4 mx-auto" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex space-x-4">
-              <button
-                onClick={() => setIsAddingToCart(false)}
-                className="flex-1 bg-gray-300 hover:bg-gray-400 text-[#4C4B16] py-3 rounded-lg font-semibold"
-              >
-                Skip
-              </button>
-              <button
-                onClick={() => addToCart(isAddingToCart)}
-                className="flex-1 bg-[#4C4B16] hover:bg-[#3a3912] text-white py-3 rounded-lg font-semibold"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Cart Modal */}
-      {isCartOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl">
-            <div className="bg-[#4C4B16] text-white p-6 flex justify-between items-center">
-              <h2 className="text-2xl font-bold flex items-center space-x-2">
-                <ShoppingCart className="w-6 h-6" />
-                <span>Your Cart</span>
-              </h2>
-              <button
-                onClick={() => setIsCartOpen(false)}
-                className="hover:bg-white/20 p-2 rounded-full transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            <div className="p-6 overflow-y-auto max-h-96">
-              {cart.length === 0 ? (
-                <p className="text-center text-gray-500 py-8">Your cart is empty</p>
-              ) : (
-                <div className="space-y-6">
-                  {cart.map((item) => (
-                    <div key={item.id} className="bg-gray-50 p-4 rounded-xl">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden">
-                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold">{item.name}</h3>
-                            <p className="text-[#4C4B16] font-bold">{formatPrice(item.price)}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="bg-gray-200 hover:bg-gray-300 p-2 rounded-full"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <span className="font-semibold w-8 text-center">{item.quantity}</span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-2 rounded-full"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => removeFromCart(item.id)}
-                            className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full ml-2"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Desserts */}
-                      {item.desserts && item.desserts.length > 0 && (
-                        <div className="ml-20 mt-3 space-y-2 border-t pt-3">
-                          <p className="text-sm font-semibold text-gray-700">With Desserts:</p>
-                          {item.desserts.map((d) => (
-                            <div key={d.id} className="flex justify-between items-center text-sm">
-                              <span>
-                                {d.name} x{d.quantity}
-                              </span>
-                              <div className="flex items-center space-x-2">
-                                <button
-                                  onClick={() => updateDessertQuantity(item.id, d.id, d.quantity - 1)}
-                                  className="bg-gray-200 hover:bg-gray-300 p-1 rounded w-6"
-                                >
-                                  <Minus className="w-3 h-3" />
-                                </button>
-                                <span className="font-medium">{formatPrice(d.price * d.quantity)}</span>
-                                <button
-                                  onClick={() => updateDessertQuantity(item.id, d.id, d.quantity + 1)}
-                                  className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-1 rounded w-6"
-                                >
-                                  <Plus className="w-3 h-3" />
-                                </button>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {cart.length > 0 && (
-              <div className="border-t bg-gray-50 p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-xl font-bold">Total: {formatPrice(getTotalPrice())}</span>
-                  <span className="text-gray-600">({getTotalItems()} items)</span>
-                </div>
+        {/* Cart Modal */}
+        {isCartOpen && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl">
+              <div className="bg-[#4C4B16] text-white p-6 flex justify-between items-center">
+                <h2 className="text-2xl font-bold flex items-center space-x-2">
+                  <ShoppingCart className="w-6 h-6" />
+                  <span>Your Cart</span>
+                </h2>
                 <button
-                  onClick={() => {
-                    setIsCartOpen(false);
-                    setIsCheckoutOpen(true);
-                  }}
-                  className="w-full bg-[#4C4B16] hover:bg-[#3a3912] text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow"
+                  onClick={() => setIsCartOpen(false)}
+                  className="hover:bg-white/20 p-2 rounded-full transition-colors"
                 >
-                  Proceed to Checkout
+                  <X className="w-6 h-6" />
                 </button>
               </div>
-            )}
-          </div>
-        </div>
-      )}
 
-      {/* Checkout Modal */}
-      {isCheckoutOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
-            <div className="bg-[#4C4B16] text-white p-6 rounded-t-2xl">
-              <h2 className="text-2xl font-bold text-center flex items-center justify-center space-x-2">
-                <CheckCircle className="w-7 h-7" />
-                <span>Complete Your Order</span>
-              </h2>
-            </div>
-
-            <div className="p-6 overflow-y-auto max-h-[75vh]">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Customer Info */}
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold mb-4 border-b pb-2">Customer Information</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">First Name *</label>
-                      <input
-                        type="text"
-                        value={checkoutForm.firstName}
-                        onChange={(e) => handleFormChange('firstName', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
-                        placeholder="Enter first name"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Last Name *</label>
-                      <input
-                        type="text"
-                        value={checkoutForm.lastName}
-                        onChange={(e) => handleFormChange('lastName', e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
-                        placeholder="Enter last name"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Email Address *</label>
-                    <input
-                      type="email"
-                      value={checkoutForm.email}
-                      onChange={(e) => handleFormChange('email', e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
-                      placeholder="Enter email address"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Contact Number *</label>
-                    <input
-                      type="tel"
-                      value={checkoutForm.contactNumber}
-                      onChange={(e) => handleFormChange('contactNumber', e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
-                      placeholder="Enter contact number"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Shipping Address *</label>
-                    <textarea
-                      value={checkoutForm.shippingAddress}
-                      onChange={(e) => handleFormChange('shippingAddress', e.target.value)}
-                      rows="3"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
-                      placeholder="Enter complete shipping address"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Region *</label>
-                    <select
-                      value={checkoutForm.region}
-                      onChange={(e) => handleFormChange('region', e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
-                    >
-                      <option value="">Select Region</option>
-                      {regions.map((region) => (
-                        <option key={region} value={region}>
-                          {region}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* Payment & Summary */}
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold mb-4 border-b pb-2">Payment Method *</h3>
-                  <div className="space-y-4">
-                    {paymentMethods.map((method) => (
-                      <div
-                        key={method.id}
-                        className="border border-gray-200 rounded-lg p-4 hover:border-[#4C4B16] transition-colors"
-                      >
-                        <label className="flex items-start space-x-3 cursor-pointer">
-                          <input
-                            type="radio"
-                            name="paymentMethod"
-                            value={method.id}
-                            checked={checkoutForm.paymentMethod === method.id}
-                            onChange={(e) => handleFormChange('paymentMethod', e.target.value)}
-                            className="mt-1 text-[#4C4B16] focus:ring-[#4C4B16]"
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2 mb-2">
-                              {method.icon}
-                              <span className="font-medium">{method.name}</span>
+              <div className="p-6 overflow-y-auto max-h-96">
+                {cart.length === 0 ? (
+                  <p className="text-center text-gray-500 py-8">Your cart is empty</p>
+                ) : (
+                  <div className="space-y-6">
+                    {cart.map((item) => (
+                      <div key={item.id} className="bg-gray-50 p-4 rounded-xl">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-16 h-16 rounded-lg overflow-hidden">
+                              <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                             </div>
-                            <p className="text-sm text-gray-600">{method.description}</p>
-                            {method.id === 'gcash' && checkoutForm.paymentMethod === 'gcash' && (
-                              <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                                <h4 className="font-medium text-blue-900 mb-2">GCash Payment Details:</h4>
-                                <div className="text-sm text-blue-800">
-                                  <p><strong>GCash Number:</strong> {method.number}</p>
-                                  <p><strong>Account Name:</strong> {method.accountName}</p>
-                                  <p className="mt-2 text-blue-700">Please send your payment and upload a screenshot below (optional).</p>
+                            <div>
+                              <h3 className="font-semibold">{item.name}</h3>
+                              <p className="text-[#4C4B16] font-bold">{formatPrice(item.price)}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              className="bg-gray-200 hover:bg-gray-300 p-2 rounded-full"
+                            >
+                              <Minus className="w-4 h-4" />
+                            </button>
+                            <span className="font-semibold w-8 text-center">{item.quantity}</span>
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-2 rounded-full"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => removeFromCart(item.id)}
+                              className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full ml-2"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {item.desserts && item.desserts.length > 0 && (
+                          <div className="ml-20 mt-3 space-y-2 border-t pt-3">
+                            <p className="text-sm font-semibold text-gray-700">With Desserts:</p>
+                            {item.desserts.map((d) => (
+                              <div key={d.id} className="flex justify-between items-center text-sm">
+                                <span>{d.name} x{d.quantity}</span>
+                                <div className="flex items-center space-x-2">
+                                  <button
+                                    onClick={() => updateDessertQuantity(item.id, d.id, d.quantity - 1)}
+                                    className="bg-gray-200 hover:bg-gray-300 p-1 rounded w-6"
+                                  >
+                                    <Minus className="w-3 h-3" />
+                                  </button>
+                                  <span className="font-medium">{formatPrice(d.price * d.quantity)}</span>
+                                  <button
+                                    onClick={() => updateDessertQuantity(item.id, d.id, d.quantity + 1)}
+                                    className="bg-[#4C4B16] hover:bg-[#3a3912] text-white p-1 rounded w-6"
+                                  >
+                                    <Plus className="w-3 h-3" />
+                                  </button>
                                 </div>
                               </div>
-                            )}
+                            ))}
                           </div>
-                        </label>
+                        )}
                       </div>
                     ))}
                   </div>
+                )}
+              </div>
 
-                  {checkoutForm.paymentMethod === 'gcash' && (
-                    <div className="mt-6">
-                      <label className="block text-sm font-medium mb-2">
-                        Payment Screenshot{' '}
-                        <span className="text-gray-500">(Optional)</span>
-                      </label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#4C4B16] transition-colors">
+              {cart.length > 0 && (
+                <div className="border-t bg-gray-50 p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-xl font-bold">Total: {formatPrice(getTotalPrice())}</span>
+                    <span className="text-gray-600">({getTotalItems()} items)</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsCartOpen(false);
+                      setIsCheckoutOpen(true);
+                    }}
+                    className="w-full bg-[#4C4B16] hover:bg-[#3a3912] text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow"
+                  >
+                    Proceed to Checkout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Checkout Modal */}
+        {isCheckoutOpen && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+              <div className="bg-[#4C4B16] text-white p-6 rounded-t-2xl">
+                <h2 className="text-2xl font-bold text-center flex items-center justify-center space-x-2">
+                  <CheckCircle className="w-7 h-7" />
+                  <span>Complete Your Order</span>
+                </h2>
+              </div>
+
+              <div className="p-6 overflow-y-auto max-h-[75vh]">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Customer Info */}
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-bold mb-4 border-b pb-2">Customer Information</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">First Name *</label>
                         <input
-                          type="file"
-                          id="paymentScreenshot"
-                          accept="image/*"
-                          onChange={handleFileUpload}
-                          className="hidden"
+                          type="text"
+                          value={checkoutForm.firstName}
+                          onChange={(e) => handleFormChange('firstName', e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
+                          placeholder="Enter first name"
                         />
-                        <label htmlFor="paymentScreenshot" className="cursor-pointer">
-                          <Upload className="w-12 h-12 mx-auto text-gray-400 mb-3" />
-                          <p className="text-gray-600 mb-2">
-                            {checkoutForm.paymentScreenshot
-                              ? checkoutForm.paymentScreenshot.name
-                              : 'Click to upload payment screenshot'}
-                          </p>
-                          <p className="text-sm text-gray-500">PNG, JPG up to 5MB</p>
-                        </label>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Last Name *</label>
+                        <input
+                          type="text"
+                          value={checkoutForm.lastName}
+                          onChange={(e) => handleFormChange('lastName', e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
+                          placeholder="Enter last name"
+                        />
                       </div>
                     </div>
-                  )}
 
-                  <div className="bg-gray-50 rounded-lg p-6 mt-6">
-                    <h3 className="text-lg font-bold mb-4">Order Summary</h3>
-                    <div className="space-y-3">
-                      {cart.map((item) => (
-                        <div key={item.id} className="border-b pb-2">
-                          <div className="flex justify-between font-medium">
-                            <span>{item.name} x{item.quantity}</span>
-                            <span>{formatPrice(item.price * item.quantity)}</span>
-                          </div>
-                          {item.desserts?.map((d) => (
-                            <div key={d.id} className="text-sm text-gray-600 ml-4">
-                              {d.name} x{d.quantity} = {formatPrice(d.price * d.quantity)}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Email Address *</label>
+                      <input
+                        type="email"
+                        value={checkoutForm.email}
+                        onChange={(e) => handleFormChange('email', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
+                        placeholder="Enter email address"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Contact Number *</label>
+                      <input
+                        type="tel"
+                        value={checkoutForm.contactNumber}
+                        onChange={(e) => handleFormChange('contactNumber', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
+                        placeholder="Enter contact number"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Shipping Address *</label>
+                      <textarea
+                        value={checkoutForm.shippingAddress}
+                        onChange={(e) => handleFormChange('shippingAddress', e.target.value)}
+                        rows="3"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
+                        placeholder="Enter complete shipping address"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Region *</label>
+                      <select
+                        value={checkoutForm.region}
+                        onChange={(e) => handleFormChange('region', e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:border-[#4C4B16] focus:outline-none focus:ring-2 focus:ring-[#4C4B16]/20"
+                      >
+                        <option value="">Select Region</option>
+                        {regions.map((region) => (
+                          <option key={region} value={region}>
+                            {region}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Payment & Summary */}
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-bold mb-4 border-b pb-2">Payment Method *</h3>
+                    <div className="space-y-4">
+                      {paymentMethods.map((method) => (
+                        <div
+                          key={method.id}
+                          className="border border-gray-200 rounded-lg p-4 hover:border-[#4C4B16] transition-colors"
+                        >
+                          <label className="flex items-start space-x-3 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="paymentMethod"
+                              value={method.id}
+                              checked={checkoutForm.paymentMethod === method.id}
+                              onChange={(e) => handleFormChange('paymentMethod', e.target.value)}
+                              className="mt-1 text-[#4C4B16] focus:ring-[#4C4B16]"
+                            />
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-2 mb-2">
+                                {method.icon}
+                                <span className="font-medium">{method.name}</span>
+                              </div>
+                              <p className="text-sm text-gray-600">{method.description}</p>
+                              {method.id === 'gcash' && checkoutForm.paymentMethod === 'gcash' && (
+                                <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                  <h4 className="font-medium text-blue-900 mb-2">GCash Payment Details:</h4>
+                                  <div className="text-sm text-blue-800">
+                                    <p><strong>GCash Number:</strong> {method.number}</p>
+                                    <p><strong>Account Name:</strong> {method.accountName}</p>
+                                    <p className="mt-2 text-blue-700">Please send your payment and upload a screenshot below (optional).</p>
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                          ))}
+                          </label>
                         </div>
                       ))}
-                      <div className="border-t pt-3 mt-3">
-                        <div className="flex justify-between">
-                          <span className="text-lg font-bold">Total</span>
-                          <span className="text-2xl font-bold text-[#4C4B16]">{formatPrice(getTotalPrice())}</span>
+                    </div>
+
+                    {checkoutForm.paymentMethod === 'gcash' && (
+                      <div className="mt-6">
+                        <label className="block text-sm font-medium mb-2">
+                          Payment Screenshot{' '}
+                          <span className="text-gray-500">(Optional)</span>
+                        </label>
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#4C4B16] transition-colors">
+                          <input
+                            type="file"
+                            id="paymentScreenshot"
+                            accept="image/*"
+                            onChange={handleFileUpload}
+                            className="hidden"
+                          />
+                          <label htmlFor="paymentScreenshot" className="cursor-pointer">
+                            <Upload className="w-12 h-12 mx-auto text-gray-400 mb-3" />
+                            <p className="text-gray-600 mb-2">
+                              {checkoutForm.paymentScreenshot
+                                ? checkoutForm.paymentScreenshot.name
+                                : 'Click to upload payment screenshot'}
+                            </p>
+                            <p className="text-sm text-gray-500">PNG, JPG up to 5MB</p>
+                          </label>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1">({getTotalItems()} items)</p>
+                      </div>
+                    )}
+
+                    <div className="bg-gray-50 rounded-lg p-6 mt-6">
+                      <h3 className="text-lg font-bold mb-4">Order Summary</h3>
+                      <div className="space-y-3">
+                        {cart.map((item) => (
+                          <div key={item.id} className="border-b pb-2">
+                            <div className="flex justify-between font-medium">
+                              <span>{item.name} x{item.quantity}</span>
+                              <span>{formatPrice(item.price * item.quantity)}</span>
+                            </div>
+                            {item.desserts?.map((d) => (
+                              <div key={d.id} className="text-sm text-gray-600 ml-4">
+                                {d.name} x{d.quantity} = {formatPrice(d.price * d.quantity)}
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                        <div className="border-t pt-3 mt-3">
+                          <div className="flex justify-between">
+                            <span className="text-lg font-bold">Total</span>
+                            <span className="text-2xl font-bold text-[#4C4B16]">{formatPrice(getTotalPrice())}</span>
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1">({getTotalItems()} items)</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
-                <button
-                  onClick={() => setIsCheckoutOpen(false)}
-                  className="flex-1 bg-gray-300 hover:bg-gray-400 text-[#4C4B16] py-3 px-6 rounded-xl font-semibold transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handlePlaceOrder}
-                  disabled={!validateForm()}
-                  className={`flex-2 py-3 px-8 rounded-xl font-semibold transition-all duration-300 ${
-                    validateForm()
-                      ? 'bg-[#4C4B16] hover:bg-[#3a3912] text-white transform hover:scale-105 shadow'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  Place Order - {formatPrice(getTotalPrice())}
-                </button>
+                <div className="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
+                  <button
+                    onClick={() => setIsCheckoutOpen(false)}
+                    className="flex-1 bg-gray-300 hover:bg-gray-400 text-[#4C4B16] py-3 px-6 rounded-xl font-semibold transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handlePlaceOrder}
+                    disabled={!validateForm()}
+                    className={`flex-2 py-3 px-8 rounded-xl font-semibold transition-all duration-300 ${
+                      validateForm()
+                        ? 'bg-[#4C4B16] hover:bg-[#3a3912] text-white transform hover:scale-105 shadow'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                  >
+                    Place Order - {formatPrice(getTotalPrice())}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+
+      {/* Toastify Container - Positioned at Top Center */}
+      <ToastContainer
+        position="top-center"
+        autoClose={false}
+        hideProgressBar={false}
+        closeOnClick={false}
+        draggable={false}
+        pauseOnHover
+        style={{ width: '100%', maxWidth: '500px' }}
+      />
+    </>
   );
 };
 
